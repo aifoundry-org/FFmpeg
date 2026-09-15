@@ -1,0 +1,101 @@
+name: ETSOC MPEG2 (native test, not hardware)
+
+on:
+  push:
+    paths: ['libavcodec/**', 'fftools/**', 'configure', 'et-kernels/**', 'et-runtime/**', 'et-tools/**', 'et-tests/**', '.github/workflows/etsoc.yml']
+  pull_request:
+    paths: ['libavcodec/**', 'fftools/**', 'configure', 'et-kernels/**', 'et-runtime/**', 'et-tools/**', 'et-tests/**', '.github/workflows/etsoc.yml']
+  workflow_dispatch:
+    inputs:
+      sysemu:
+        description: 'Run optional simulator suite on a provisioned et-sdk runner (never hardware)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  cpu-disabled:
+    name: CPU-only --disable-etsoc (zero ET dependencies)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build without ET and check dependency isolation
+        run: JOBS=4 et-tests/check-cpu-disabled.sh "$RUNNER_TEMP/et-disabled"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: CPU-only-disabled-build-logs
+          path: |
+            ${{ runner.temp }}/et-disabled/*.log
+            ${{ runner.temp }}/et-disabled/*.md5
+            ${{ runner.temp }}/et-disabled/ffmpeg/ffbuild/config.log
+          if-no-files-found: warn
+
+  native-test:
+    name: HOST-NATIVE TEST (no hardware claim)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Native runtime fault-injection and comparison-tool unit tests
+        run: ET_TEST_SANITIZERS=1 et-tests/unit.sh "$RUNNER_TEMP/et-unit"
+      - name: Production C++ shim mock-SDK fault and lifetime tests
+        run: |
+          c++ -std=c++17 -Wall -Wextra -Werror -g -fsanitize=address,undefined \
+            -Iet-runtime/tests/mock -Ilibavcodec libavcodec/et_runtime.cpp \
+            et-runtime/tests/runtime_test.cpp -o "$RUNNER_TEMP/et-sdk-mock"
+          ASAN_OPTIONS=detect_leaks=1 "$RUNNER_TEMP/et-sdk-mock"
+      - name: Build isolated native test runtime and own FFmpeg
+        run: JOBS=4 et-tests/build-native-ffmpeg.sh "$RUNNER_TEMP/et-native"
+      - name: Supported progressive-I gate, exact CPU comparisons, strict failures
+        run: et-tests/run.sh "$RUNNER_TEMP/et-native/ffmpeg/ffmpeg" "$RUNNER_TEMP/et-results" native supported-i
+      - name: Mandatory I/P/B full-GOP gate, including 250-frame stress
+        run: et-tests/run.sh "$RUNNER_TEMP/et-native/ffmpeg/ffmpeg" "$RUNNER_TEMP/et-gop-results" native full-gop
+      - name: Late-audit policy rejection and libavcodec drain-after-error gate
+        run: et-tests/audit.sh "$RUNNER_TEMP/et-native" "$RUNNER_TEMP/et-audit-results"
+      - name: Direct native kernel intra-matrix and alternate-scan oracle
+        run: |
+          et-tests/run-kernel-native.sh "$RUNNER_TEMP/et-native/ffmpeg/ffmpeg" \
+            "$RUNNER_TEMP/et-native/runtime/kernel/libet_mpeg2_native.so" "$RUNNER_TEMP/et-kernel-results"
+      - name: Preserve test logs and corpus, including failed runs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: NATIVE-TEST-results-NOT-hardware
+          path: |
+            ${{ runner.temp }}/et-results/
+            ${{ runner.temp }}/et-gop-results/
+            ${{ runner.temp }}/et-audit-results/
+            ${{ runner.temp }}/et-kernel-results/
+            ${{ runner.temp }}/et-native/ffmpeg/ffbuild/config.log
+          if-no-files-found: warn
+
+  sysemu:
+    name: OPTIONAL system emulator (-mem_check -Werror=memory, NOT hardware)
+    if: github.event_name == 'workflow_dispatch' && inputs.sysemu
+    runs-on: [self-hosted, linux, et-sdk]
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build production host and device ELF with provisioned SDK
+        run: |
+          python3 et-tools/build-host.py
+          cmake -S et-kernels -B et-tests/build-device -DET_DEVICE=ON \
+            -DCMAKE_TOOLCHAIN_FILE=/opt/et/lib/cmake/riscv64-ec-toolchain.cmake
+          cmake --build et-tests/build-device -j4
+      - name: Simulator memory checker (missing prerequisites is not success)
+        env:
+          FF_ET_MEM_CHECK: '1'
+          FF_ET_SYSEMU: '1'
+          FF_ET_ALLOW_PCIE: '0'
+          FF_ET_KERNEL: '${{ github.workspace }}/et-tests/build-device/et_mpeg2_slice.elf'
+        run: et-tools/validate-sysemu.sh build-et/host/ffmpeg et-tests/build-sysemu-results
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SYSEMU-results-NOT-hardware
+          path: et-tests/build-sysemu-results/
+          if-no-files-found: warn

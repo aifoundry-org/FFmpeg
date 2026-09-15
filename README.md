@@ -44,3 +44,11 @@ GPL. Please refer to the LICENSE file for detailed information.
 Patches should be submitted to the ffmpeg-devel mailing list using
 `git format-patch` or `git send-email`. Github pull requests should be
 avoided because they are not part of our review process and will be ignored.
+
+## ETSOC-1 MPEG-2 fork
+
+This branch adds opt-in `--enable-etsoc` / `-hwaccel et` slice reconstruction
+with ordinary host `yuv420p` frames. See [ET_IMPLEMENTATION.md](ET_IMPLEMENTATION.md)
+for builds, supported inputs and remaining work, and [ET_VALIDATION.md](ET_VALIDATION.md)
+for native, sys_emu and attached-accelerator results. This is a correctness-first
+scalar baseline, not a claim of faster-than-CPU decoding.

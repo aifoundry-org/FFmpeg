@@ -22,6 +22,7 @@
 #include <string.h>
 
 #include "config.h"
+#include "config_components.h"
 
 #if CONFIG_ICONV
 # include <iconv.h>
@@ -48,6 +49,9 @@
 #include "decode.h"
 #include "hwaccel_internal.h"
 #include "hwconfig.h"
+#if CONFIG_MPEG2_ET_HWACCEL
+#include "et_mpeg12.h"
+#endif
 #include "internal.h"
 #include "lcevcdec.h"
 #include "packet_internal.h"
@@ -1338,6 +1342,12 @@ int ff_get_format(AVCodecContext *avctx, const enum AVPixelFormat *fmt)
             hw_config = NULL;
         }
 
+#if CONFIG_MPEG2_ET_HWACCEL
+        /* ET returns ordinary host frames. Do not hijack CPU yuv420p decode. */
+        if (hw_config && hw_config->hwaccel == &ff_mpeg2_et_hwaccel &&
+            !ff_et_mpeg2_enabled(avctx))
+            hw_config = NULL;
+#endif
         if (!hw_config) {
             // No config available, so no extra setup required.
             ret = user_choice;

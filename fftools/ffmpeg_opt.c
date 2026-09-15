@@ -19,6 +19,7 @@
  */
 
 #include "config.h"
+#include "config_components.h"
 
 #include <stdint.h>
 
@@ -145,6 +146,9 @@ static int show_hwaccels(void *optctx, const char *opt, const char *arg)
     enum AVHWDeviceType type = AV_HWDEVICE_TYPE_NONE;
 
     printf("Hardware acceleration methods:\n");
+#if CONFIG_MPEG2_ET_HWACCEL
+    printf("et\n");
+#endif
     while ((type = av_hwdevice_iterate_types(type)) !=
            AV_HWDEVICE_TYPE_NONE)
         printf("%s\n", av_hwdevice_get_type_name(type));

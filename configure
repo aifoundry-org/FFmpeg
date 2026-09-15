@@ -347,6 +347,7 @@ External library support:
   --disable-d3d11va        disable Microsoft Direct3D 11 video acceleration code [autodetect]
   --disable-d3d12va        disable Microsoft Direct3D 12 video acceleration code [autodetect]
   --disable-dxva2          disable Microsoft DirectX 9 video acceleration code [autodetect]
+  --enable-etsoc          enable ETSOC-1 MPEG-2 slice offload [no]
   --disable-ffnvcodec      disable dynamically linked Nvidia code [autodetect]
   --disable-libdrm         disable DRM code (Linux) [autodetect]
   --enable-libmfx          enable Intel MediaSDK (AKA Quick Sync Video) code via libmfx [no]
@@ -2020,6 +2021,7 @@ HWACCEL_LIBRARY_NONFREE_LIST="
 
 HWACCEL_LIBRARY_LIST="
     $HWACCEL_LIBRARY_NONFREE_LIST
+    etsoc
     libmfx
     libvpl
     mmal
@@ -3226,6 +3228,8 @@ mpeg2_d3d12va_hwaccel_deps="d3d12va"
 mpeg2_d3d12va_hwaccel_select="mpeg2video_decoder"
 mpeg2_dxva2_hwaccel_deps="dxva2"
 mpeg2_dxva2_hwaccel_select="mpeg2video_decoder"
+mpeg2_et_hwaccel_deps="etsoc"
+mpeg2_et_hwaccel_select="mpeg2video_decoder"
 mpeg2_nvdec_hwaccel_deps="nvdec"
 mpeg2_nvdec_hwaccel_select="mpeg2video_decoder"
 mpeg2_vaapi_hwaccel_deps="vaapi"
@@ -6977,6 +6981,7 @@ enabled libopus           && {
         require_pkg_config libopus opus opus_multistream.h opus_multistream_surround_encoder_create
     }
 }
+enabled etsoc             && require_pkg_config etsoc etsoc et_runtime.h ff_et_runtime_open
 enabled libplacebo        && require_pkg_config libplacebo "libplacebo >= 4.192.0" libplacebo/vulkan.h pl_vulkan_create
 enabled libpulse          && require_pkg_config libpulse libpulse pulse/pulseaudio.h pa_context_new
 enabled libqrencode       && require_pkg_config libqrencode libqrencode qrencode.h QRcode_encodeString

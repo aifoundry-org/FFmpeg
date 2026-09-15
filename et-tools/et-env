@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Full local SDK container. Emulator-only by default; PCIe requires explicit opt-in.
+set -euo pipefail
+ROOT=$(dirname "$(dirname "$(readlink -f "$0")")")
+IMAGE=${ET_IMAGE:-et-soc1-dev:20260911}
+DOCKER=(docker)
+if ! docker info >/dev/null 2>&1; then DOCKER=(sudo docker); fi
+DEVICES=()
+if [[ ${FF_ET_ALLOW_PCIE:-0} == 1 ]]; then
+    DEVICES=(--device=/dev/et0_mgmt --device=/dev/et0_ops)
+fi
+ENV=(-e HOME=/tmp -e FF_ET_SYSEMU=${FF_ET_SYSEMU:-1}
+     -e GLOG_minloglevel=${GLOG_minloglevel:-1}
+     -e PATH=/opt/et/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin)
+for var in FF_ET_MEM_CHECK FF_ET_KERNEL FF_ET_SHIRE_MASK FF_ET_DEVICE FF_ET_DUMP_MB FF_ET_DUMP_DIR; do
+    [[ ! -v $var ]] || ENV+=(-e "$var=${!var}")
+done
+if [[ $# == 0 ]]; then set -- bash; fi
+exec "${DOCKER[@]}" run --rm --init "${DEVICES[@]}" --user "$(id -u):$(id -g)" \
+    "${ENV[@]}" -v "$ROOT:/work" -v "$ROOT/../et-platform:/src/et-platform:ro" \
+    -w /work "$IMAGE" "$@"

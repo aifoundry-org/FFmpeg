@@ -1,0 +1,550 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-09-15T20:57:38.955395+00:00",
+  "ffmpeg_base": "db69d06eeeab4f46da15030a80d539efb4503ca8",
+  "kernel": {
+    "path": "et-kernels/build-device/et_mpeg2_slice.elf",
+    "sha256": "93d5319440f44d4a741a57fd708959d8908d7105b010dab73a5731829e4fea2d",
+    "bytes": 39032
+  },
+  "host": {
+    "path": "build-et/host/ffmpeg",
+    "sha256": "a581069db4fd2637088fbb188db186840668aee681bb525af002c5a1f88db5f1",
+    "bytes": 7053480
+  },
+  "physical_device": "et0 / 0000:01:00.0",
+  "shire_mask": "0x1",
+  "firmware_changed": false,
+  "silicon": [
+    {
+      "case": "single-i",
+      "dimensions": "64x48",
+      "harts": 1,
+      "frames": 1,
+      "exact_framemd5": true,
+      "unchanged_error_counters": true,
+      "artifacts": [
+        {
+          "path": "build-et/corpus/single-i.m2v",
+          "sha256": "7087f73e89fbb88813ebff2aada6872a6433975bb9a53568375e42820298f6a8",
+          "bytes": 1674
+        },
+        {
+          "path": "build-et/corpus/single-i.golden.md5",
+          "sha256": "ee979a5ef24f69db4960577502aaa77fe8fac5419c3828e3831277b850c43abe",
+          "bytes": 292
+        },
+        {
+          "path": "build-et/silicon/single-i-h1/output.md5",
+          "sha256": "ee979a5ef24f69db4960577502aaa77fe8fac5419c3828e3831277b850c43abe",
+          "bytes": 292
+        },
+        {
+          "path": "build-et/silicon/single-i-h1/decode.log",
+          "sha256": "540ddce54210e4fcded047f9ac6c51cbde6e9c12601cc9d9b73fd536783d9397",
+          "bytes": 8194
+        },
+        {
+          "path": "build-et/silicon/single-i-h1/before.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/single-i-h1/after.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/single-i-h1/before.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/single-i-h1/after.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/single-i-h1/before.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        },
+        {
+          "path": "build-et/silicon/single-i-h1/after.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        }
+      ]
+    },
+    {
+      "case": "i-only",
+      "dimensions": "128x96",
+      "harts": 64,
+      "frames": 5,
+      "exact_framemd5": true,
+      "unchanged_error_counters": true,
+      "artifacts": [
+        {
+          "path": "build-et/corpus/i-only.m2v",
+          "sha256": "82f231e1d0fbc226dff26a6d265bc12972e9b880776e4e2882c7d21e1297aa36",
+          "bytes": 21743
+        },
+        {
+          "path": "build-et/corpus/i-only.golden.md5",
+          "sha256": "e6ffce3256bb5904801a5818270b5fd69d8d0f91bb6e18df2a42ad1b18e8e22a",
+          "bytes": 613
+        },
+        {
+          "path": "build-et/silicon/i-only-h64/output.md5",
+          "sha256": "e6ffce3256bb5904801a5818270b5fd69d8d0f91bb6e18df2a42ad1b18e8e22a",
+          "bytes": 613
+        },
+        {
+          "path": "build-et/silicon/i-only-h64/decode.log",
+          "sha256": "32c98e9d855654a3af57c874c2ed41eacf290d496be7a93da28eb3041e9e1953",
+          "bytes": 8593
+        },
+        {
+          "path": "build-et/silicon/i-only-h64/before.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/i-only-h64/after.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/i-only-h64/before.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/i-only-h64/after.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/i-only-h64/before.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        },
+        {
+          "path": "build-et/silicon/i-only-h64/after.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        }
+      ]
+    },
+    {
+      "case": "65rows",
+      "dimensions": "64x1040",
+      "harts": 64,
+      "frames": 1,
+      "exact_framemd5": true,
+      "unchanged_error_counters": true,
+      "artifacts": [
+        {
+          "path": "build-et/corpus/65rows.m2v",
+          "sha256": "c8d4c07390097714521a4b138c5a2be325989f6fcba0b420d4f2e399487263c7",
+          "bytes": 20558
+        },
+        {
+          "path": "build-et/corpus/65rows.golden.md5",
+          "sha256": "404f825049c8622ea6b61bde1c68ae293bb191bcda3f53fecc578856955fa465",
+          "bytes": 294
+        },
+        {
+          "path": "build-et/silicon/65rows-h64/output.md5",
+          "sha256": "404f825049c8622ea6b61bde1c68ae293bb191bcda3f53fecc578856955fa465",
+          "bytes": 294
+        },
+        {
+          "path": "build-et/silicon/65rows-h64/decode.log",
+          "sha256": "15051717ef33d6b45533b2b0ee502459f8eb43ac3f0556946ea76a861e41551e",
+          "bytes": 8134
+        },
+        {
+          "path": "build-et/silicon/65rows-h64/before.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/65rows-h64/after.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/65rows-h64/before.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/65rows-h64/after.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/65rows-h64/before.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        },
+        {
+          "path": "build-et/silicon/65rows-h64/after.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        }
+      ]
+    },
+    {
+      "case": "ipb12",
+      "dimensions": "128x96",
+      "harts": 64,
+      "frames": 12,
+      "exact_framemd5": true,
+      "unchanged_error_counters": true,
+      "artifacts": [
+        {
+          "path": "build-et/corpus/ipb12.m2v",
+          "sha256": "310b3570e9b2056570f9c6f262b8bf2929e84d633da3361df9357d04805b1806",
+          "bytes": 28457
+        },
+        {
+          "path": "build-et/corpus/ipb12.golden.md5",
+          "sha256": "7a0446ef817006c6c9502c0354c8d34946a420523ca4d7f03ad88bec46c98463",
+          "bytes": 1173
+        },
+        {
+          "path": "build-et/silicon/ipb12-h64/output.md5",
+          "sha256": "7a0446ef817006c6c9502c0354c8d34946a420523ca4d7f03ad88bec46c98463",
+          "bytes": 1173
+        },
+        {
+          "path": "build-et/silicon/ipb12-h64/decode.log",
+          "sha256": "514ad5703728ddaa8c4c272e8e048ae08c673efb7a247a27fe5cb590039a80fe",
+          "bytes": 9245
+        },
+        {
+          "path": "build-et/silicon/ipb12-h64/before.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/ipb12-h64/after.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/ipb12-h64/before.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/ipb12-h64/after.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/ipb12-h64/before.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        },
+        {
+          "path": "build-et/silicon/ipb12-h64/after.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        }
+      ]
+    },
+    {
+      "case": "ipb250",
+      "dimensions": "128x96",
+      "harts": 64,
+      "frames": 250,
+      "exact_framemd5": true,
+      "unchanged_error_counters": true,
+      "artifacts": [
+        {
+          "path": "build-et/corpus/ipb250.m2v",
+          "sha256": "769387f4ef640750d451888f58166be49f3d8d6cb490def4769ac508e8158603",
+          "bytes": 727763
+        },
+        {
+          "path": "build-et/corpus/ipb250.golden.md5",
+          "sha256": "f00314ccd331e8013dac5b92e9fdd32573206cf571152f28ae8e48a40af5a1e9",
+          "bytes": 20213
+        },
+        {
+          "path": "build-et/silicon/ipb250-h64/output.md5",
+          "sha256": "f00314ccd331e8013dac5b92e9fdd32573206cf571152f28ae8e48a40af5a1e9",
+          "bytes": 20213
+        },
+        {
+          "path": "build-et/silicon/ipb250-h64/decode.log",
+          "sha256": "57ee3141daa2f36d7aa79a2e10192549510d9de28af67e220ef21f57146a1f37",
+          "bytes": 31547
+        },
+        {
+          "path": "build-et/silicon/ipb250-h64/before.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/ipb250-h64/after.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/ipb250-h64/before.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/ipb250-h64/after.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/ipb250-h64/before.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        },
+        {
+          "path": "build-et/silicon/ipb250-h64/after.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        }
+      ]
+    },
+    {
+      "case": "sd-ipb250",
+      "dimensions": "720x576",
+      "harts": 1,
+      "frames": 250,
+      "exact_framemd5": true,
+      "unchanged_error_counters": true,
+      "artifacts": [
+        {
+          "path": "build-et/corpus/sd-ipb250.m2v",
+          "sha256": "f222a13e90e6b4c16e241a40b302f472e7f05a3bd706de4b29c2e03d392f392e",
+          "bytes": 6534233
+        },
+        {
+          "path": "build-et/corpus/sd-ipb250.golden.md5",
+          "sha256": "c2662473737d3bb10092ea7279547c418fe63ee735735f98c5f3cbd2ca2a3995",
+          "bytes": 20214
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h1/output.md5",
+          "sha256": "c2662473737d3bb10092ea7279547c418fe63ee735735f98c5f3cbd2ca2a3995",
+          "bytes": 20214
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h1/decode.log",
+          "sha256": "148ab7d00ce813e4fa2c388588d11d2e067e936d02d21b23d4fdb8abe9afba14",
+          "bytes": 31842
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h1/before.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h1/after.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h1/before.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h1/after.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h1/before.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h1/after.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        }
+      ],
+      "single_observation_wall_seconds": 43.321
+    },
+    {
+      "case": "sd-ipb250",
+      "dimensions": "720x576",
+      "harts": 64,
+      "frames": 250,
+      "exact_framemd5": true,
+      "unchanged_error_counters": true,
+      "artifacts": [
+        {
+          "path": "build-et/corpus/sd-ipb250.m2v",
+          "sha256": "f222a13e90e6b4c16e241a40b302f472e7f05a3bd706de4b29c2e03d392f392e",
+          "bytes": 6534233
+        },
+        {
+          "path": "build-et/corpus/sd-ipb250.golden.md5",
+          "sha256": "c2662473737d3bb10092ea7279547c418fe63ee735735f98c5f3cbd2ca2a3995",
+          "bytes": 20214
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h64/output.md5",
+          "sha256": "c2662473737d3bb10092ea7279547c418fe63ee735735f98c5f3cbd2ca2a3995",
+          "bytes": 20214
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h64/decode.log",
+          "sha256": "df0227b6b9f1e68b1243e233444cd6124bbdb38aebc1206608eee5237c7d87ce",
+          "bytes": 32319
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h64/before.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h64/after.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h64/before.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h64/after.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h64/before.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        },
+        {
+          "path": "build-et/silicon/sd-ipb250-h64/after.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        }
+      ],
+      "single_observation_wall_seconds": 3.146
+    },
+    {
+      "case": "hd-ipb12",
+      "dimensions": "1920x1080",
+      "harts": 64,
+      "frames": 12,
+      "exact_framemd5": true,
+      "unchanged_error_counters": true,
+      "artifacts": [
+        {
+          "path": "build-et/corpus/hd-ipb12.m2v",
+          "sha256": "ac58c81173a7430938a7ab1c3e10ec94523c7eb58685740fb824986a24e50059",
+          "bytes": 1153003
+        },
+        {
+          "path": "build-et/corpus/hd-ipb12.golden.md5",
+          "sha256": "9b03b03f1c4e3e0b4f87d1e39a2bc47e8fc41ea93e1c1965f1fa892e3fb64c40",
+          "bytes": 1176
+        },
+        {
+          "path": "build-et/silicon/hd-ipb12-h64/output.md5",
+          "sha256": "9b03b03f1c4e3e0b4f87d1e39a2bc47e8fc41ea93e1c1965f1fa892e3fb64c40",
+          "bytes": 1176
+        },
+        {
+          "path": "build-et/silicon/hd-ipb12-h64/decode.log",
+          "sha256": "f4a6dd554b399d03b0cd991955dcc950f5ba33c826a53bfcd052c22b0091bf80",
+          "bytes": 9316
+        },
+        {
+          "path": "build-et/silicon/hd-ipb12-h64/before.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/hd-ipb12-h64/after.counts",
+          "sha256": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+          "bytes": 39
+        },
+        {
+          "path": "build-et/silicon/hd-ipb12-h64/before.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/hd-ipb12-h64/after.ce",
+          "sha256": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+          "bytes": 280
+        },
+        {
+          "path": "build-et/silicon/hd-ipb12-h64/before.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        },
+        {
+          "path": "build-et/silicon/hd-ipb12-h64/after.uce",
+          "sha256": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+          "bytes": 132
+        }
+      ],
+      "single_observation_wall_seconds": 0.611
+    }
+  ],
+  "silicon_decoded_frames": 781,
+  "native_summary": {
+    "integration_checks_passed": 69,
+    "policy_negatives_passed": 8,
+    "api_drain_controls": 4,
+    "api_drain_fault_cases": 12,
+    "note": "See et-tests/STATUS.md; native execution is not hardware validation."
+  },
+  "sysemu_250": {
+    "status": "PASS",
+    "dimensions": "64x48",
+    "harts": 64,
+    "memory_check": true,
+    "fatal_memory_errors": true,
+    "artifacts": [
+      {
+        "path": "build-et/corpus/ipb250-small.m2v",
+        "sha256": "feb7aed2b9d0b78b75a8ae5c4b8f58e68779140b1c66ccd8dc1fc7a9f14f407e",
+        "bytes": 67306
+      },
+      {
+        "path": "build-et/corpus/ipb250-small.golden.md5",
+        "sha256": "cc7f3b1bde600309bce9371ff97788d37dd67137159868cc876c962b36864058",
+        "bytes": 20212
+      },
+      {
+        "path": "build-et/corpus/ipb250-small.et64.md5",
+        "sha256": "cc7f3b1bde600309bce9371ff97788d37dd67137159868cc876c962b36864058",
+        "bytes": 20212
+      },
+      {
+        "path": "build-et/ipb250-small.et64.log",
+        "sha256": "1ed47fcf8c432c0e7b95c3898353760aba95e20dbe64e7c0230ed74faf50db05",
+        "bytes": 239773
+      },
+      {
+        "path": "build-et/ipb250-small.et64.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "bytes": 2
+      },
+      {
+        "path": "build-et/ipb250-small.et64.cmp",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "bytes": 2
+      }
+    ]
+  }
+}

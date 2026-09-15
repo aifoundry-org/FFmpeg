@@ -19,6 +19,7 @@
 #include <float.h>
 #include <stdint.h>
 
+#include "config_components.h"
 #include "ffmpeg.h"
 #include "ffmpeg_sched.h"
 #include "ffmpeg_utils.h"
@@ -1352,6 +1353,10 @@ static int ist_add(const OptionsContext *o, Demuxer *d, AVStream *st, AVDictiona
                 ds->dec_opts.hwaccel_id = HWACCEL_NONE;
             else if (!strcmp(hwaccel, "auto"))
                 ds->dec_opts.hwaccel_id = HWACCEL_AUTO;
+#if CONFIG_MPEG2_ET_HWACCEL
+            else if (!strcmp(hwaccel, "et"))
+                ds->dec_opts.hwaccel_id = HWACCEL_NONE;
+#endif
             else {
                 enum AVHWDeviceType type = av_hwdevice_find_type_by_name(hwaccel);
                 if (type != AV_HWDEVICE_TYPE_NONE) {
@@ -1393,6 +1398,22 @@ static int ist_add(const OptionsContext *o, Demuxer *d, AVStream *st, AVDictiona
         if (ret < 0)
             return ret;
     }
+
+#if CONFIG_MPEG2_ET_HWACCEL
+    if (hwaccel && !strcmp(hwaccel, "et")) {
+        if (!ist->dec || strcmp(ist->dec->name, "mpeg2video")) {
+            av_log(ist, AV_LOG_ERROR, "ET acceleration requires the mpeg2video decoder.\n");
+            return AVERROR(ENOSYS);
+        }
+        if (hwaccel_device || (hwaccel_output_format && strcmp(hwaccel_output_format, "yuv420p"))) {
+            av_log(ist, AV_LOG_ERROR, "ET uses host yuv420p frames; select the device with FF_ET_DEVICE.\n");
+            return AVERROR(EINVAL);
+        }
+        ret = av_dict_set(&ds->decoder_opts, "et", "1", 0);
+        if (ret < 0)
+            return ret;
+    }
+#endif
 
     ds->reinit_filters = -1;
     opt_match_per_stream_int(ist, &o->reinit_filters, ic, st, &ds->reinit_filters);

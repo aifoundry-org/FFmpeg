@@ -1,0 +1,10 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+
+Name: etsoc
+Description: FFmpeg synchronous ET-SOC1 runtime C shim
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -letsoc @ET_PC_LIBS@
+Cflags: -I${includedir}/etsoc

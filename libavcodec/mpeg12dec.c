@@ -43,6 +43,9 @@
 #include "codec_internal.h"
 #include "decode.h"
 #include "error_resilience.h"
+#if CONFIG_MPEG2_ET_HWACCEL
+#include "et_mpeg12.h"
+#endif
 #include "hwaccel_internal.h"
 #include "hwconfig.h"
 #include "idctdsp.h"
@@ -71,6 +74,12 @@ enum Mpeg2ClosedCaptionsFormat {
 
 typedef struct Mpeg1Context {
     MpegEncContext mpeg_enc_ctx;
+#if CONFIG_MPEG2_ET_HWACCEL
+    int et_enabled;
+    int et_probe;
+    int et_shires;
+    int et_harts;
+#endif
     int repeat_field;           /* true if we must repeat the field */
     AVPanScan pan_scan;         /* some temporary storage for the panscan */
     enum AVStereo3DType stereo3d_type;
@@ -92,6 +101,14 @@ typedef struct Mpeg1Context {
     int extradata_decoded;
     int64_t timecode_frame_start;  /*< GOP timecode frame start number, in non drop frame format */
 } Mpeg1Context;
+
+#if CONFIG_MPEG2_ET_HWACCEL
+int ff_et_mpeg2_enabled(const AVCodecContext *avctx)
+{
+    const Mpeg1Context *s = avctx->priv_data;
+    return s->et_enabled && !s->et_probe;
+}
+#endif
 
 /* as H.263, but only 17 codes */
 static int mpeg_decode_motion(MpegEncContext *s, int fcode, int pred)
@@ -767,6 +784,13 @@ static av_cold int mpeg_decode_init(AVCodecContext *avctx)
     MpegEncContext *s2 = &s->mpeg_enc_ctx;
     int ret;
 
+#if CONFIG_MPEG2_ET_HWACCEL
+    if (s->et_enabled) {
+        /* MPEG-2 has no frame threads. Existing hwaccel guards bypass slice threads. */
+        if (s->et_probe && (ret = ff_et_mpeg2_probe(avctx)) < 0)
+            return ret;
+    }
+#endif
     s2->out_format = FMT_MPEG1;
 
     if (   avctx->codec_tag != AV_RL32("VCR2")
@@ -860,6 +884,17 @@ static enum AVPixelFormat mpeg_get_pixelformat(AVCodecContext *avctx)
     MpegEncContext *s = &s1->mpeg_enc_ctx;
     const enum AVPixelFormat *pix_fmts;
 
+#if CONFIG_MPEG2_ET_HWACCEL
+    if (ff_et_mpeg2_enabled(avctx)) {
+        static const enum AVPixelFormat et_formats[] = { AV_PIX_FMT_YUV420P, AV_PIX_FMT_NONE };
+        if (avctx->codec_id != AV_CODEC_ID_MPEG2VIDEO ||
+            s->chroma_format != 1 || (avctx->flags & AV_CODEC_FLAG_GRAY)) {
+            av_log(avctx, AV_LOG_ERROR, "ET requires MPEG-2 yuv420p; no CPU fallback\n");
+            return AV_PIX_FMT_NONE;
+        }
+        return ff_get_format(avctx, et_formats);
+    }
+#endif
     if (CONFIG_GRAY && (avctx->flags & AV_CODEC_FLAG_GRAY))
         return AV_PIX_FMT_GRAY8;
 
@@ -997,6 +1032,10 @@ FF_ENABLE_DEPRECATION_WARNINGS
         } // MPEG-2
 
         avctx->pix_fmt = mpeg_get_pixelformat(avctx);
+#if CONFIG_MPEG2_ET_HWACCEL
+        if (ff_et_mpeg2_enabled(avctx) && avctx->pix_fmt == AV_PIX_FMT_NONE)
+            return AVERROR_INVALIDDATA;
+#endif
 
         if ((ret = ff_mpv_common_init(s)) < 0)
             return ret;
@@ -1751,7 +1790,12 @@ static int slice_end(AVCodecContext *avctx, AVFrame *pict, int *got_output)
         } else {
             /* latency of 1 frame for I- and P-frames */
             if (s->last_pic.ptr && !s->last_pic.ptr->dummy) {
-                int ret = av_frame_ref(pict, s->last_pic.ptr->f);
+                int ret;
+#if CONFIG_MPEG2_ET_HWACCEL
+                if (ff_et_mpeg2_enabled(avctx) && !ff_et_mpeg2_picture_valid(avctx, s->last_pic.ptr))
+                    return AVERROR_INVALIDDATA;
+#endif
+                ret = av_frame_ref(pict, s->last_pic.ptr->f);
                 if (ret < 0)
                     return ret;
                 ff_print_debug_info(s, s->last_pic.ptr, pict);
@@ -2305,6 +2349,16 @@ static int decode_chunks(AVCodecContext *avctx, AVFrame *picture,
             case 0x3:
                 mpeg_decode_quant_matrix_extension(s2);
                 break;
+#if CONFIG_MPEG2_ET_HWACCEL
+            case 0x5:
+            case 0x9:
+            case 0xA:
+                if (ff_et_mpeg2_enabled(avctx)) {
+                    av_log(avctx, AV_LOG_ERROR, "ET does not support scalable MPEG-2 extensions\n");
+                    return AVERROR_INVALIDDATA;
+                }
+                break;
+#endif
             case 0x7:
                 mpeg_decode_picture_display_extension(s);
                 break;
@@ -2511,7 +2565,14 @@ static int mpeg_decode_frame(AVCodecContext *avctx, AVFrame *picture,
     if (buf_size == 0 || (buf_size == 4 && AV_RB32(buf) == SEQ_END_CODE)) {
         /* special case for last picture */
         if (s2->low_delay == 0 && s2->next_pic.ptr) {
-            int ret = av_frame_ref(picture, s2->next_pic.ptr->f);
+            int ret;
+#if CONFIG_MPEG2_ET_HWACCEL
+            if (ff_et_mpeg2_enabled(avctx) && !ff_et_mpeg2_picture_valid(avctx, s2->next_pic.ptr)) {
+                ff_mpv_unref_picture(&s2->next_pic);
+                return AVERROR_INVALIDDATA;
+            }
+#endif
+            ret = av_frame_ref(picture, s2->next_pic.ptr->f);
             if (ret < 0)
                 return ret;
 
@@ -2618,6 +2679,16 @@ const FFCodec ff_mpeg1video_decoder = {
 #define M2V_PARAM     AV_OPT_FLAG_VIDEO_PARAM | AV_OPT_FLAG_DECODING_PARAM
 
 static const AVOption mpeg2video_options[] = {
+#if CONFIG_MPEG2_ET_HWACCEL
+    { "et", "offload MPEG-2 reconstruction to ETSOC-1", M2V_OFFSET(et_enabled),
+      AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, M2V_PARAM },
+    { "et_probe", "open ET runtime but explicitly decode on CPU", M2V_OFFSET(et_probe),
+      AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, M2V_PARAM },
+    { "et_shires", "number of ET shires (v1 supports one)", M2V_OFFSET(et_shires),
+      AV_OPT_TYPE_INT, { .i64 = 1 }, 1, 32, M2V_PARAM },
+    { "et_harts", "active harts in the selected shire", M2V_OFFSET(et_harts),
+      AV_OPT_TYPE_INT, { .i64 = 64 }, 1, 64, M2V_PARAM },
+#endif
     { "cc_format", "extract a specific Closed Captions format",
        M2V_OFFSET(cc_format), AV_OPT_TYPE_INT, { .i64 = CC_FORMAT_AUTO },
         CC_FORMAT_AUTO, CC_FORMAT_DVD, M2V_PARAM, .unit = "cc_format" },
@@ -2658,6 +2729,9 @@ const FFCodec ff_mpeg2video_decoder = {
     .p.max_lowres   = 3,
     .p.profiles     = NULL_IF_CONFIG_SMALL(ff_mpeg2_video_profiles),
     .hw_configs     = (const AVCodecHWConfigInternal *const []) {
+#if CONFIG_MPEG2_ET_HWACCEL
+                        HW_CONFIG_HWACCEL(0, 0, 1, YUV420P, NONE, ff_mpeg2_et_hwaccel),
+#endif
 #if CONFIG_MPEG2_DXVA2_HWACCEL
                         HWACCEL_DXVA2(mpeg2),
 #endif

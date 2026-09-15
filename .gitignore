@@ -41,3 +41,6 @@
 /src
 /mapfile
 /tools/python/__pycache__/
+
+# ETSOC local build, corpus, emulator logs and validation artifacts
+/build-et/
