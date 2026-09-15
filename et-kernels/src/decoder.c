@@ -9,6 +9,17 @@
 #include "libavcodec/get_bits.h"
 #include "libavcodec/simple_idct.h"
 #include "cache.h"
+#include "motion.h"
+#include "reconstruct.h"
+#ifndef ET_PREFETCH_MC
+#define ET_PREFETCH_MC 0
+#endif
+#ifndef ET_EVEN_ONLY
+#define ET_EVEN_ONLY 0
+#endif
+#ifndef ET_SPREAD_HARTS
+#define ET_SPREAD_HARTS 0
+#endif
 #include "tables.h"
 
 #if HAVE_FAST_UNALIGNED
@@ -17,6 +28,14 @@
 
 #define TEX_VLC_BITS 9
 #define MAX_INDEX 63
+#ifndef ET_PREQUANT
+#define ET_PREQUANT 0
+#endif
+#if ET_PREQUANT
+#define ET_COEFF_QSCALE(s) 1
+#else
+#define ET_COEFF_QSCALE(s) ((s)->qscale)
+#endif
 
 typedef struct ETBlockState {
     GetBitContext gb;
@@ -24,7 +43,41 @@ typedef struct ETBlockState {
     const uint16_t *intra_matrix, *chroma_intra_matrix;
     const uint16_t *inter_matrix, *chroma_inter_matrix;
     int qscale, last_dc[3], intra_dc_precision, intra_vlc_format, valid_bits;
+#if ET_PREQUANT
+    const uint16_t *raw_quant;
+    _Alignas(32) uint16_t scaled_quant[256];
+#endif
 } ETBlockState;
+
+static void et_set_qscale(ETBlockState *s, int qscale)
+{
+#if ET_PREQUANT
+    if (qscale != s->qscale) {
+        /* Max 112*255=28560: exact uint16 product, no saturation/narrowing.
+         * One scale change replaces a multiplication for every coefficient. */
+#ifdef ET_DEVICE
+        static const _Alignas(32) uint32_t offsets[8] = {0,2,4,6,8,10,12,14};
+        const uint16_t *src = s->raw_quant;
+        uint16_t *dst = s->scaled_quant;
+        uintptr_t masks, count = 32;
+        __asm__ volatile(
+            "mova.x.m %[mask]\n" "mov.m.x m0, zero, 255\n"
+            "flw.ps f2, 0(%[offsets])\n" "fbcx.ps f1, %[q]\n"
+            "1:\n" "fgh.ps f0, f2(%[src])\n" "fmul.pi f0, f0, f1\n"
+            "fsch.ps f0, f2(%[dst])\n"
+            "addi %[src], %[src], 16\n" "addi %[dst], %[dst], 16\n"
+            "addi %[count], %[count], -1\n" "bnez %[count], 1b\n"
+            "mova.m.x %[mask]\n"
+            : [src] "+&r"(src), [dst] "+&r"(dst), [count] "+&r"(count), [mask] "=&r"(masks)
+            : [offsets] "r"(offsets), [q] "r"(qscale)
+            : "f0", "f1", "f2", "memory");
+#else
+        for (unsigned i=0; i<256; i++) s->scaled_quant[i] = s->raw_quant[i] * qscale;
+#endif
+    }
+#endif
+    s->qscale = qscale;
+}
 
 static int et_decode_dc(GetBitContext *gb, int component)
 {
@@ -35,18 +88,75 @@ static int et_decode_dc(GetBitContext *gb, int component)
 #include "block_intra.h"
 #include "block_inter.h"
 
+#ifndef ET_CACHED_BITS
+#define ET_CACHED_BITS 1
+#endif
+#ifndef ET_DIRECT_BITS
+#define ET_DIRECT_BITS 0
+#endif
+#ifndef ET_FAST_HEADERS
+#define ET_FAST_HEADERS 1
+#endif
+#ifndef ET_BIT_WINDOW_BYTES
+#define ET_BIT_WINDOW_BYTES 1024
+#endif
+_Static_assert(ET_BIT_WINDOW_BYTES >= 256 && !(ET_BIT_WINDOW_BYTES & 7), "bit window alignment/size");
+
 typedef struct ETBits {
     const uint8_t *data;
     uint32_t bytes, pos;
     int error;
+#if ET_CACHED_BITS
+    uint32_t window_base, window_bytes;
+    _Alignas(8) uint8_t window[ET_BIT_WINDOW_BYTES + 64];
+#endif
 } ETBits;
 
 /* FFmpeg's readers assume padded input. The ABI deliberately does not: a
  * guarded local window supplies that padding without ever overreading DRAM.
  * A block consumes <= 20 + 63*24 + 16 bits, hence a 256-byte window suffices.
  * All copies remain bytewise even with compiler vectorization enabled. */
-static void bit_window(const ETBits *b, uint8_t *buf, unsigned n, GetBitContext *gb)
+#if ET_CACHED_BITS
+static av_always_inline void bit_refill(ETBits *b, unsigned n)
 {
+    uint32_t off = b->pos >> 3;
+    /* Copy each slice region once, rather than copying/zeroing 320 bytes per
+     * coefficient block and 72 bytes per header read. The public ABI still
+     * needs NO speculative-read padding; only this owned cache is padded.
+     * Refills start on an eight-byte slice offset, preserving aligned host
+     * slice bases and permitting wide memcpy without unaligned DRAM loads. */
+    uint32_t end = b->window_base + b->window_bytes;
+    if (off < b->window_base || off > end ||
+        (n > end - off && end != b->bytes)) {
+        b->window_base = off & ~7u;
+        uint32_t count = b->bytes - b->window_base;
+        if (count > ET_BIT_WINDOW_BYTES) count = ET_BIT_WINDOW_BYTES;
+        memcpy(b->window, b->data + b->window_base, count);
+        memset(b->window + count, 0, 64);
+        b->window_bytes = count;
+    }
+}
+#endif
+
+static unsigned bit_window(ETBits *b, uint8_t *buf, unsigned n, GetBitContext *gb)
+{
+#if ET_DIRECT_BITS
+    /* An interior window may use original input directly when the entire
+     * reader envelope, INCLUDING 64 bytes of lookahead, is inside the slice.
+     * This never relies on ABI padding and never rounds a pointer down. */
+    uint32_t byte = b->pos >> 3;
+    if (b->bytes - byte >= n + 64) {
+        init_get_bits(gb, b->data + byte, n * 8);
+        skip_bits(gb, b->pos & 7);
+        return n * 8;
+    }
+#endif
+#if ET_CACHED_BITS
+    bit_refill(b, n);
+    init_get_bits(gb, b->window, b->window_bytes * 8);
+    skip_bits(gb, b->pos - b->window_base * 8);
+    return b->window_bytes * 8;
+#else
     uint32_t off = b->pos >> 3;
     const volatile uint8_t *src = b->data;
     for (unsigned i = 0; i < n; i++)
@@ -55,19 +165,38 @@ static void bit_window(const ETBits *b, uint8_t *buf, unsigned n, GetBitContext 
     for (unsigned i = n; i < n + 64; i++) buf[i] = 0;
     init_get_bits(gb, buf, n * 8);
     skip_bits(gb, b->pos & 7);
+    unsigned valid = (b->bytes - off) * 8;
+    return valid < n * 8 ? valid : n * 8;
+#endif
 }
 
 static unsigned read_bits(ETBits *b, unsigned n)
 {
-    uint8_t buf[72];
-    GetBitContext gb;
     if (b->error || n > 24 || n > b->bytes*8 - b->pos) {
         b->error = 1;
         return 0;
     }
     if (!n) return 0;
+#if ET_CACHED_BITS && ET_FAST_HEADERS
+    /* At most 24 bits plus a seven-bit offset: one bounded 32-bit
+     * big-endian read suffices. No context construction for every header. */
+    const uint8_t *source;
+#if ET_DIRECT_BITS
+    if (b->bytes - (b->pos >> 3) >= 4) source = b->data + (b->pos >> 3);
+    else
+#endif
+    {
+        bit_refill(b, 8);
+        source = b->window + (b->pos >> 3) - b->window_base;
+    }
+    uint32_t word = AV_RB32(source);
+    unsigned val = (word << (b->pos & 7)) >> (32 - n);
+#else
+    uint8_t buf[72];
+    GetBitContext gb;
     bit_window(b, buf, 8, &gb);
     unsigned val = get_bits(&gb, n);
+#endif
     b->pos += n;
     return val;
 }
@@ -78,8 +207,9 @@ static int read_vlc(ETBits *b, const VLCElem *table)
     GetBitContext gb;
     if (b->error) return -1;
     bit_window(b, buf, 8, &gb);
+    unsigned start = get_bits_count(&gb);
     int sym = get_vlc2(&gb, table, 9, 2);
-    unsigned used = get_bits_count(&gb) - (b->pos & 7);
+    unsigned used = get_bits_count(&gb) - start;
     if (sym < 0 || !used || used > b->bytes*8 - b->pos) {
         b->error = 1;
         return -1;
@@ -113,12 +243,11 @@ static int read_increment(ETBits *b, unsigned limit)
 static int block_decode(ETBits *b, ETBlockState *s, int16_t *block, int n, int intra)
 {
     _Alignas(8) uint8_t scratch[320];
-    bit_window(b, scratch, 256, &s->gb);
-    uint32_t remain = b->bytes * 8 - (b->pos & ~7u);
-    s->valid_bits = remain < 256*8 ? remain : 256*8;
+    s->valid_bits = bit_window(b, scratch, 256, &s->gb);
+    unsigned start = get_bits_count(&s->gb);
     int result = intra ? mpeg2_decode_block_intra(s, block, n) :
                          mpeg2_decode_block_non_intra(s, block, n);
-    unsigned used = get_bits_count(&s->gb) - (b->pos & 7);
+    unsigned used = get_bits_count(&s->gb) - start;
     if (result || used > b->bytes*8 - b->pos) return ET_DECODE_BAD_SLICE;
     b->pos += used;
     return ET_DECODE_OK;
@@ -178,18 +307,10 @@ static int predict_mb(const ETFrameParams *p, unsigned x, unsigned y,
                 p->plane_offset[plane] + (size_t)sy*stride + sx;
             uint8_t *dst = (uint8_t *)(uintptr_t)p->dst_addr +
                 p->plane_offset[plane] + (size_t)y*size*stride + x*size;
-            for (int row = 0; row < size; row++) {
-                for (int col = 0; col < size; col++) {
-                    unsigned a = src[col], val;
-                    if (hx && hy) val = (a + src[col+1] + src[col+stride] + src[col+stride+1] + 2) >> 2;
-                    else if (hx) val = (a + src[col+1] + 1) >> 1;
-                    else if (hy) val = (a + src[col+stride] + 1) >> 1;
-                    else val = a;
-                    dst[col] = have_prediction ? (dst[col] + val + 1) >> 1 : val;
-                }
-                src += stride;
-                dst += stride;
-            }
+#if ET_PREFETCH_MC
+            et_prefetch_rectangle(src, stride, size + hx, size + hy);
+#endif
+            et_mc_predict(dst, src, stride, size, hx, hy, have_prediction);
         }
         have_prediction = 1;
     }
@@ -215,7 +336,7 @@ static int decode_mb(const ETFrameParams *p, ETBits *b, ETBlockState *s,
     }
     int intra = type & ET_MB_INTRA;
     int field_dct = intra && !p->frame_pred_frame_dct ? read_bits(b, 1) : 0;
-    if (type & ET_MB_QUANT) s->qscale = get_qscale(b, p);
+    if (type & ET_MB_QUANT) et_set_qscale(s, get_qscale(b, p));
     if (b->error || !s->qscale) return ET_DECODE_BAD_SLICE;
     int cbp = 63;
     if (intra) {
@@ -243,7 +364,7 @@ static int decode_mb(const ETFrameParams *p, ETBits *b, ETBlockState *s,
     }
     for (int n = 0; n < 6; n++) {
         if (!(cbp & (32 >> n))) continue;
-        _Alignas(8) int16_t block[64] = {0};
+        _Alignas(32) int16_t block[64] = {0};
         int ret = block_decode(b, s, block, n, intra);
         if (ret) return ret;
         unsigned plane = n < 4 ? 0 : n-3;
@@ -251,7 +372,11 @@ static int decode_mb(const ETFrameParams *p, ETBits *b, ETBlockState *s,
         unsigned px = plane ? 8*x : 16*x + (n&1)*8;
         unsigned py = plane ? 8*y : 16*y + (n>>1)*(field_dct ? 1 : 8);
         uint8_t *dst = (uint8_t *)(uintptr_t)p->dst_addr + p->plane_offset[plane] + (size_t)py*stride + px;
-        if (intra) ff_simple_idct_put_int16_8bit(dst, stride * (!plane && field_dct ? 2 : 1), block);
+        unsigned output_stride = stride * (!plane && field_dct ? 2 : 1);
+#if ET_FAST_DC
+        if (et_reconstruct_dc(dst, output_stride, block, !intra)) continue;
+#endif
+        if (intra) ff_simple_idct_put_int16_8bit(dst, output_stride, block);
         else ff_simple_idct_add_int16_8bit(dst, stride, block);
     }
     motion->previous_type = type;
@@ -277,13 +402,26 @@ static int decode_slice(const ETFrameParams *p, const ETSliceDesc *slice,
     if (end > p->input_bytes || slice->bitstream_len < 5 ||
         slice->bitstream_len > UINT32_MAX/8 || slice->reserved)
         return ET_DECODE_BAD_SLICE;
-    ETBits b = { input + p->bitstream_offset + slice->bitstream_off,
-                 slice->bitstream_len, 32, 0 };
+    ETBits b;
+    b.data = input + p->bitstream_offset + slice->bitstream_off;
+    b.bytes = slice->bitstream_len;
+    b.pos = 32;
+    b.error = 0;
+#if ET_CACHED_BITS
+    b.window_base = b.window_bytes = 0;
+#endif
     if (b.data[0] || b.data[1] || b.data[2] != 1 ||
         b.data[3] != slice->mb_y + 1)
         return ET_DECODE_BAD_SLICE;
-    ETBlockState s = {0};
+    /* Every live field is initialized below or by block_decode; do not
+     * clear a matrix cache that the first qscale setup overwrites fully. */
+    ETBlockState s;
+    s.qscale = 0;
     const uint16_t *mat = (const uint16_t *)(input + p->quant_offset);
+#if ET_PREQUANT
+    s.raw_quant = mat;
+    mat = s.scaled_quant;
+#endif
     s.intra_matrix = mat;
     s.chroma_intra_matrix = mat + 128;
     s.inter_matrix = mat + 64;
@@ -293,7 +431,7 @@ static int decode_slice(const ETFrameParams *p, const ETSliceDesc *slice,
     s.intra_dc_precision = p->intra_dc_precision;
     s.intra_vlc_format = p->intra_vlc_format;
     s.last_dc[0] = s.last_dc[1] = s.last_dc[2] = 1 << (7 + p->intra_dc_precision);
-    s.qscale = get_qscale(&b, p);
+    et_set_qscale(&s, get_qscale(&b, p));
     if (!s.qscale || (slice->quant_scale && s.qscale != slice->quant_scale))
         return ET_DECODE_BAD_SLICE;
     while (read_bits(&b, 1)) read_bits(&b, 8);
@@ -454,13 +592,25 @@ int et_mpeg2_decode(const ETFrameParams *p, unsigned hart)
     if (p->active_harts != 1 && p->active_harts != 64)
         return et_mpeg2_report_failure(p, hart, ET_DECODE_BAD_PARAMS);
     if (hart >= p->active_harts) return ET_DECODE_OK;
+#if ET_EVEN_ONLY
+    if (p->active_harts == 64 && (hart & 1)) return ET_DECODE_OK;
+#endif
     int ret = params_valid(p);
     if (!status_valid(p)) return ET_DECODE_BAD_PARAMS;
     ETSliceStatus *status = (ETSliceStatus *)(uintptr_t)p->status_addr;
     const ETSliceDesc *slices = ret ? NULL :
         (const ETSliceDesc *)((const uint8_t *)(uintptr_t)p->input_addr + p->slice_table_offset);
     int first_error = ret;
-    for (unsigned i = hart; i < p->nb_slices; i += p->active_harts) {
+    /* Use one hart from EVERY minion before assigning its SMT sibling.
+     * With 36 SD rows, linear IDs occupy only 18/32 minions. The permutation
+     * preserves complete row/cache-line ownership and the 1/64-hart ABI. */
+    unsigned worker = hart, workers = p->active_harts;
+#if ET_EVEN_ONLY
+    if (p->active_harts == 64) { worker = hart >> 1; workers = 32; }
+#elif ET_SPREAD_HARTS
+    if (p->active_harts == 64) worker = (hart >> 1) + 32 * (hart & 1);
+#endif
+    for (unsigned i = worker; i < p->nb_slices; i += workers) {
         uint64_t start = et_cycles();
         ETSliceStatus st = {0};
         st.frame_id = p->frame_id;

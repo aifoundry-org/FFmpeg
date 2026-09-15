@@ -17,8 +17,12 @@ et-tests/run-kernel-native.sh /tmp/et-native/ffmpeg/ffmpeg \
   /tmp/et-native/runtime/kernel/libet_mpeg2_native.so /tmp/et-kernel-results
 ```
 
-The builder compiles the current kernel `decoder.c` and `idct.c` as a host-native
-static archive plus a shared library for direct-kernel tests. It always forces
+The builder compiles `decoder.c`, `idct.c` and `idct_simd.c` as a host-native
+static archive plus shared library. This explicitly selects the shared integer
+IDCT instruction model (rows/columns/packed), bounded direct bitreader, exact DC
+shortcut and core-first scheduling, with SWAR reference motion. ET motion asm
+is independently modeled by `et-kernels/tests/test_motion_vector.py` and gated
+on hardware; native integration does not execute that assembly. It always forces
 FFmpeg to relink, including when only the external kernel/runtime archives changed. Alternatively pass an existing native `.a` or `.so` as the second
 argument to `build-native-ffmpeg.sh` or `build-native-runtime.sh`. The latter only
 builds the separate test runtime and writes `OUTPUT/lib/pkgconfig/etsoc.pc`.

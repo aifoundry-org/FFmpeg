@@ -1,5 +1,9 @@
 # ETSOC-1 MPEG-2 validation - September 15, 2026
 
+**Historical scalar checkpoint (`0f6deff`).** The later exact integer-SIMD
+implementation and its separately retained evidence are in `ET_OPTIMIZATION.md`
+and `ET_OPTIMIZATION.json`; the baseline results below are not overwritten.
+
 ## Scope and identity
 
 - FFmpeg n7.1.1 private fork, `et-hwaccel`; base

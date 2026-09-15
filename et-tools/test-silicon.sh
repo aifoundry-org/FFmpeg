@@ -7,6 +7,7 @@ NAME=${1:?Usage: test-silicon.sh NAME HARTS INPUT_RELATIVE_TO_REPO GOLDEN_RELATI
 HARTS=${2:?}; INPUT=${3:?}; GOLDEN=${4:?}
 [[ $NAME =~ ^[a-zA-Z0-9_-]+$ && ($HARTS == 1 || $HARTS == 64) ]] || exit 2
 OUT="$ROOT/build-et/silicon/$NAME-h$HARTS"
+[[ ! -e "$OUT/result.txt" ]] || { echo "Refusing to overwrite retained evidence: $OUT" >&2; exit 2; }
 mkdir -p "$OUT"
 [[ ! -e "$ROOT/build-et/silicon/RECOVERY_REQUIRED" ]] || { echo 'Prior silicon failure requires investigation.' >&2; exit 1; }
 exec 9>"$ROOT/../setup/.device.lock"
@@ -21,7 +22,17 @@ for marker in "$ROOT/../et-platform/examples/hyenadna/artifacts/device-recovery-
     [[ ! -e $marker ]] || { echo "Recovery blocker exists: $marker" >&2; exit 1; }
 done
 export FF_ET_SYSEMU=0 FF_ET_MEM_CHECK=0 FF_ET_DEVICE=0 FF_ET_SHIRE_MASK=1
-export FF_ET_KERNEL=/work/et-kernels/build-device/et_mpeg2_slice.elf
+export FF_ET_KERNEL=${FF_ET_KERNEL:-/work/et-kernels/build-device/et_mpeg2_slice.elf}
+[[ $FF_ET_KERNEL == /work/* ]] || { echo 'Kernel must be a /work path inside the repository mount.' >&2; exit 2; }
+sha256sum "$ROOT/${FF_ET_KERNEL#/work/}" "$ROOT/build-et/host/ffmpeg" "$ROOT/$INPUT" "$ROOT/$GOLDEN" >"$OUT/provenance.sha256"
+printf 'kernel=%s\ninput=%s\ngolden=%s\nharts=%s\ntiming=%s\n' \
+    "$FF_ET_KERNEL" "$INPUT" "$GOLDEN" "$HARTS" "${FF_ET_TIMING:-0}" >"$OUT/config.txt"
+CPU_PREFIX=()
+if [[ -n ${FF_ET_CPUSET:-} ]]; then
+    [[ $FF_ET_CPUSET =~ ^[0-9,-]+$ ]] || { echo 'Invalid FF_ET_CPUSET' >&2; exit 2; }
+    CPU_PREFIX=(taskset -c "$FF_ET_CPUSET")
+fi
+printf 'cpu_affinity=%s\n' "${FF_ET_CPUSET:-unrestricted}" >>"$OUT/config.txt"
 snapshot() {
     cat /sys/bus/pci/devices/0000:01:00.0/err_stats/ce_count >"$OUT/$1.ce"
     cat /sys/bus/pci/devices/0000:01:00.0/err_stats/uce_count >"$OUT/$1.uce"
@@ -37,7 +48,7 @@ grep -q 'MM Hang Count: 0$' "$OUT/before.mm" || { echo 'Nonzero MM hang count; s
     -m DM_CMD_GET_MODULE_FIRMWARE_REVISIONS -u 30000 >"$OUT/firmware.log" 2>&1
 printf 'begin %s\n' "$(date -u +%FT%TZ)" >"$OUT/timestamps"
 status=0
-"$ROOT/et-tools/et-env" timeout 180 build-et/host/ffmpeg -nostdin -nostats -benchmark -v verbose \
+"$ROOT/et-tools/et-env" timeout 180 "${CPU_PREFIX[@]}" build-et/host/ffmpeg -nostdin -nostats -benchmark -v verbose \
     -xerror -err_detect explode -hwaccel et -et_harts "$HARTS" -i "$INPUT" \
     -f framemd5 -y "/work/build-et/silicon/$NAME-h$HARTS/output.md5" >"$OUT/decode.log" 2>&1 || status=$?
 printf 'end %s\nexit %s\n' "$(date -u +%FT%TZ)" "$status" >>"$OUT/timestamps"
@@ -50,9 +61,17 @@ if ! cmp "$OUT/before.ce" "$OUT/after.ce" || ! cmp "$OUT/before.uce" "$OUT/after
     echo "Hardware counters changed during $NAME-h$HARTS; inspect $OUT" >"$ROOT/build-et/silicon/RECOVERY_REQUIRED"
     exit 1
 fi
-[[ $status == 0 ]] || { cat "$OUT/decode.log" >&2; exit "$status"; }
+if [[ $status != 0 ]]; then
+    echo "Decoder failed (exit $status) during $NAME-h$HARTS; inspect $OUT before further launches" >"$ROOT/build-et/silicon/RECOVERY_REQUIRED"
+    cat "$OUT/decode.log" >&2
+    exit "$status"
+fi
+if grep -q 'NATIVE TEST RUNTIME' "$OUT/decode.log"; then
+    echo 'Wrong binary: native execution is NOT silicon validation.' >&2; exit 1
+fi
 cmp "$ROOT/$GOLDEN" "$OUT/output.md5"
 expected=$(grep -c '^0,' "$ROOT/$GOLDEN")
 actual=$(grep -c 'ET frame [0-9].*harts=' "$OUT/decode.log")
 [[ $expected == "$actual" ]] || { echo 'Missing ET completion records' >&2; exit 1; }
+grep 'bench: utime' "$OUT/decode.log"
 printf 'PASS silicon: %s harts=%s frames=%s, exact MD5, unchanged health counters\n' "$NAME" "$HARTS" "$actual" | tee "$OUT/result.txt"

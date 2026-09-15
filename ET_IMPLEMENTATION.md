@@ -13,9 +13,12 @@ Host FFmpeg parses MPEG-2 headers and stages complete slices. One ordinary
 host retains normal `yuv420p` AVFrames; filters, rawvideo, framemd5 and null
 output require no hardware-frame transfer API.
 
-- Real intra/inter VLC, inverse quantization, scalar FFmpeg simple IDCT,
-  forward/backward half-pel prediction and bidirectional averaging.
-- `-et_harts 1` serializes all slices; `-et_harts 64` assigns `h, h+64, ...`.
+- Real intra/inter VLC and inverse quantization, bit-exact integer-SIMD simple
+  IDCT, forward/backward half-pel prediction and bidirectional averaging.
+- `-et_harts 1` serializes slices; 64-hart scheduling fills all 32 minions before
+  assigning SMT siblings, retaining disjoint complete-row ownership.
+- Selected SIMD/bounded-reader optimizations, controls and repeated hardware
+  measurements are documented in `ET_OPTIMIZATION.md`.
 - Three device output slots hold both references plus the next destination.
   Successful references stay resident. No host reference upload per frame.
 - One packed H2D transfer of quant matrices, slice descriptors and padded
@@ -105,7 +108,8 @@ FF_ET_SYSEMU=1 build-et/host/ffmpeg -hwaccel et -et_probe 1 \
 `FF_ET_DEVICE` selects the SDK-visible device index, default 0.
 
 **PCIe is opt-in.** The attached accelerator passed the recorded shire-0 tests
-in `ET_VALIDATION.md`, including 250-frame SD and 12-frame HD I/P/B streams.
+in `ET_VALIDATION.md` (original scalar baseline) and `ET_OPTIMIZATION.md`
+(selected integer SIMD, including repeated 250-frame SD/HD I/P/B streams).
 The SDK constructor initializes/resets every exposed device as part of opening
 its runtime (the same path used by the existing backend). Coordinate
 ownership first; do not run alongside another hardware workload.
@@ -153,9 +157,14 @@ python3 et-tests/compare.py golden.yuv et-frame-00000001.yuv --size 128x96
 It reports the first differing plane/pixel/MB. Dumping remains available for a
 failed reconstruction whose readback succeeded.
 
+`FF_ET_TIMING=1` logs per-frame upload/wait, launch/wait, readback/wait and
+validation/copy microseconds, plus successful-frame totals. These are host API
+envelopes, **not device execution/stall counters**. The default makes no extra
+clock calls; keep timing disabled for headline benchmarks.
+
 ## Deliberate changes from the proposed design
 
-- Compact generated FFmpeg coefficient helpers plus scalar motion glue avoid
+- Compact generated FFmpeg coefficient helpers plus specialized motion glue avoid
   pulling in the entire generic MPEG decoder. No mutable VLC initialization,
   heap allocation or atomics are needed on device. The generated provenance
   file records source hashes and all extraction transformations are scripted.
@@ -184,13 +193,12 @@ failed reconstruction whose readback succeeded.
    simply run concurrently: P[n+1] consumes P[n]. Independent streams/GOPs or
    dependency-ready B pictures need a scheduler and a reference visibility
    policy. A shire-count option alone is not a valid implementation.
-3. Profile silicon before optimizing. On the recorded 250-frame 720x576 case,
-   64 harts took 3.146 s versus 43.321 s with one hart (13.8x), but normal CPU
-   FFmpeg took 0.154 s. This baseline is **not faster than CPU decoding**.
-   These are individual wall-time observations, not a statistical benchmark or
-   an I-cache diagnosis. The compact baseline has 12,532 bytes of `.text`,
-   28 bytes CRT, 20,096 bytes `.rodata`, and zero BSS.
-4. Packed-integer SIMD, compressed/size-optimized builds, two-pass VLD and
-   device-resident AVFrames are not implemented. No optimization claim is made.
+3. Single-shire SIMD is now implemented and hardware-gated. Repeated medians:
+   250 SD frames improved **3.286 -> 1.252 s**, HD **8.150 -> 2.432 s**.
+   CPU remains faster. See `ET_OPTIMIZATION.md` for all samples, system-time
+   excursions, rejected candidates and exact selected-binary identity.
+4. Further entropy/front-end and launch/readback optimization, compressed
+   instruction builds, two-pass VLD and device-resident AVFrames remain open.
 
-See `ET_VALIDATION.md` for actual runs and their limitations.
+See `ET_VALIDATION.md` for the historical baseline and `ET_OPTIMIZATION.md` for
+current optimized results and their limitations.

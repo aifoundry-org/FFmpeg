@@ -1,3 +1,13 @@
+# SIMD update — September 15, 2026
+
+Rebuilt with integer-IDCT models, direct/bounded bits, exact DC shortcut,
+core-first scheduling and SWAR motion reference. **115/115** integration,
+policy/drain and direct-oracle cases pass (69 + 8 + 16 + 22). ASan/UBSan runtime
+units and ET-disabled dependency isolation pass again. Logs:
+`build-et/optimization/*-regression.log`; results `/tmp/et-opt-{all,audit,kernel}`.
+Additional kernel SIMD/guard tests and separately validated hardware results
+are in `../ET_OPTIMIZATION.md`. The handoff below is the retained earlier audit.
+
 # Test-agent handoff (2026-09-15)
 
 ## Final HOST-NATIVE validation (no simulator/hardware claim)

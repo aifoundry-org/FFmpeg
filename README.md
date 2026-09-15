@@ -50,5 +50,6 @@ avoided because they are not part of our review process and will be ignored.
 This branch adds opt-in `--enable-etsoc` / `-hwaccel et` slice reconstruction
 with ordinary host `yuv420p` frames. See [ET_IMPLEMENTATION.md](ET_IMPLEMENTATION.md)
 for builds, supported inputs and remaining work, and [ET_VALIDATION.md](ET_VALIDATION.md)
-for native, sys_emu and attached-accelerator results. This is a correctness-first
-scalar baseline, not a claim of faster-than-CPU decoding.
+for the original native, sys_emu and accelerator baseline.
+[ET_OPTIMIZATION.md](ET_OPTIMIZATION.md) records the exact integer-SIMD kernel:
+2.63x SD / 3.35x HD improvements on one shire, still slower than CPU decoding.

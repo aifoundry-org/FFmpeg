@@ -48,6 +48,15 @@ jobs:
             -Iet-runtime/tests/mock -Ilibavcodec libavcodec/et_runtime.cpp \
             et-runtime/tests/runtime_test.cpp -o "$RUNNER_TEMP/et-sdk-mock"
           ASAN_OPTIONS=detect_leaks=1 "$RUNNER_TEMP/et-sdk-mock"
+      - name: Exact SIMD models, memory guards and IDCT/DC sanitizers
+        run: |
+          cmake -S et-kernels -B "$RUNNER_TEMP/et-kernel-sanitize" \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_C_FLAGS='-fsanitize=address,undefined -fno-omit-frame-pointer -g'
+          cmake --build "$RUNNER_TEMP/et-kernel-sanitize" -j4
+          ctest --test-dir "$RUNNER_TEMP/et-kernel-sanitize" --output-on-failure
+          python3 et-kernels/tests/test_motion_vector.py
+          et-kernels/tests/check_motion.sh
       - name: Build isolated native test runtime and own FFmpeg
         run: JOBS=4 et-tests/build-native-ffmpeg.sh "$RUNNER_TEMP/et-native"
       - name: Supported progressive-I gate, exact CPU comparisons, strict failures

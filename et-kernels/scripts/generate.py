@@ -118,6 +118,7 @@ def replace(old, new):
     assert block.count(old) == 1, old
     block = block.replace(old,new)
 replace('MpegEncContext *s', 'ETBlockState *s')
+replace('const int qscale = s->qscale;', 'const int qscale = ET_COEFF_QSCALE(s);')
 replace('diff = decode_dc(&s->gb, component);', 'diff = et_decode_dc(&s->gb, component);\n    if (diff == INT_MIN) return ET_DECODE_BAD_SLICE;')
 replace('s->last_dc[component] = dc;', 'if (dc < 0 || dc >= (1 << (8 + s->intra_dc_precision)))\n        return ET_DECODE_BAD_SLICE;\n    s->last_dc[component] = dc;')
 replace('    ff_tlog(s->avctx, "dc=%d\\n", block[0]);\n', '')
@@ -132,6 +133,7 @@ start = text.index('static inline int mpeg2_decode_block_non_intra(')
 end = text.index('static inline int mpeg2_decode_block_intra(', start)
 block = text[start:end]
 replace('MpegEncContext *s', 'ETBlockState *s')
+replace('const int qscale = s->qscale;', 'const int qscale = ET_COEFF_QSCALE(s);')
 replace('            if (level != 0) {', '            if (level == -32768 || level == 127 || re_index > (unsigned)s->valid_bits)\n                return ET_DECODE_BAD_SLICE;\n            if (level != 0) {')
 replace('                SKIP_BITS(re, &s->gb, 12);', '                SKIP_BITS(re, &s->gb, 12);\n                if (level == 0 || level == -2048) return ET_DECODE_BAD_SLICE;')
 replace('end:\n        LAST_SKIP_BITS(re, &s->gb, 2);', 'end:\n        if (i < 0 || SHOW_UBITS(re, &s->gb, 2) != 2) return ET_DECODE_BAD_SLICE;\n        LAST_SKIP_BITS(re, &s->gb, 2);')

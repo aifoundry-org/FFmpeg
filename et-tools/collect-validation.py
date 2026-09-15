@@ -22,6 +22,17 @@ def record(path):
 def frames(path):
     return sum(line.startswith("0,") for line in path.read_text().splitlines())
 
+# This is the historical scalar checkpoint collector, not a way to attest old
+# logs to a newly rebuilt binary. New experiments capture pre-launch hashes.
+previous = root / "ET_VALIDATION.json"
+if previous.exists():
+    old = json.loads(previous.read_text())
+    for key, path in (("kernel", root / "et-kernels/build-device/et_mpeg2_slice.elf"),
+                      ("host", build / "host/ffmpeg")):
+        if sha(path) != old[key]["sha256"]:
+            raise SystemExit("Refusing to rewrite historical baseline evidence with changed binaries; "
+                             "use et-tools/optimization-results.py for the SIMD experiment.")
+
 cases = [
     ("single-i", "64x48", 1), ("i-only", "128x96", 64),
     ("65rows", "64x1040", 64), ("ipb12", "128x96", 64),

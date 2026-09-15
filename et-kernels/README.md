@@ -1,10 +1,12 @@
 # ET MPEG-2 slice kernel (I / progressive P / progressive B)
 
-This is **real scalar decoding**, not an output-copy stub. Only this directory
-belongs to the kernel implementation; the shared wire ABI lives in
-`../libavcodec/et_mpeg2_protocol.h`. No hardware is launched by any script here.
-Progressive P/B pictures use resident references, scalar half-pel prediction,
-and FFmpeg residual decoding; unsupported motion modes are rejected.
+This is **real MPEG-2 decoding with bit-exact ET integer SIMD**, not an output-copy
+stub. Scalar controls are retained. The shared wire ABI lives in
+`../libavcodec/et_mpeg2_protocol.h`. No hardware is launched by scripts here;
+`../et-tools/test-silicon.sh` is the explicit parent gate. Progressive P/B uses
+resident references, exact half-pel prediction and FFmpeg residual decoding.
+Unsupported motion modes are rejected. See `../ET_OPTIMIZATION.md` for selected
+options, measured hardware improvements, rejected controls and limits.
 
 ## Build and test
 
@@ -27,7 +29,9 @@ et-kernels/scripts/build-device.sh
 The device script mounts FFmpeg at `/work` and sibling `et-platform` at
 `/src/et-platform:ro`. It uses the SDK toolchain and `DeviceUtils` CMake macro,
 not an uberkernel. `ET_DOCKER_IMAGE` and `ET_PLATFORM_SOURCE` can override these
-locations. The output is `et-kernels/build-device/et_mpeg2_slice.elf` (plus `.bin`,
+locations. `ET_KERNEL_BUILD=build-et/variant` selects a separate build tree.
+The script applies selected defaults before explicit user `-D` overrides.
+The output is `et-kernels/build-device/et_mpeg2_slice.elf` (plus `.bin`,
 `.lst`, `.map`). Default load address is **0x8005801000**; override with:
 
 ```sh
@@ -37,10 +41,18 @@ et-kernels/scripts/build-device.sh -DADDRESS=0x8005801000
 `entry_point(params, environment)` uses the existing GP-SDK environment's shire
 mask and ET `hartid` CSR (0xcd0, **not** machine `mhartid`). Launch on precisely
 one compute shire. `active_harts=1` uses logical hart 0 only, even if firmware
-starts all 64 harts; `active_harts=64` processes slice indices
-`hart, hart+64, ...`. The chosen physical shire need not be shire zero.
+starts all 64 harts. By default `active_harts=64` maps the worker index to
+`(hart >> 1) + 32*(hart & 1)` and then processes `worker, worker+64, ...`.
+This fills all minions before SMT siblings. Linear and 32-even-worker variants
+remain compile-time controls; every variant must cover every row. The chosen
+physical shire need not be shire zero, but all approved tests here use shire 0.
 The known ggml-et CRT initializes GP, uses the firmware stack, calls the entry,
 and returns via `SYSCALL_RETURN_FROM_KERNEL`. It does not clear BSS.
+
+Native builds explicitly use the shared integer-IDCT instruction model and
+SWAR motion reference, not executable ET assembly. Expanded-assembly motion
+models and actual silicon tests are separate gates. There is no production
+native substitution.
 
 Native API (`include/et_mpeg2.h`):
 
@@ -130,9 +142,13 @@ ctest --test-dir et-kernels/build-sanitize --output-on-failure
 
 ## FFmpeg reuse / freestanding implementation
 
-`src/idct.c` includes FFmpeg's **unchanged** `simple_idct_template.c` at 8-bit,
-16-bit-coefficient depth. `src/decoder.c` includes **unchanged** `get_bits.h`
-and its generic VLC machinery. Isolated config headers force
+`src/idct.c` retains FFmpeg's **unchanged** `simple_idct_template.c` as the
+scalar control/oracle at 8-bit, int16-coefficient depth. The selected Put/Add
+path uses exact eight-lane row and column integer SIMD in `src/idct_simd.c`.
+Packing preserves int16 wrapping, clipping, and the per-row DC special case.
+See `tests/idct_simd.md` and `tests/reconstruct.md` for arithmetic proofs/tests.
+`src/decoder.c` includes **unchanged** `get_bits.h` for coefficient/VLC machinery;
+short headers use equivalent bounded 32-bit extraction. Isolated config headers force
 `HAVE_FAST_UNALIGNED=0`, `AV_HAVE_FAST_UNALIGNED=0`, and all architecture-specific
 implementations off, independently of the parent FFmpeg configuration.
 
@@ -143,8 +159,10 @@ codewords, and extracts `mpeg2_decode_block_intra` and
 from the upstream syntax annotations, and MB-address/CBP/MV tables are
 precomputed alongside the coefficient tables. The
 script records **every** modification: compact standalone state, removal of
-logging/bookkeeping, strict DC/escape/VLC/range/end checks. Inverse quantization
-and mismatch-control arithmetic remain FFmpeg's original implementation.
+logging/bookkeeping, strict DC/escape/VLC/range/end checks, and a compile-time
+qscale accessor. By default inverse quantization and mismatch-control arithmetic
+remain FFmpeg's original implementation. Experimental `ET_PREQUANT=ON` exactly
+prescales uint16 matrices on qscale changes; it is not selected.
 Upstream attribution and LGPL notices are retained. No hidden manual code copy
 or device-side VLC initialization is used. `generated/sources.sha256` records
 the source hashes. Regenerate with:
@@ -153,16 +171,19 @@ the source hashes. Regenerate with:
 python3 et-kernels/scripts/generate.py
 ```
 
-FFmpeg readers require speculative-read padding, so the wrapper copies a
-bounded window using volatile byte reads, supplies local zero padding, and
-checks consumed bits against the actual input. Valid intra/inter blocks use
-less than 196 bytes, below the 256-byte window. Macroblock/slice header windows
-are eight bytes. This deliberately favors a safe, testable baseline over
-maximum throughput; there are no global mutable tables or allocations.
+FFmpeg readers require speculative-read padding. Direct windows are allowed
+only when their entire span plus 64 lookahead bytes is INSIDE the actual slice.
+Tails reuse an owned 1024-byte window plus local zero padding. Consumed bits
+are checked against actual input. Valid intra/inter blocks use less than 196
+bytes, below the 256-byte block window. The ABI still needs no caller padding.
+There are no global mutable tables or allocations.
 
-The device libc is bytewise, with compiler builtins/vectorization disabled.
-The linker **fails** on any BSS/TLS. A post-link check rejects unresolved symbols
-and compressed/vector instructions, user-illegal counter reads, and non-64-byte
+The device libc uses aligned RV64 words only when alignment and length prove
+safety, with exact byte tails. Compiler builtins/auto-vectorization remain
+disabled; SIMD is explicit. The linker **fails** on any BSS/TLS. A post-link
+check uses a narrow custom integer-SIMD/data-movement allowlist and still rejects
+unresolved symbols, compressed/standard-RISC-V-vector instructions,
+user-illegal counter reads, and non-64-byte
 LOAD segment offsets/addresses/filesz/memsz. LOAD file and memory sizes must
 match; final padding resides **inside** the rodata/data sections. The loader
 must handle non-PT_LOAD metadata program headers correctly (the production

@@ -44,3 +44,4 @@
 
 # ETSOC local build, corpus, emulator logs and validation artifacts
 /build-et/
+/et-tools/__pycache__/

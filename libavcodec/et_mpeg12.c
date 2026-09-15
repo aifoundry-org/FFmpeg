@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 #include <errno.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,6 +12,7 @@
 #include "libavutil/intreadwrite.h"
 #include "libavutil/opt.h"
 #include "libavutil/mem.h"
+#include "libavutil/time.h"
 #include "et_mpeg12.h"
 #include "et_runtime.h"
 #include "hwaccel_internal.h"
@@ -48,7 +50,32 @@ typedef struct ETMPEGContext {
     int harts;
     int failed;
     int slot;
+    int timing;
+    uint64_t timed_frames;
+    int64_t timing_totals[4];
 } ETMPEGContext;
+
+/* Host API envelopes include the shim's completion waits, not device PMU
+ * measurements. Totals cover successful frames only; -1 means not attempted. */
+static int et_log_timing(AVCodecContext *avctx, const int64_t elapsed[4], int ret)
+{
+    ETMPEGContext *ctx = avctx->internal->hwaccel_priv_data;
+    int i;
+
+    if (!ctx->timing)
+        return ret;
+    if (ret >= 0) {
+        ctx->timed_frames++;
+        for (i = 0; i < 4; i++)
+            ctx->timing_totals[i] += elapsed[i];
+    }
+    av_log(avctx, AV_LOG_INFO,
+           "ET host timing: frame_id=%u upload_wait_us=%"PRId64
+           " launch_wait_us=%"PRId64" readback_wait_us=%"PRId64
+           " copy_validate_us=%"PRId64" ret=%d\n",
+           ctx->params.frame_id, elapsed[0], elapsed[1], elapsed[2], elapsed[3], ret);
+    return ret;
+}
 
 static int et_error(AVCodecContext *avctx, int ret, const char *operation)
 {
@@ -86,6 +113,13 @@ static int et_uninit(AVCodecContext *avctx)
     ETMPEGContext *ctx = avctx->internal->hwaccel_priv_data;
     if (!ctx)
         return 0;
+    if (ctx->timing)
+        av_log(avctx, AV_LOG_INFO,
+               "ET host timing totals: successful_frames=%"PRIu64
+               " upload_wait_us=%"PRId64" launch_wait_us=%"PRId64
+               " readback_wait_us=%"PRId64" copy_validate_us=%"PRId64"\n",
+               ctx->timed_frames, ctx->timing_totals[0], ctx->timing_totals[1],
+               ctx->timing_totals[2], ctx->timing_totals[3]);
     ff_et_runtime_close(&ctx->runtime);
     av_freep(&ctx->staging);
     av_freep(&ctx->readback);
@@ -98,9 +132,17 @@ static int et_init(AVCodecContext *avctx)
     MpegEncContext *s = avctx->priv_data;
     const char *kernel = getenv("FF_ET_KERNEL");
     const char *mask = getenv("FF_ET_SHIRE_MASK");
+    const char *timing = getenv("FF_ET_TIMING");
     char error[512] = { 0 }, *end;
     int64_t shires = 1, harts = 64;
     int ret;
+
+    ctx->timing = timing && !strcmp(timing, "1");
+    if (ctx->timing)
+        av_log(avctx, AV_LOG_INFO,
+               "ET host timing enabled: host API envelopes including waits; "
+               "not device execution/stall counters; setup, slice staging, debug dumps "
+               "and timing logs excluded; -1 means not attempted\n");
 
     if (avctx->sw_pix_fmt != AV_PIX_FMT_YUV420P || s->chroma_format != 1 ||
         avctx->lowres || avctx->skip_top || avctx->skip_bottom ||
@@ -351,6 +393,7 @@ static int et_end_frame(AVCodecContext *avctx)
     ETPicture *pic = s->cur_pic.ptr->hwaccel_picture_private;
     const ETSliceStatus *status;
     uint64_t cycles = 0;
+    int64_t start = 0, elapsed[4] = { -1, -1, -1, -1 };
     int i, plane, y, ret;
     if (ctx->failed)
         return AVERROR_EXTERNAL;
@@ -368,24 +411,41 @@ static int et_end_frame(AVCodecContext *avctx)
     }
     p->input_addr = ctx->input;
     p->input_bytes = ctx->used;
+    if (ctx->timing)
+        start = av_gettime_relative();
     ret = ff_et_runtime_write(ctx->runtime, ctx->input, ctx->staging, ctx->used);
+    if (ctx->timing)
+        elapsed[0] = av_gettime_relative() - start;
     if (ret < 0)
-        return et_error(avctx, ret, "frame upload");
+        return et_log_timing(avctx, elapsed, et_error(avctx, ret, "frame upload"));
+    if (ctx->timing)
+        start = av_gettime_relative();
     ret = ff_et_runtime_launch(ctx->runtime, p, ctx->shire_mask);
+    if (ctx->timing)
+        elapsed[1] = av_gettime_relative() - start;
     if (ret < 0)
-        return et_error(avctx, ret, "kernel launch");
+        return et_log_timing(avctx, elapsed, et_error(avctx, ret, "kernel launch"));
+    if (ctx->timing)
+        start = av_gettime_relative();
     ret = ff_et_runtime_read(ctx->runtime, ctx->readback, p->dst_addr, ctx->output_size);
+    if (ctx->timing)
+        elapsed[2] = av_gettime_relative() - start;
     if (ret < 0)
-        return et_error(avctx, ret, "frame readback");
+        return et_log_timing(avctx, elapsed, et_error(avctx, ret, "frame readback"));
     et_dump_frame(avctx);
+    if (ctx->timing)
+        start = av_gettime_relative();
     status = (const ETSliceStatus *)(ctx->readback + p->frame_bytes);
     for (i = 0; i < p->nb_slices; i++) {
         if (status[i].frame_id != p->frame_id || status[i].code != ET_DECODE_OK ||
             status[i].mb_decoded != p->mb_width) {
+            if (ctx->timing)
+                elapsed[3] = av_gettime_relative() - start;
             av_log(avctx, AV_LOG_ERROR, "ET slice %d: status=%u generation=%u/%u MBs=%u/%u bits=%u\n",
                    i, status[i].code, status[i].frame_id, p->frame_id,
                    status[i].mb_decoded, p->mb_width, status[i].bits_consumed);
-            return et_invalid(avctx, "device slice reconstruction failed");
+            return et_log_timing(avctx, elapsed,
+                                 et_invalid(avctx, "device slice reconstruction failed"));
         }
         cycles += status[i].cycles;
     }
@@ -400,9 +460,11 @@ static int et_end_frame(AVCodecContext *avctx)
      * missing-MB count only after all device rows have been validated. */
     atomic_store(&s->er.error_count, 0);
     pic->valid = 1;
+    if (ctx->timing)
+        elapsed[3] = av_gettime_relative() - start;
     av_log(avctx, AV_LOG_VERBOSE, "ET frame %u: type=%d slices=%u harts=%u sum_slice_cycles=%llu\n",
            p->frame_id, p->pict_type, p->nb_slices, p->active_harts, (unsigned long long)cycles);
-    return 0;
+    return et_log_timing(avctx, elapsed, 0);
 }
 
 const FFHWAccel ff_mpeg2_et_hwaccel = {

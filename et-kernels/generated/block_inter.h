@@ -29,7 +29,7 @@ static inline int mpeg2_decode_block_non_intra(ETBlockState *s,
     int level, i, j, run;
     const uint8_t *const scantable = s->intra_scantable.permutated;
     const uint16_t *quant_matrix;
-    const int qscale = s->qscale;
+    const int qscale = ET_COEFF_QSCALE(s);
     int mismatch;
 
     mismatch = 1;

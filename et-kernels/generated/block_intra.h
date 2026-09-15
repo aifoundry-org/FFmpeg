@@ -31,7 +31,7 @@ static inline int mpeg2_decode_block_intra(ETBlockState *s,
     const RL_VLC_ELEM *rl_vlc;
     const uint8_t *const scantable = s->intra_scantable.permutated;
     const uint16_t *quant_matrix;
-    const int qscale = s->qscale;
+    const int qscale = ET_COEFF_QSCALE(s);
     int mismatch;
 
     /* DC coefficient */

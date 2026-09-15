@@ -12,7 +12,7 @@ fi
 ENV=(-e HOME=/tmp -e FF_ET_SYSEMU=${FF_ET_SYSEMU:-1}
      -e GLOG_minloglevel=${GLOG_minloglevel:-1}
      -e PATH=/opt/et/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin)
-for var in FF_ET_MEM_CHECK FF_ET_KERNEL FF_ET_SHIRE_MASK FF_ET_DEVICE FF_ET_DUMP_MB FF_ET_DUMP_DIR; do
+for var in FF_ET_MEM_CHECK FF_ET_KERNEL FF_ET_SHIRE_MASK FF_ET_DEVICE FF_ET_DUMP_MB FF_ET_DUMP_DIR FF_ET_TIMING; do
     [[ ! -v $var ]] || ENV+=(-e "$var=${!var}")
 done
 if [[ $# == 0 ]]; then set -- bash; fi

@@ -37,4 +37,28 @@ static inline void et_evict(const void *ptr, size_t bytes)
     (void)ptr; (void)bytes;
 #endif
 }
+
+/* Read-only L2 hint for an already validated prediction rectangle. Plane
+ * strides and bounds guarantee these COMPLETE lines belong to the reference
+ * allocation, including the optional halo. Never alter cache partitioning. */
+static inline void et_prefetch_rectangle(const uint8_t *src, size_t stride,
+                                         unsigned bytes, unsigned rows)
+{
+#ifdef ET_DEVICE
+    uintptr_t base = (uintptr_t)src & ~(uintptr_t)63;
+    unsigned columns = (((uintptr_t)src & 63) + bytes + 63) / 64;
+    for (unsigned col=0; col<columns; col++) {
+        for (unsigned row=0; row<rows; row+=16) {
+            unsigned n = rows-row;
+            if (n > 16) n = 16;
+            uint64_t value = (UINT64_C(1) << 58) |
+                ((base + col*64 + row*stride) & UINT64_C(0xFFFFFFFFFFC0)) | (n-1);
+            __asm__ volatile("mv x31, %1\n\tcsrw 0x81f, %0"
+                :: "r"(value), "r"(stride) : "x31", "memory");
+        }
+    }
+#else
+    (void)src; (void)stride; (void)bytes; (void)rows;
+#endif
+}
 #endif
