@@ -1,0 +1,2479 @@
+{
+  "date_utc": "2026-09-16",
+  "scope": "Full compressed AAC-LC, one stereo48k stream, 512 packets/1048576 float samples; ET shire0/hart0 versus CPU0; five fresh processes per mode. CPU samples ran separately from all builds, simulation and device work.",
+  "audio_duration_s": 10.922666666666666,
+  "input_sha256": "80dd3dbd32f432ec3f148306b6e2fa1d76dfef1533fab5e99347c59c65afa004",
+  "scalar_pcm_sha256": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+  "elf_sha256": "deb1c2127c5132e69b28cd244eb16388f106326d211cff378f1e8df246532321",
+  "runner_sha256": "56fcc2fb20bed129a0c8f6e94863e0c75c4fee116e15c7b70060ee57ae084e90",
+  "cpu_environment": "Architecture:                       x86_64\nCPU op-mode(s):                     32-bit, 64-bit\nAddress sizes:                      46 bits physical, 48 bits virtual\nByte Order:                         Little Endian\nCPU(s):                             24\nOn-line CPU(s) list:                0-23\nVendor ID:                          GenuineIntel\nModel name:                         13th Gen Intel(R) Core(TM) i7-13700K\nCPU family:                         6\nModel:                              183\nThread(s) per core:                 2\nCore(s) per socket:                 16\nSocket(s):                          1\nStepping:                           1\nCPU(s) scaling MHz:                 22%\nCPU max MHz:                        5400.0000\nCPU min MHz:                        800.0000\nBogoMIPS:                           6835.20\nFlags:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb intel_pt sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req umip pku ospke waitpkg gfni vaes vpclmulqdq tme rdpid movdiri movdir64b fsrm md_clear serialize pconfig arch_lbr flush_l1d arch_capabilities\nVirtualization:                     VT-x\nL1d cache:                          640 KiB (16 instances)\nL1i cache:                          768 KiB (16 instances)\nL2 cache:                           24 MiB (10 instances)\nL3 cache:                           30 MiB (1 instance)\nNUMA node(s):                       1\nNUMA node0 CPU(s):                  0-23\nVulnerability Gather data sampling: Not affected\nVulnerability Itlb multihit:        Not affected\nVulnerability L1tf:                 Not affected\nVulnerability Mds:                  Not affected\nVulnerability Meltdown:             Not affected\nVulnerability Mmio stale data:      Not affected\nVulnerability Retbleed:             Not affected\nVulnerability Spec rstack overflow: Not affected\nVulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl and seccomp\nVulnerability Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:           Vulnerable: eIBRS with unprivileged eBPF\nVulnerability Srbds:                Not affected\nVulnerability Tsx async abort:      Not affected\ncc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nLinux aa21d63c53e7 5.15.140-release-94a7f6a-81353a4 #1 SMP Mon Jan 29 20:33:05 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux\n",
+  "cpu_samples": {
+    "scope": "one full stereo 48 kHz AAC-LC stream, 512 packets; CPU0; five fresh processes plus one 5-context repeat process per mode",
+    "input_sha256": "80dd3dbd32f432ec3f148306b6e2fa1d76dfef1533fab5e99347c59c65afa004",
+    "executable_sha256": "3417e02d735a65991a5037b14eab7085dfa1297061a21bcc594ca9ddc287e659",
+    "samples": [
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000561358,
+          "decode_output_store_s": 0.006279158,
+          "decoder_close_s": 2.0538e-05,
+          "total_s": 0.006861054,
+          "per_decode_s": 0.006861054,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000561644,
+          "decode_output_store_s": 0.006848114,
+          "decoder_close_s": 1.8157e-05,
+          "total_s": 0.007427915,
+          "per_decode_s": 0.007427915,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000542697,
+          "decode_output_store_s": 0.006120436,
+          "decoder_close_s": 1.8397e-05,
+          "total_s": 0.00668153,
+          "per_decode_s": 0.00668153,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.00046606,
+          "decode_output_store_s": 0.006088576,
+          "decoder_close_s": 1.8287e-05,
+          "total_s": 0.006572923,
+          "per_decode_s": 0.006572923,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000465208,
+          "decode_output_store_s": 0.006090776,
+          "decoder_close_s": 1.8223e-05,
+          "total_s": 0.006574207,
+          "per_decode_s": 0.006574207,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "5",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 5,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 5,
+          "setup_table_context_s": 0.000789788,
+          "decode_output_store_s": 0.028573872,
+          "decoder_close_s": 3.3275e-05,
+          "total_s": 0.029396935,
+          "per_decode_s": 0.005879387,
+          "frames": 2560,
+          "samples": 5242880,
+          "checksum": -6.847726904961746,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 15
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000491597,
+          "decode_output_store_s": 0.004393304,
+          "decoder_close_s": 1.8788e-05,
+          "total_s": 0.004903689,
+          "per_decode_s": 0.004903689,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000476668,
+          "decode_output_store_s": 0.004381592,
+          "decoder_close_s": 1.8538e-05,
+          "total_s": 0.004876798,
+          "per_decode_s": 0.004876798,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000481471,
+          "decode_output_store_s": 0.004364076,
+          "decoder_close_s": 1.9058e-05,
+          "total_s": 0.004864605,
+          "per_decode_s": 0.004864605,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000493008,
+          "decode_output_store_s": 0.004362191,
+          "decoder_close_s": 1.9508e-05,
+          "total_s": 0.004874707,
+          "per_decode_s": 0.004874707,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000484075,
+          "decode_output_store_s": 0.00441385,
+          "decoder_close_s": 1.8421e-05,
+          "total_s": 0.004916346,
+          "per_decode_s": 0.004916346,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "5",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 5,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 5,
+          "setup_table_context_s": 0.000869554,
+          "decode_output_store_s": 0.019991241,
+          "decoder_close_s": 3.5596e-05,
+          "total_s": 0.020896391,
+          "per_decode_s": 0.004179278,
+          "frames": 2560,
+          "samples": 5242880,
+          "checksum": -6.8477278092177585,
+          "pcm_written": false,
+          "matched_features": true,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 15
+        }
+      }
+    ]
+  },
+  "cpu_fresh_statistics_s": {
+    "scalar": {
+      "setup_table_context_s": {
+        "median": 0.000542697,
+        "min": 0.000465208,
+        "max": 0.000561644,
+        "samples": [
+          0.000561358,
+          0.000561644,
+          0.000542697,
+          0.00046606,
+          0.000465208
+        ]
+      },
+      "decode_output_store_s": {
+        "median": 0.006120436,
+        "min": 0.006088576,
+        "max": 0.006848114,
+        "samples": [
+          0.006279158,
+          0.006848114,
+          0.006120436,
+          0.006088576,
+          0.006090776
+        ]
+      },
+      "decoder_close_s": {
+        "median": 1.8287e-05,
+        "min": 1.8157e-05,
+        "max": 2.0538e-05,
+        "samples": [
+          2.0538e-05,
+          1.8157e-05,
+          1.8397e-05,
+          1.8287e-05,
+          1.8223e-05
+        ]
+      },
+      "total_s": {
+        "median": 0.00668153,
+        "min": 0.006572923,
+        "max": 0.007427915,
+        "samples": [
+          0.006861054,
+          0.007427915,
+          0.00668153,
+          0.006572923,
+          0.006574207
+        ]
+      }
+    },
+    "optimized": {
+      "setup_table_context_s": {
+        "median": 0.000484075,
+        "min": 0.000476668,
+        "max": 0.000493008,
+        "samples": [
+          0.000491597,
+          0.000476668,
+          0.000481471,
+          0.000493008,
+          0.000484075
+        ]
+      },
+      "decode_output_store_s": {
+        "median": 0.004381592,
+        "min": 0.004362191,
+        "max": 0.00441385,
+        "samples": [
+          0.004393304,
+          0.004381592,
+          0.004364076,
+          0.004362191,
+          0.00441385
+        ]
+      },
+      "decoder_close_s": {
+        "median": 1.8788e-05,
+        "min": 1.8421e-05,
+        "max": 1.9508e-05,
+        "samples": [
+          1.8788e-05,
+          1.8538e-05,
+          1.9058e-05,
+          1.9508e-05,
+          1.8421e-05
+        ]
+      },
+      "total_s": {
+        "median": 0.004876798,
+        "min": 0.004864605,
+        "max": 0.004916346,
+        "samples": [
+          0.004903689,
+          0.004876798,
+          0.004864605,
+          0.004874707,
+          0.004916346
+        ]
+      }
+    }
+  },
+  "silicon_samples": [
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-pcm-1",
+      "mode": "pcm",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.286632478,
+        "upload_s": 0.000563957,
+        "decoder_init_s": 0.278319036,
+        "init_status_io_s": 0.001016204,
+        "decode_s": 1.506541721,
+        "decode_status_io_s": 0.000726573,
+        "consumer_s": 0.0,
+        "consumer_status_io_s": 0.0,
+        "pcm_readback_s": 0.0039543,
+        "state_validation_read_s": 0.000449361,
+        "compare_s": 0.001437971,
+        "decoder_close_s": 0.006232352,
+        "close_status_io_s": 0.000776513,
+        "resident_service_s": 1.507268294,
+        "transfer_inclusive_service_s": 1.511786551,
+        "codec_lifecycle_s": 1.7910931090000002,
+        "cold_service_s": 2.084763134,
+        "decode_ticks": 900399185,
+        "pcm_publication_ticks": 1507953,
+        "decode_context_publication_ticks": 3196209
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162225653,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278319036,
+          "status_io_s": 0.001016204
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900399185,
+          "publication_ticks": 1507953,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506541721,
+          "status_io_s": 0.000726573
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543411,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006232352,
+          "status_io_s": 0.000776513
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264600,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196209,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985169,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "c54ab29d5823ec2863270065df608e318b700871a1b3ad5e843256b574f42769",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "039cfafbf01924539fb2be20157b6581cd78d972b8b7aced05bd532895d9a561",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "cd2d97c96ecc388fd2d44035c798b1a0e3f78433bbcac113a3f0dcfeef015991",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "007b711f5a6d0dc81af7b339eff144561de9128cf8152464c53b7388c44034a6",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "841a50e4250dce336c28d14a8f8ac22cef513c19363c96d589444e8954009980",
+        "run.jsonl": "00834bc0fbccea1801503fb97d296af6be0a32b290be8a28c06ee54893bc7c60",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-pcm-2",
+      "mode": "pcm",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.28907115,
+        "upload_s": 0.000565298,
+        "decoder_init_s": 0.278335829,
+        "init_status_io_s": 0.00099572,
+        "decode_s": 1.506412805,
+        "decode_status_io_s": 0.000788703,
+        "consumer_s": 0.0,
+        "consumer_status_io_s": 0.0,
+        "pcm_readback_s": 0.004051201,
+        "state_validation_read_s": 0.000374205,
+        "compare_s": 0.001456868,
+        "decoder_close_s": 0.006290379,
+        "close_status_io_s": 0.000723429,
+        "resident_service_s": 1.507201508,
+        "transfer_inclusive_service_s": 1.511818007,
+        "codec_lifecycle_s": 1.791039013,
+        "cold_service_s": 2.0872345140000004,
+        "decode_ticks": 900380193,
+        "pcm_publication_ticks": 1507589,
+        "decode_context_publication_ticks": 3196207
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162226627,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278335829,
+          "status_io_s": 0.00099572
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900380193,
+          "publication_ticks": 1507589,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506412805,
+          "status_io_s": 0.000788703
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543275,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006290379,
+          "status_io_s": 0.000723429
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264750,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196207,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985043,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "9ffba22dcfc28b04d546b5ba8a367206b1a038f1d638790fe1bf21075efc0e0f",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "865bd456e600ea36db378c5684864cfed553dc2899e58dbe47f4f5500a73e18e",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "cd2d97c96ecc388fd2d44035c798b1a0e3f78433bbcac113a3f0dcfeef015991",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "e3cd9bb877f10f340213fb885a0694ec2b81c0539b780bbff0455541149b6185",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "ceda43f05f5e7ddf9d1dcd9fb3233828dd0fd5f3591342e1800aced3663d7d0d",
+        "run.jsonl": "1ce472e8e2bec266ff6e42a45f0c155c906a07ca6e0311a7c67be3a60f6548fc",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-pcm-3",
+      "mode": "pcm",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.289779868,
+        "upload_s": 0.000565452,
+        "decoder_init_s": 0.278346294,
+        "init_status_io_s": 0.000988275,
+        "decode_s": 1.506396722,
+        "decode_status_io_s": 0.000801466,
+        "consumer_s": 0.0,
+        "consumer_status_io_s": 0.0,
+        "pcm_readback_s": 0.004024369,
+        "state_validation_read_s": 0.000359473,
+        "compare_s": 0.001434701,
+        "decoder_close_s": 0.006230754,
+        "close_status_io_s": 0.000698083,
+        "resident_service_s": 1.507198188,
+        "transfer_inclusive_service_s": 1.511788009,
+        "codec_lifecycle_s": 1.7909737700000001,
+        "cold_service_s": 2.0878312830000003,
+        "decode_ticks": 900378751,
+        "pcm_publication_ticks": 1508761,
+        "decode_context_publication_ticks": 3196212
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162226483,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278346294,
+          "status_io_s": 0.000988275
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900378751,
+          "publication_ticks": 1508761,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506396722,
+          "status_io_s": 0.000801466
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543439,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006230754,
+          "status_io_s": 0.000698083
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264596,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196212,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985042,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "155e69680288f8b08a677926e23255eee849c5705caf69dbe93667f7a642fd98",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "1b8d90e7b231c49a15598d8a496f5c0f59d5bccfc867c3ad46c71b40021c7cdb",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "cd2d97c96ecc388fd2d44035c798b1a0e3f78433bbcac113a3f0dcfeef015991",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "98a8d8044b9c883085c76a2245a71b2f4b05e388e1288d2104b28945c7c5585b",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "a83dc01cba784a6bfc05ea5980b63e5ca5f0b2ce3b360775e60d1e2eed7c675a",
+        "run.jsonl": "92efab1259b018a427b63a1085764dc45e8d8522ff0a46ac7b40a8c72e1534e2",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-pcm-4",
+      "mode": "pcm",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.289217309,
+        "upload_s": 0.000562447,
+        "decoder_init_s": 0.278377788,
+        "init_status_io_s": 0.001017342,
+        "decode_s": 1.506462004,
+        "decode_status_io_s": 0.00072196,
+        "consumer_s": 0.0,
+        "consumer_status_io_s": 0.0,
+        "pcm_readback_s": 0.003909997,
+        "state_validation_read_s": 0.00036774,
+        "compare_s": 0.001461202,
+        "decoder_close_s": 0.006190216,
+        "close_status_io_s": 0.000735771,
+        "resident_service_s": 1.507183964,
+        "transfer_inclusive_service_s": 1.511656408,
+        "codec_lifecycle_s": 1.7910300080000001,
+        "cold_service_s": 2.087194834,
+        "decode_ticks": 900378083,
+        "pcm_publication_ticks": 1508459,
+        "decode_context_publication_ticks": 3196218
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162225934,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278377788,
+          "status_io_s": 0.001017342
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900378083,
+          "publication_ticks": 1508459,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506462004,
+          "status_io_s": 0.00072196
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543260,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006190216,
+          "status_io_s": 0.000735771
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264721,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196218,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985039,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "63fa9ef76eed8b9fa8350f5b1f239f15282b0e098871490bdcc73d37342ea647",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "73487ded201950368578ba97ae748a2f7cf591a0310ae2e17985b9c747f6703b",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "cd2d97c96ecc388fd2d44035c798b1a0e3f78433bbcac113a3f0dcfeef015991",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "ccc1995dd5dbed392920001d66c85aa9a9ec2349110d4125e65cd0205aa06c5f",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "d80e4793856f5fdeb7d785650634a88915b17b2990d942441bfc74c46eb18e2c",
+        "run.jsonl": "5c445240481214ca231b5195821b7ae9ad6e3d2d7614e66e4616002a8417237d",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-pcm-5",
+      "mode": "pcm",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.284041857,
+        "upload_s": 0.000563249,
+        "decoder_init_s": 0.278284533,
+        "init_status_io_s": 0.000837209,
+        "decode_s": 1.506399942,
+        "decode_status_io_s": 0.000672148,
+        "consumer_s": 0.0,
+        "consumer_status_io_s": 0.0,
+        "pcm_readback_s": 0.004066033,
+        "state_validation_read_s": 0.0003656,
+        "compare_s": 0.00146519,
+        "decoder_close_s": 0.00628625,
+        "close_status_io_s": 0.00071479,
+        "resident_service_s": 1.50707209,
+        "transfer_inclusive_service_s": 1.511701372,
+        "codec_lifecycle_s": 1.7909707250000002,
+        "cold_service_s": 2.0818660110000002,
+        "decode_ticks": 900376773,
+        "pcm_publication_ticks": 1508404,
+        "decode_context_publication_ticks": 3196208
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162226311,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278284533,
+          "status_io_s": 0.000837209
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900376773,
+          "publication_ticks": 1508404,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506399942,
+          "status_io_s": 0.000672148
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543290,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.00628625,
+          "status_io_s": 0.00071479
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264708,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196208,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2984912,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "6ea618fc20332e6b3e66be9bc2032efc2d14bb18c084a5bd62576589b6af302b",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "b41bc32965635cdf57fd2cb835d812750d8f52eac4d9b41bf6f2eae6ee6a3ea5",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "cd2d97c96ecc388fd2d44035c798b1a0e3f78433bbcac113a3f0dcfeef015991",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "891734d9809d1492f95feb64328508fe8e536b6b9eb0a17aa94957fe638b9adf",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "17471b7671d7707a664bc1a25b431f57eb01a4b67791925746a8f6e3d9476777",
+        "run.jsonl": "376f59e918f6b7b6873bf864cc1b5c33aa7c033ca3b9ff932a16d771c5e97f90",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-meter-1",
+      "mode": "meter",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.288399369,
+        "upload_s": 0.000563611,
+        "decoder_init_s": 0.278256186,
+        "init_status_io_s": 0.00087159,
+        "decode_s": 1.506429001,
+        "decode_status_io_s": 0.000759272,
+        "consumer_s": 0.005774547,
+        "consumer_status_io_s": 0.000630759,
+        "pcm_readback_s": 0.004093191,
+        "state_validation_read_s": 0.000386187,
+        "compare_s": 0.00135829,
+        "decoder_close_s": 0.006294484,
+        "close_status_io_s": 0.000994238,
+        "resident_service_s": 1.513593579,
+        "transfer_inclusive_service_s": 1.51415719,
+        "codec_lifecycle_s": 1.790979671,
+        "cold_service_s": 2.0889730570000005,
+        "decode_ticks": 900377518,
+        "pcm_publication_ticks": 1508283,
+        "decode_context_publication_ticks": 3196204
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162227275,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278256186,
+          "status_io_s": 0.00087159
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900377518,
+          "publication_ticks": 1508283,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506429001,
+          "status_io_s": 0.000759272
+        },
+        {
+          "type": "status",
+          "operation": 3,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 0.005774547,
+          "status_io_s": 0.000630759
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543259,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006294484,
+          "status_io_s": 0.000994238
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264597,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196204,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 3,
+          "generation": 1,
+          "ticks": 3209900,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985041,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "3eb2b5ff99f811c63a8cfd5fd06922277b87b0e55e6fe797b3338c07b8c5822a",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "a4727dadf5a1edd779da43a3957e1b00776dc24566b2aadf695aa579fe447d98",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "c71c4df6f45d3d752d8660afbfaae0a6843597f7aa64dfc7acd1a4a2df1b9cb6",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "7cbeac82577734751d29f635956d5d07de0a532da945e802dc346392a372cf5e",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "ed51a20a5fa1351b0a2870fb31e0bfcf0b2da3071b8b7e483e54524332533586",
+        "run.jsonl": "e5ec3bdf4d667912b4d6fad279a9b6f10f67f6175d8a1b6053f71307265e4683",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-meter-2",
+      "mode": "meter",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.285104897,
+        "upload_s": 0.000563516,
+        "decoder_init_s": 0.278298734,
+        "init_status_io_s": 0.000916676,
+        "decode_s": 1.506361459,
+        "decode_status_io_s": 0.000713461,
+        "consumer_s": 0.00572647,
+        "consumer_status_io_s": 0.000835583,
+        "pcm_readback_s": 0.004067949,
+        "state_validation_read_s": 0.000442985,
+        "compare_s": 0.001400032,
+        "decoder_close_s": 0.006164234,
+        "close_status_io_s": 0.001040314,
+        "resident_service_s": 1.513636973,
+        "transfer_inclusive_service_s": 1.514200489,
+        "codec_lifecycle_s": 1.7908244270000002,
+        "cold_service_s": 2.085725344,
+        "decode_ticks": 900377295,
+        "pcm_publication_ticks": 1507838,
+        "decode_context_publication_ticks": 3196342
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162226766,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278298734,
+          "status_io_s": 0.000916676
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900377295,
+          "publication_ticks": 1507838,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506361459,
+          "status_io_s": 0.000713461
+        },
+        {
+          "type": "status",
+          "operation": 3,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 0.00572647,
+          "status_io_s": 0.000835583
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543267,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006164234,
+          "status_io_s": 0.001040314
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264569,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196342,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 3,
+          "generation": 1,
+          "ticks": 3209909,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985040,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "ce4ba2a3cfb378de07bca020d69afb2f2bc09e4d68010f889878065f99e561d3",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "8a2c7a710eb8609644e6f7367f024ff5701480ebeb8074e70db80782a8f3aa54",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "c71c4df6f45d3d752d8660afbfaae0a6843597f7aa64dfc7acd1a4a2df1b9cb6",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "bfd2eac1ec61747a2130712f16dd255c3847564bc19b08fd2f2c0e52d060edbd",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "0363db9adf7bbc61831e714ee471540082cc4e2fc385ab854c2aaaed0e2e05af",
+        "run.jsonl": "13ea7928026de7b21d29f06b6617963ff9e8d663638bc1932b3fffd31ab52088",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-meter-3",
+      "mode": "meter",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.285794286,
+        "upload_s": 0.000566219,
+        "decoder_init_s": 0.278337878,
+        "init_status_io_s": 0.000999959,
+        "decode_s": 1.506451307,
+        "decode_status_io_s": 0.000687095,
+        "consumer_s": 0.005664694,
+        "consumer_status_io_s": 0.000744195,
+        "pcm_readback_s": 0.004038107,
+        "state_validation_read_s": 0.000339592,
+        "compare_s": 0.001411715,
+        "decoder_close_s": 0.006235053,
+        "close_status_io_s": 0.001025225,
+        "resident_service_s": 1.513547291,
+        "transfer_inclusive_service_s": 1.51411351,
+        "codec_lifecycle_s": 1.791024238,
+        "cold_service_s": 2.086505911,
+        "decode_ticks": 900377669,
+        "pcm_publication_ticks": 1507482,
+        "decode_context_publication_ticks": 3196210
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162226717,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278337878,
+          "status_io_s": 0.000999959
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900377669,
+          "publication_ticks": 1507482,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506451307,
+          "status_io_s": 0.000687095
+        },
+        {
+          "type": "status",
+          "operation": 3,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 0.005664694,
+          "status_io_s": 0.000744195
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543398,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006235053,
+          "status_io_s": 0.001025225
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264592,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196210,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 3,
+          "generation": 1,
+          "ticks": 3209899,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985040,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "f1ca81fb4b4218d91cf769b2193143fe1ce997ab91efd1ada6d372574b07c8df",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "63ebcf75383dd77ddeaeff6b11f0883bb846968844369e67879f5bc0d51f60f0",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "c71c4df6f45d3d752d8660afbfaae0a6843597f7aa64dfc7acd1a4a2df1b9cb6",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "892f398824a573f5bdd64c835195e49a4d49a3e19c8455e02f33cea5b78cbbd4",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "271be6e3c0052d4ae75ba41b44c47502064b4ac2220d83ecc642342d5de1773d",
+        "run.jsonl": "5ec6acb9f64e8cc42aca9a3e0c840f3980c74f304f496b0724056a2d156cbf75",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-meter-4",
+      "mode": "meter",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.287705327,
+        "upload_s": 0.000562163,
+        "decoder_init_s": 0.278301582,
+        "init_status_io_s": 0.000878113,
+        "decode_s": 1.506359509,
+        "decode_status_io_s": 0.00065286,
+        "consumer_s": 0.00565919,
+        "consumer_status_io_s": 0.000601213,
+        "pcm_readback_s": 0.004040666,
+        "state_validation_read_s": 0.000349188,
+        "compare_s": 0.00137814,
+        "decoder_close_s": 0.006183086,
+        "close_status_io_s": 0.001000353,
+        "resident_service_s": 1.513272772,
+        "transfer_inclusive_service_s": 1.513834935,
+        "codec_lifecycle_s": 1.7908441769999999,
+        "cold_service_s": 2.0879033959999997,
+        "decode_ticks": 900377798,
+        "pcm_publication_ticks": 1507948,
+        "decode_context_publication_ticks": 3196202
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162226469,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278301582,
+          "status_io_s": 0.000878113
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900377798,
+          "publication_ticks": 1507948,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506359509,
+          "status_io_s": 0.00065286
+        },
+        {
+          "type": "status",
+          "operation": 3,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 0.00565919,
+          "status_io_s": 0.000601213
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543247,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006183086,
+          "status_io_s": 0.001000353
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264595,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196202,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 3,
+          "generation": 1,
+          "ticks": 3209895,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985040,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "46771e0558b9393e541f59a67ff615a1642934d76094357d9416253fa5590f01",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "33aec3c1eae90c3f2cb3084295bd82d34d6ab011d5b9cf55de7b996977e7460f",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "c71c4df6f45d3d752d8660afbfaae0a6843597f7aa64dfc7acd1a4a2df1b9cb6",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "394d46346300615db2a0aa3e4c098c2944e5911ecaeead6aed51c63f99a4a898",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "070838f8b235175aaa48a658995dde2a45ef3cc81ceda93f48a087e38e53416b",
+        "run.jsonl": "47af562a6008f861591af73cf3339d0cdd44aa4401487a52e0c2d03c870aed2a",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/bench-fixed-sines-meter-5",
+      "mode": "meter",
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.283045724,
+        "upload_s": 0.000562074,
+        "decoder_init_s": 0.278267947,
+        "init_status_io_s": 0.000881984,
+        "decode_s": 1.506368228,
+        "decode_status_io_s": 0.000701926,
+        "consumer_s": 0.005689978,
+        "consumer_status_io_s": 0.000616303,
+        "pcm_readback_s": 0.003965976,
+        "state_validation_read_s": 0.000388469,
+        "compare_s": 0.001376942,
+        "decoder_close_s": 0.006181026,
+        "close_status_io_s": 0.00099356,
+        "resident_service_s": 1.513376435,
+        "transfer_inclusive_service_s": 1.513938509,
+        "codec_lifecycle_s": 1.7908172009999999,
+        "cold_service_s": 2.08330875,
+        "decode_ticks": 900377325,
+        "pcm_publication_ticks": 1508315,
+        "decode_context_publication_ticks": 3196088
+      },
+      "statuses": [
+        {
+          "type": "status",
+          "operation": 0,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 675856,
+          "init_ticks": 162226295,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.278267947,
+          "status_io_s": 0.000881984
+        },
+        {
+          "type": "status",
+          "operation": 1,
+          "generation": 1,
+          "result": 0,
+          "frames": 512,
+          "samples_per_channel": 524288,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 900377325,
+          "publication_ticks": 1508315,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 1.506368228,
+          "status_io_s": 0.000701926
+        },
+        {
+          "type": "status",
+          "operation": 3,
+          "generation": 1,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 0,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 1065659079,
+          "consumer_above_one": 3,
+          "launch_s": 0.005689978,
+          "status_io_s": 0.000616303
+        },
+        {
+          "type": "status",
+          "operation": 2,
+          "generation": 513,
+          "result": 0,
+          "frames": 0,
+          "samples_per_channel": 0,
+          "heap_peak": 694432,
+          "init_ticks": 543272,
+          "decode_ticks": 0,
+          "publication_ticks": 0,
+          "unsupported_calls": 0,
+          "heap_failures": 0,
+          "consumer_peak_bits": 0,
+          "consumer_above_one": 0,
+          "launch_s": 0.006181026,
+          "status_io_s": 0.00099356
+        }
+      ],
+      "contexts": [
+        {
+          "type": "context_publication",
+          "operation": 0,
+          "generation": 1,
+          "ticks": 3264610,
+          "heap_live": 675792,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 1,
+          "generation": 1,
+          "ticks": 3196088,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 3,
+          "generation": 1,
+          "ticks": 3209896,
+          "heap_live": 692576,
+          "stack_guard_ok": 1
+        },
+        {
+          "type": "context_publication",
+          "operation": 2,
+          "generation": 513,
+          "ticks": 2985042,
+          "heap_live": 0,
+          "stack_guard_ok": 1
+        }
+      ],
+      "artifact_sha256": {
+        "timestamps": "d3bc6605987e248419eff585b361b3af6eaa9bd47436f37f0304ec9efefef9ba",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "578934605c0b5509fe6c33c1bdac0ff7c13365ff02ab38eaa7a108713d1f22a7",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "c71c4df6f45d3d752d8660afbfaae0a6843597f7aa64dfc7acd1a4a2df1b9cb6",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "28229a8cef15ae52ef0a5e8bd3bae4713104a4af93aec247ce2014dc97c71ce1",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "35bfe8bab3e04a80c3678966dd9b3124ed18a0ace942955f04d5a7a24b8d3e67",
+        "run.jsonl": "c6f8ce41b69fb9161a0838a61182ae545610f679f068326f10252afab77c4294",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    }
+  ],
+  "silicon_statistics": {
+    "pcm": {
+      "runtime_setup_s": {
+        "median": 0.28907115,
+        "min": 0.284041857,
+        "max": 0.289779868,
+        "samples": [
+          0.286632478,
+          0.28907115,
+          0.289779868,
+          0.289217309,
+          0.284041857
+        ]
+      },
+      "decoder_init_s": {
+        "median": 0.278335829,
+        "min": 0.278284533,
+        "max": 0.278377788,
+        "samples": [
+          0.278319036,
+          0.278335829,
+          0.278346294,
+          0.278377788,
+          0.278284533
+        ]
+      },
+      "decode_s": {
+        "median": 1.506412805,
+        "min": 1.506396722,
+        "max": 1.506541721,
+        "samples": [
+          1.506541721,
+          1.506412805,
+          1.506396722,
+          1.506462004,
+          1.506399942
+        ]
+      },
+      "decoder_close_s": {
+        "median": 0.006232352,
+        "min": 0.006190216,
+        "max": 0.006290379,
+        "samples": [
+          0.006232352,
+          0.006290379,
+          0.006230754,
+          0.006190216,
+          0.00628625
+        ]
+      },
+      "upload_s": {
+        "median": 0.000563957,
+        "min": 0.000562447,
+        "max": 0.000565452,
+        "samples": [
+          0.000563957,
+          0.000565298,
+          0.000565452,
+          0.000562447,
+          0.000563249
+        ]
+      },
+      "pcm_readback_s": {
+        "median": 0.004024369,
+        "min": 0.003909997,
+        "max": 0.004066033,
+        "samples": [
+          0.0039543,
+          0.004051201,
+          0.004024369,
+          0.003909997,
+          0.004066033
+        ]
+      },
+      "consumer_s": {
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "samples": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "init_status_io_s": {
+        "median": 0.00099572,
+        "min": 0.000837209,
+        "max": 0.001017342,
+        "samples": [
+          0.001016204,
+          0.00099572,
+          0.000988275,
+          0.001017342,
+          0.000837209
+        ]
+      },
+      "decode_status_io_s": {
+        "median": 0.000726573,
+        "min": 0.000672148,
+        "max": 0.000801466,
+        "samples": [
+          0.000726573,
+          0.000788703,
+          0.000801466,
+          0.00072196,
+          0.000672148
+        ]
+      },
+      "close_status_io_s": {
+        "median": 0.000723429,
+        "min": 0.000698083,
+        "max": 0.000776513,
+        "samples": [
+          0.000776513,
+          0.000723429,
+          0.000698083,
+          0.000735771,
+          0.00071479
+        ]
+      },
+      "consumer_status_io_s": {
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "samples": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "resident_service_s": {
+        "median": 1.507198188,
+        "min": 1.50707209,
+        "max": 1.507268294,
+        "samples": [
+          1.507268294,
+          1.507201508,
+          1.507198188,
+          1.507183964,
+          1.50707209
+        ]
+      },
+      "transfer_inclusive_service_s": {
+        "median": 1.511786551,
+        "min": 1.511656408,
+        "max": 1.511818007,
+        "samples": [
+          1.511786551,
+          1.511818007,
+          1.511788009,
+          1.511656408,
+          1.511701372
+        ]
+      },
+      "codec_lifecycle_s": {
+        "median": 1.7910300080000001,
+        "min": 1.7909707250000002,
+        "max": 1.7910931090000002,
+        "samples": [
+          1.7910931090000002,
+          1.791039013,
+          1.7909737700000001,
+          1.7910300080000001,
+          1.7909707250000002
+        ]
+      },
+      "cold_service_s": {
+        "median": 2.087194834,
+        "min": 2.0818660110000002,
+        "max": 2.0878312830000003,
+        "samples": [
+          2.084763134,
+          2.0872345140000004,
+          2.0878312830000003,
+          2.087194834,
+          2.0818660110000002
+        ]
+      },
+      "decode_ticks": {
+        "median": 900378751,
+        "min": 900376773,
+        "max": 900399185,
+        "samples": [
+          900399185,
+          900380193,
+          900378751,
+          900378083,
+          900376773
+        ]
+      },
+      "pcm_publication_ticks": {
+        "median": 1508404,
+        "min": 1507589,
+        "max": 1508761,
+        "samples": [
+          1507953,
+          1507589,
+          1508761,
+          1508459,
+          1508404
+        ]
+      },
+      "decode_context_publication_ticks": {
+        "median": 3196209,
+        "min": 3196207,
+        "max": 3196218,
+        "samples": [
+          3196209,
+          3196207,
+          3196212,
+          3196218,
+          3196208
+        ]
+      }
+    },
+    "meter": {
+      "runtime_setup_s": {
+        "median": 0.285794286,
+        "min": 0.283045724,
+        "max": 0.288399369,
+        "samples": [
+          0.288399369,
+          0.285104897,
+          0.285794286,
+          0.287705327,
+          0.283045724
+        ]
+      },
+      "decoder_init_s": {
+        "median": 0.278298734,
+        "min": 0.278256186,
+        "max": 0.278337878,
+        "samples": [
+          0.278256186,
+          0.278298734,
+          0.278337878,
+          0.278301582,
+          0.278267947
+        ]
+      },
+      "decode_s": {
+        "median": 1.506368228,
+        "min": 1.506359509,
+        "max": 1.506451307,
+        "samples": [
+          1.506429001,
+          1.506361459,
+          1.506451307,
+          1.506359509,
+          1.506368228
+        ]
+      },
+      "decoder_close_s": {
+        "median": 0.006183086,
+        "min": 0.006164234,
+        "max": 0.006294484,
+        "samples": [
+          0.006294484,
+          0.006164234,
+          0.006235053,
+          0.006183086,
+          0.006181026
+        ]
+      },
+      "upload_s": {
+        "median": 0.000563516,
+        "min": 0.000562074,
+        "max": 0.000566219,
+        "samples": [
+          0.000563611,
+          0.000563516,
+          0.000566219,
+          0.000562163,
+          0.000562074
+        ]
+      },
+      "pcm_readback_s": {
+        "median": 0.004040666,
+        "min": 0.003965976,
+        "max": 0.004093191,
+        "samples": [
+          0.004093191,
+          0.004067949,
+          0.004038107,
+          0.004040666,
+          0.003965976
+        ]
+      },
+      "consumer_s": {
+        "median": 0.005689978,
+        "min": 0.00565919,
+        "max": 0.005774547,
+        "samples": [
+          0.005774547,
+          0.00572647,
+          0.005664694,
+          0.00565919,
+          0.005689978
+        ]
+      },
+      "init_status_io_s": {
+        "median": 0.000881984,
+        "min": 0.00087159,
+        "max": 0.000999959,
+        "samples": [
+          0.00087159,
+          0.000916676,
+          0.000999959,
+          0.000878113,
+          0.000881984
+        ]
+      },
+      "decode_status_io_s": {
+        "median": 0.000701926,
+        "min": 0.00065286,
+        "max": 0.000759272,
+        "samples": [
+          0.000759272,
+          0.000713461,
+          0.000687095,
+          0.00065286,
+          0.000701926
+        ]
+      },
+      "close_status_io_s": {
+        "median": 0.001000353,
+        "min": 0.00099356,
+        "max": 0.001040314,
+        "samples": [
+          0.000994238,
+          0.001040314,
+          0.001025225,
+          0.001000353,
+          0.00099356
+        ]
+      },
+      "consumer_status_io_s": {
+        "median": 0.000630759,
+        "min": 0.000601213,
+        "max": 0.000835583,
+        "samples": [
+          0.000630759,
+          0.000835583,
+          0.000744195,
+          0.000601213,
+          0.000616303
+        ]
+      },
+      "resident_service_s": {
+        "median": 1.513547291,
+        "min": 1.513272772,
+        "max": 1.513636973,
+        "samples": [
+          1.513593579,
+          1.513636973,
+          1.513547291,
+          1.513272772,
+          1.513376435
+        ]
+      },
+      "transfer_inclusive_service_s": {
+        "median": 1.51411351,
+        "min": 1.513834935,
+        "max": 1.514200489,
+        "samples": [
+          1.51415719,
+          1.514200489,
+          1.51411351,
+          1.513834935,
+          1.513938509
+        ]
+      },
+      "codec_lifecycle_s": {
+        "median": 1.7908441769999999,
+        "min": 1.7908172009999999,
+        "max": 1.791024238,
+        "samples": [
+          1.790979671,
+          1.7908244270000002,
+          1.791024238,
+          1.7908441769999999,
+          1.7908172009999999
+        ]
+      },
+      "cold_service_s": {
+        "median": 2.086505911,
+        "min": 2.08330875,
+        "max": 2.0889730570000005,
+        "samples": [
+          2.0889730570000005,
+          2.085725344,
+          2.086505911,
+          2.0879033959999997,
+          2.08330875
+        ]
+      },
+      "decode_ticks": {
+        "median": 900377518,
+        "min": 900377295,
+        "max": 900377798,
+        "samples": [
+          900377518,
+          900377295,
+          900377669,
+          900377798,
+          900377325
+        ]
+      },
+      "pcm_publication_ticks": {
+        "median": 1507948,
+        "min": 1507482,
+        "max": 1508315,
+        "samples": [
+          1508283,
+          1507838,
+          1507482,
+          1507948,
+          1508315
+        ]
+      },
+      "decode_context_publication_ticks": {
+        "median": 3196204,
+        "min": 3196088,
+        "max": 3196342,
+        "samples": [
+          3196204,
+          3196342,
+          3196210,
+          3196202,
+          3196088
+        ]
+      }
+    }
+  },
+  "ratios": {
+    "scalar": {
+      "ET_over_CPU_decode_time": 246.128348535954,
+      "ET_over_CPU_codec_lifecycle_time": 268.05686841187577
+    },
+    "optimized": {
+      "ET_over_CPU_decode_time": 343.8049012778917,
+      "ET_over_CPU_codec_lifecycle_time": 367.25531957649264
+    }
+  },
+  "optimized_reference": {
+    "optimized_unchanged_from_v2": true,
+    "optimized_vs_scalar_word_mismatches": 751895,
+    "optimized_sha256": "1f13a016e24164bf1d38f375b4bc1c8761029060de2270121453497a56631b08",
+    "note": "Native optimized reference is distinct from the strict scalar ET oracle; no tolerance applied."
+  },
+  "caveats": [
+    "CPU and ET both decode, validate finiteness, calculate fused peak/above-one, and store complete planar PCM. CPU checksums are additionally observed.",
+    "The strict ET oracle is scalar CPU PCM. Optimized native FFmpeg is unchanged from its previous reference but not scalar-bit-exact; no tolerance or oracle substitution is used.",
+    "CPU file load/envelope check/output-buffer allocation/file writing are outside codec timers. Device buffers/image/runtime are separately timed; device compressed upload and PCM download are separately retained.",
+    "CPU uses ADTS discovery on first packet, target uses ASC during INIT; setup/decode phase boundaries are not identical. Codec-lifecycle subtotals include setup, decoding and teardown on each side.",
+    "ET launch times include SDK dispatch/wait and publication. decode_ticks includes PCM publication; never add those overlapping counters. Context publication is separate. HPM3 readings are raw ticks, not assumed clock-calibrated seconds.",
+    "METER retrieves features accumulated during decode; it is not a separate PCM scan. Meter-service total excludes diagnostic PCM download, which is still done for exact validation.",
+    "Cold ET service includes runtime/image/buffers, codec INIT/CLOSE, input upload, status I/O and requested output. Diagnostic private-state download and golden comparison are excluded.",
+    "CPU five-context extra processes are retained separately and not pooled into the five-fresh-process medians.",
+    "This measures a scalar single-hart prototype, not whole-card performance or a hardware peak. Earlier synthesis-only multicore workloads are not equivalent.",
+    "Corrected ELF hardware validation used explicit user-authorized reviewed-child diagnostic eligibility. The parent emulator PCM failed; no corrected-emulator PASS is claimed."
+  ]
+}

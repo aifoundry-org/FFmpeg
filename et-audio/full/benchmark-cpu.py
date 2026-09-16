@@ -2,11 +2,13 @@
 """Retain each full CPU sample; run inside the SDK only after competing work stops."""
 import argparse,hashlib,json,pathlib,subprocess
 p=argparse.ArgumentParser(description=__doc__)
-p.add_argument('--output',required=True);a=p.parse_args()
+p.add_argument('--output',required=True)
+p.add_argument('--cpu',default='build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu')
+a=p.parse_args()
 root=pathlib.Path(__file__).resolve().parents[2];out=pathlib.Path(a.output).resolve()
 if out.exists():raise SystemExit('refusing existing output')
 out.mkdir(parents=True)
-cpu=root/'build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu'
+cpu=(root/a.cpu).resolve()
 inp=root/'build-et/aac-full/fixtures/stereo-48000-512.input'
 records=[]
 for mode in ('scalar','optimized'):

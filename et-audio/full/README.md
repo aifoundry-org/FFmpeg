@@ -84,15 +84,28 @@ cc -std=c11 -O2 -Wall -Wextra -Werror -ffp-contract=off \
 ```
 
 The selected arithmetic is the pinned FFmpeg float AAC decoder, not the
-separate `etaac_synth` path. The only private numerical integration is a
+separate `etaac_synth` path. One private numerical integration is a
 **link-time frozen `ff_cbrt_tab[8192]` override**: `build-device.py` calls
 `ff_cbrt_tableinit()` from the pinned native CPU archive, emits exact `uint32_t`
 bits into that fresh output's `private-source/cbrt_frozen.c`, records both CPU
 archive and generated-source SHA-256 in `CBRT_PROVENANCE.txt`, and defines the
 corresponding no-op initializer before r6 is searched. No AAC payload is
 processed on the host and r6 source/archive files are not edited. This removes
-the target libm/double table-generation variability; PNS/sqrt and complete
-packet PCM still require the native/device oracle comparison gate.
+the target libm/double table-generation variability; complete packet PCM
+still requires the native/device oracle comparison gate.
+
+The default build also freezes the payload-independent **AAC sine windows**
+(lengths 120, 128, 512, 960, 1024) from the pinned native initializer. The
+selected target's old newlib `sf_sin.c` differed in 17/128 short-window words;
+substituting only that table reproduced every one of the 407 failed PCM words
+on native code. `freeze-sine-windows.py` copies the upstream sinewin translation
+unit and header into the fresh private build and changes only the initializer:
+it copies exact frozen coefficients for those lengths, computing other lengths
+normally. Allocation, initialization calls, transforms, and decoding remain
+real. Generated source, native archive hashes and dynamic dependencies are
+recorded in `SINE_PROVENANCE.txt`; no packet or PCM data is consumed by generation.
+`--legacy-runtime-sine-windows` is an explicit reproduction-only build option.
+Original FFmpeg archives and all prior binaries remain unchanged.
 
 ## Execution gates and evidence
 
@@ -128,6 +141,16 @@ This route does not create an emulator PASS, claim safety is guaranteed, or
 relax numerical acceptance. The normal path still requires the matching
 emulator PASS. All device-health, ownership, static instruction, and stop-on-
 failure checks remain in force, including blockers after a numerical failure.
+For the corrected candidate, explicitly select
+`ETAAC_FULL_DEBUG_AUTHORIZATION=silicon-fixed-sines-authorization.json` in
+addition to the debug flag. This pins the child ELF and fix evidence, verifies
+that all six existing device objects and the library hash inventory are
+identical to the completed simulator parent, and adds only the private sinewin
+object. It does not claim a corrected-emulator PASS. The numerical-only hold
+was reviewed under the shared lock after the user requested the full benchmark;
+its two original marker files were archived verbatim beneath
+`build-et/aac-full/reviews/sine-window-numerical-hold/`. No reset or device
+recovery operation was performed.
 
 `run-silicon.sh NAME INPUT GOLD CHUNK METER` acquires the shared device lock,
 checks retained recovery blockers and the established health baseline, uses
@@ -140,3 +163,30 @@ and CLOSE. With METER enabled the transfer-inclusive application service omits
 diagnostic PCM readback; the actual read and exact comparison are still retained.
 CPU benchmarks must run only after competing builds/simulation/device work stops.
 Prior synthesis-only results are context, not equivalent full-decoder throughput.
+
+## Completed validation and benchmark
+
+The corrected candidate passes all five fixtures on silicon, plus ten complete
+512-packet benchmark runs, with exact scalar PCM, clean teardown and unchanged
+recorded health. Frozen binaries are in `build-et/aac-full/selected/`.
+See `BENCHMARKS.md` / `BENCHMARKS.json` for the matched complete-decoder CPU/ET
+comparison and `RESULTS.md` for the retained investigation history. The matched
+CPU v3 driver now also performs the same finite validation and fused features
+as the kernel; ordinary v2 CPU timings remain preserved as historical evidence.
+The optimized native CPU reference is distinct from scalar PCM and is never
+used as an ET tolerance or replacement oracle.
+
+Reproduce the CPU sampling only when builds/simulator/device work is idle:
+
+```sh
+FF_ET_ALLOW_PCIE=0 et-tools/et-env python3 et-audio/full/benchmark-cpu.py \
+  --cpu build-et/aac-full/cpu-matched-v3/cpu/aac-full-cpu \
+  --output build-et/aac-full/UNIQUE-cpu-benchmark
+```
+
+Hardware benchmark samples used the existing guarded wrapper with the corrected
+ELF, explicit reviewed-child authorization, `stereo-48000-512`, chunk 512, and
+five fresh names each with METER 0 and 1. Each process downloaded and compared
+all PCM regardless of which service boundary was timed. The collector is
+read-only with respect to artifacts/device and refuses to overwrite its
+committed inventory.

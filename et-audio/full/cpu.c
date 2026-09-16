@@ -35,7 +35,7 @@ typedef struct FullInput {
 
 typedef struct Timing {
     double setup_s, decode_s, close_s;
-    uint64_t frames, samples;
+    uint64_t frames, samples, peak_bits, above_one;
     double checksum;
 } Timing;
 
@@ -119,6 +119,15 @@ static int decode_once(const FullInput *in, float *store, Timing *t) {
             for (uint32_t ch = 0; ch < in->channels; ch++) {
                 const float *src = (const float *)frame->extended_data[ch];
                 float *dst = store + ((size_t)i * in->channels + ch) * 1024;
+                /* Match the kernel's finite check and fused resident features. */
+                for (unsigned j = 0; j < 1024; j++) {
+                    uint32_t bits;
+                    memcpy(&bits, src + j, sizeof(bits));
+                    bits &= UINT32_C(0x7fffffff);
+                    if (bits >= UINT32_C(0x7f800000)) { fprintf(stderr, "nonfinite PCM\n"); goto done; }
+                    if (bits > t->peak_bits) t->peak_bits = bits;
+                    t->above_one += bits > UINT32_C(0x3f800000);
+                }
                 memcpy(dst, src, 1024 * sizeof(*dst)); /* Full packet-major output store is in the timed loop. */
                 t->checksum += dst[(i + ch * 17) & 1023];
             }
@@ -175,10 +184,12 @@ int main(int argc, char **argv) {
         if (decode_once(&in, store, &one)) { free(store); full_input_free(&in); return 1; }
         total.setup_s += one.setup_s; total.decode_s += one.decode_s; total.frames += one.frames; total.samples += one.samples; total.checksum += one.checksum;
         total.close_s += one.close_s;
+        if (one.peak_bits > total.peak_bits) total.peak_bits = one.peak_bits;
+        total.above_one += one.above_one;
     }
     if(total.frames!=(uint64_t)repetitions*in.packets || total.samples!=total.frames*in.channels*1024){free(store);full_input_free(&in);return fail("repeat accounting mismatch");}
     if (pcm && write_new_pcm(pcm, store, floats)) { free(store); full_input_free(&in); return 1; }
-    printf("{\"type\":\"aac_full_cpu\",\"mode\":\"%s\",\"scalar\":%d,\"cpu_flags\":%d,\"packets\":%u,\"channels\":%u,\"sample_rate\":%u,\"repeats\":%lu,\"setup_table_context_s\":%.9f,\"decode_output_store_s\":%.9f,\"decoder_close_s\":%.9f,\"total_s\":%.9f,\"per_decode_s\":%.9f,\"frames\":%" PRIu64 ",\"samples\":%" PRIu64 ",\"checksum\":%.17g,\"pcm_written\":%s}\n",
-           mode, scalar, av_get_cpu_flags(), in.packets, in.channels, in.rate, repetitions, total.setup_s, total.decode_s, total.close_s, total.setup_s + total.decode_s + total.close_s, (total.setup_s + total.decode_s + total.close_s) / repetitions, total.frames, total.samples, total.checksum, pcm ? "true" : "false");
+    printf("{\"type\":\"aac_full_cpu\",\"mode\":\"%s\",\"scalar\":%d,\"cpu_flags\":%d,\"packets\":%u,\"channels\":%u,\"sample_rate\":%u,\"repeats\":%lu,\"setup_table_context_s\":%.9f,\"decode_output_store_s\":%.9f,\"decoder_close_s\":%.9f,\"total_s\":%.9f,\"per_decode_s\":%.9f,\"frames\":%" PRIu64 ",\"samples\":%" PRIu64 ",\"checksum\":%.17g,\"pcm_written\":%s,\"matched_features\":true,\"consumer_peak_bits\":%" PRIu64 ",\"consumer_above_one\":%" PRIu64 "}\n",
+           mode, scalar, av_get_cpu_flags(), in.packets, in.channels, in.rate, repetitions, total.setup_s, total.decode_s, total.close_s, total.setup_s + total.decode_s + total.close_s, (total.setup_s + total.decode_s + total.close_s) / repetitions, total.frames, total.samples, total.checksum, pcm ? "true" : "false", total.peak_bits, total.above_one);
     free(store); full_input_free(&in); return 0;
 }

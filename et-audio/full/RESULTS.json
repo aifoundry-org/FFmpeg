@@ -1,7 +1,7 @@
 {
   "date_utc": "2026-09-16",
-  "scope": "Complete compressed AAC-LC, one stream, target shire0/hart0; no silicon launches yet",
-  "status": "native passed; extended emulator completed lifecycle but failed exact PCM; silicon blocked",
+  "scope": "Full compressed AAC-LC one stream, shire0/hart0; 17 physical runs: 16 exact passes and one retained numerical failure; no hardware recovery/reset",
+  "status": "fixed sine windows validated on silicon across all five fixtures; ten matched 512-packet hardware benchmark runs passed with unchanged health",
   "cpu": {
     "scope": "one full stereo 48 kHz AAC-LC stream, 512 packets; CPU0; five fresh processes plus one 5-context repeat process per mode",
     "input_sha256": "80dd3dbd32f432ec3f148306b6e2fa1d76dfef1533fab5e99347c59c65afa004",
@@ -447,6 +447,14 @@
     {
       "path": "build-et/aac-full/emulator/portable-extended-32",
       "reason": "exit 1 after full lifecycle: 407/65536 PCM words differ from scalar oracle; no PASS.json; no hardware access"
+    },
+    {
+      "path": "build-et/aac-full/silicon/debug-portable-stereo-32",
+      "reason": "silicon exit1: same407 PCM-word mismatches as simulator; clean lifecycle and unchanged health; stop-on-failure markers retained"
+    },
+    {
+      "path": "build-et/aac-full/device-frozen-sines-v1",
+      "reason": "compile-only failure: standalone FFmpeg sinewin TU needed original XOPEN/strict-ANSI preprocessor flags; corrected in v2, failed output retained"
     }
   ],
   "previous_scope_note": "Prior synthesis-only 64-channel/512-frame results are not equivalent to this full one-stream workload; no ET full-decoder speed comparison is available.",
@@ -630,5 +638,623 @@
       "transfer_inclusive_service_s": 549.409014172
     },
     "root_cause": "not established; simulator wall times are not silicon performance"
-  }
+  },
+  "silicon_diagnostics": [
+    {
+      "path": "build-et/aac-full/silicon/debug-portable-smoke-1",
+      "health_unchanged": {
+        "ce": true,
+        "uce": true,
+        "counts": true
+      },
+      "config": {
+        "type": "config",
+        "backend": "silicon-shire0-hart0",
+        "protocol": 4,
+        "packets": 1,
+        "channels": 2,
+        "sample_rate": 48000,
+        "chunk": 1,
+        "meter": 0,
+        "input_bytes": 256,
+        "output_bytes": 8192,
+        "device_bytes": 67379840
+      },
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 1,
+        "exact_channel_frames": 2,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.291960573,
+        "upload_s": 0.000561965,
+        "decoder_init_s": 0.287149066,
+        "init_status_io_s": 0.00091594,
+        "decode_s": 0.00968464,
+        "decode_status_io_s": 0.000623038,
+        "consumer_s": 0.0,
+        "consumer_status_io_s": 0.0,
+        "pcm_readback_s": 0.000314134,
+        "state_validation_read_s": 0.000294509,
+        "compare_s": 3.07e-06,
+        "decoder_close_s": 0.006190208,
+        "close_status_io_s": 0.000604324,
+        "resident_service_s": 0.010307678,
+        "transfer_inclusive_service_s": 0.011183777
+      },
+      "all_completions_clean": true,
+      "heap_live_after_close": 0,
+      "artifact_sha256": {
+        "timestamps": "f6a5e65b8d6f4298d482c042c58edb696ef2412b9f9df3b5705fca85f4e090e0",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "e965606b707e475da158d235d9459c318f8a981d57e81ca736b931703cda3792",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "23c6dd2b65bbf236976781e5560a2c347551d4c3f6c889e9dfd53ae8e47f1d4b",
+        "config.txt": "adec92476b468a83f9bfd64f9a4adc1ec01848c94f8db09a19f86c586f699b67",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "194d52f8bb2250b1b8996af8d2729f41d75432a7149498e675e0cd497d14082d",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "589a700476beb41e37c8a3a2005c4325aa870d0c9e2f4a6825f4b46e413034ec",
+        "run.jsonl": "e99380910b8532d6bba1203ee466c4491f70d9aec2bc36a96ace4e053e985002",
+        "state.bin": "b28d74c1eaf6ef797493344b546cec71e61f83eecf2e7ba49b23fa7cc1bfbf04",
+        "diagnostic-authorization.json": "60d9a62a2ca2da41bd5e87a8d74d01368caf0b7d9eb09c03fa33b2fa2c7d1d35"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/debug-portable-stereo-32",
+      "health_unchanged": {
+        "ce": true,
+        "uce": true,
+        "counts": true
+      },
+      "config": {
+        "type": "config",
+        "backend": "silicon-shire0-hart0",
+        "protocol": 4,
+        "packets": 32,
+        "channels": 2,
+        "sample_rate": 48000,
+        "chunk": 16,
+        "meter": 1,
+        "input_bytes": 16832,
+        "output_bytes": 262144,
+        "device_bytes": 67650368
+      },
+      "result": {
+        "type": "result",
+        "pass": false,
+        "exact_packet_frames": 0,
+        "exact_channel_frames": 0,
+        "pcm_mismatches": 407,
+        "runtime_setup_s": 0.292655802,
+        "upload_s": 0.000561935,
+        "decoder_init_s": 0.28579033,
+        "init_status_io_s": 0.000956944,
+        "decode_s": 0.101687253,
+        "decode_status_io_s": 0.001244307,
+        "consumer_s": 0.005711793,
+        "consumer_status_io_s": 0.000607039,
+        "pcm_readback_s": 0.00049632,
+        "state_validation_read_s": 0.000303225,
+        "compare_s": 0.000140875,
+        "decoder_close_s": 0.006214186,
+        "close_status_io_s": 0.000635721,
+        "resident_service_s": 0.109250392,
+        "transfer_inclusive_service_s": 0.109812327
+      },
+      "all_completions_clean": true,
+      "heap_live_after_close": 0,
+      "artifact_sha256": {
+        "timestamps": "61a43b099556823a2691a2860122a3a44eb93bb0fd53f7bce74948acc6a826d8",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "77e2b6aeace8a16b5921d488a3f3c8289f29268bd0bc7660774bba5e3ddd5ef0",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "28d4ddc1ee8c65d32a12605c743ee6983f9ac638865a0a301cf0ad4075579990",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "d9522acfd25cbf551ab2e88ba60cad08af424bfa5c60b405772e6de355ca76b4",
+        "config.txt": "d58b79a50cd98f1d6f58da3e96616a990f109930919e02d51d88ca58b4e20fff",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "8a75635dc7e588d3e229e0b430e28d80a812c20d4767b5d92b4f9ff0a652c79b",
+        "run.log": "fd9a52917a17a112f56d1031a32443db72a6bfd69d87ea5ae3521ae8cf813286",
+        "run.jsonl": "99a03aefec318cfc713c45e1543f79d9ef9d79a89c25270f701bdf9ab9cc6fdb",
+        "state.bin": "9fb66b3a95283ab5237fde197c0ec59db17be86dde93c47ce3afbbd68979a690",
+        "diagnostic-authorization.json": "60d9a62a2ca2da41bd5e87a8d74d01368caf0b7d9eb09c03fa33b2fa2c7d1d35"
+      }
+    }
+  ],
+  "silicon_stereo32_pcm_byte_identical_to_simulator": true,
+  "hardware_hold": {
+    "markers": [
+      "build-et/aac-full/RECOVERY_REQUIRED",
+      "build-et/silicon/RECOVERY_REQUIRED"
+    ],
+    "reason": "wrapper exit1 on numerical mismatch; unchanged measured health; markers retained, no reset/recovery or further card access",
+    "resolution": "Two owned numerical-only markers reviewed under shared lock and archived verbatim before fixed-candidate validation, following user authorization. No device recovery operation performed.",
+    "review": "build-et/aac-full/reviews/sine-window-numerical-hold/review.json",
+    "active": false
+  },
+  "offline_diagnosis": {
+    "path": "build-et/aac-full/offline-numerical-diagnosis-v1",
+    "summary": {
+      "artifacts": {
+        "native-api-trace-3.log": "c40af5fccec41bc84f7b0cc200bb5b7cb2d1f1b6dce6a6dd7edcb67e4e162758",
+        "native-trace-3.json": "2c63a21c86ae500e189eae105ced44732c10c861103e1d5e20fab596755bea5b",
+        "native-trace-3.pcm": "812c2c3a167f44e13b6c311f353b623c9d4a22dc4eaf03741044fa29153ad248",
+        "packet-index.json": "5a404ceacba74c51971d9fe9e7bbaf9074b5584f81bc291a068a254a2556574f",
+        "pcm-bit-diagnosis.json": "dadaf17a5ba1c8f4f18e2fd81d99c027e4c268ce1378cd1ba29c2941ed97d9ad",
+        "pns-native-trace.log": "63045af8df05594912ceabbce3927a3f513b5ec1329d8f56d9c1f4add3d7f8ef",
+        "stereo-48000-32.adts": "59bec0b2026d02d23a127329c294092929b76a3c295c6d1e7dacecbbf083f372"
+      },
+      "conclusion": {
+        "candidate": "runtime-generated short transform numeric tables (sine_128 and MDCT/FFT-128 float tables), not packet-dependent PNS sqrt/division",
+        "earliest_proven_internal_boundary": "packet 9 saved-overlap update: packet 10 is EIGHT_SHORT and copies prior saved[0..447] directly to its output, so its first mismatch at sample 211 predates packet 10 spectral processing",
+        "earliest_public_pcm_difference": "packet 10, channel 0, sample 211 (word 20691)",
+        "pns_or_pulse": "ruled out for this stream by exact native API trace: zero ETAAC_PNS and ETAAC_PULSE records across 32 packet sends",
+        "syntax_at_packet_9": "EIGHT_SHORT, 4 groups, max_sfb 12, M/S enabled (11 bands), no intensity, no PNS"
+      },
+      "date": "2026-09-16",
+      "proposed_minimal_fix": {
+        "description": "freeze only the native-CPU bit patterns consumed by the AAC short path: ff_sine_128; float split-radix tables 8/16/32/64; and the 128-point inverse-MDCT exp array. Preserve AVTX allocation, mapping, dispatch, and transform execution; copy constants after the normal bounded allocations instead of evaluating sinf/cos/sin/sqrt on ET.",
+        "not_acceptable": [
+          "PCM tolerance",
+          "output replacement/stub",
+          "freezing AAC payload-derived data",
+          "broad libm behavior change without a focused acceptance run"
+        ],
+        "validation": "fresh isolated device output, static gate, then the exact 32-packet emulator acceptance gate; no hardware unless it passes."
+      },
+      "scope": "offline-only; no hardware, web, tolerance, source-root modification, or benchmark"
+    },
+    "diagnosis_sha256": "f02200c0f5f9ef4fa09375c0eb80be0acdb8f2b0d203cf885540213c827ea3db",
+    "status": "old newlib sinf confirmed: 17 sine128 coefficient differences; table-only native injection reproduces hardware bytes; frozen coefficients eliminate mismatch",
+    "sine128_proof": {
+      "causal_reproduction": {
+        "injection": "isolated copied native FFmpeg replaced only n==128 sine-window bits with target-newlib-derived bits; decoder/AVTX/PCM comparison path unchanged",
+        "result": "exactly reproduces all 407 words and is byte-identical to retained target actual.pcm",
+        "vs_golden": {
+          "by_packet": {
+            "10": 249,
+            "11": 158
+          },
+          "first": 20691,
+          "mismatch_count": 407
+        },
+        "vs_retained_emulator_actual": {
+          "by_packet": {},
+          "first": null,
+          "mismatch_count": 0
+        }
+      },
+      "ffmpeg_window_input": "window[i] = sinf((i + 0.5) * (M_PI / (2.0 * 128))) for i=0..127",
+      "fix": "Freeze the 128 native-CPU sine-window float bit patterns at device-build time and use them only for ff_sine_window_init(..., 128) in a freshly copied/rebuilt private FFmpeg archive. Preserve all transform/window arithmetic and allocation; do not use target newlib-derived values, tolerance, or packet-derived data.",
+      "hardware_context_from_user": "silicon 32-packet PCM is byte-identical to retained emulator actual.pcm; no further hardware access",
+      "required_validation": "fresh isolated no-FDIV device ELF; static policy/audit; exact 32-packet emulator lifecycle acceptance before any hardware consideration.",
+      "ruled_out": [
+        "PNS: exact native packet trace reported no PNS bands",
+        "pulse: exact native packet trace reported no pulse data",
+        "cbrt frozen table: native and candidate frozen 8192-word tables are byte-identical",
+        "FMA: no fmadd/fmsub/fnmadd/fnmsub opcode appears in candidate listing",
+        "float MDCT exponent and split-radix table casts from host-built portable double sin/cos differed zero float words in the tested 128-point path"
+      ],
+      "scope": "offline-only proof; target source/artifacts untouched; isolated cloned native FFmpeg only",
+      "target_sinf_provenance": {
+        "archive_member": "scalar-libs-no-mcode/lib/libm.a:libm_a-sf_sin.o",
+        "disassembly": "calls __ieee754_rem_pio2f, __kernel_sinf, and __kernel_cosf, matching newlib/libm/math/sf_sin.c"
+      },
+      "target_vs_native_sine128": {
+        "different_words": 17,
+        "indices": [
+          15,
+          19,
+          24,
+          61,
+          65,
+          68,
+          70,
+          71,
+          76,
+          77,
+          81,
+          82,
+          83,
+          94,
+          96,
+          98,
+          105
+        ],
+        "max_ulp": 1,
+        "native_glibc_sha256": "3476130f19dc86fc7567fde8486fb38384d283e69913a55f98152c21c6b9720f",
+        "target_newlib_sha256": "4a366547c1ef397acf8433bc34635e7a731624e8a6107b87a53b451c2977802b"
+      }
+    },
+    "independent_full_old_sinf_override": {
+      "gold_word_mismatches": 407,
+      "silicon_word_mismatches": 0,
+      "actual_sha256": "28d4ddc1ee8c65d32a12605c743ee6983f9ac638865a0a301cf0ad4075579990"
+    },
+    "fixed_native_fixture_tests": {
+      "fail_closed": [
+        {
+          "case": "truncated-header",
+          "returncode": 1,
+          "stderr": "input reject: file is not a 64-byte-aligned complete header"
+        },
+        {
+          "case": "header-magic",
+          "returncode": 1,
+          "stderr": "input reject: shared ETAAC full envelope validation"
+        },
+        {
+          "case": "count-descriptor-layout",
+          "returncode": 1,
+          "stderr": "input reject: shared ETAAC full envelope validation"
+        },
+        {
+          "case": "overflow-offset",
+          "returncode": 1,
+          "stderr": "input reject: shared ETAAC full envelope validation"
+        },
+        {
+          "case": "reserved-header",
+          "returncode": 1,
+          "stderr": "input reject: shared ETAAC full envelope validation"
+        },
+        {
+          "case": "nonzero-padding",
+          "returncode": 1,
+          "stderr": "input reject: shared ETAAC full envelope validation"
+        },
+        {
+          "case": "ADTS-CRC-present",
+          "returncode": 1,
+          "stderr": "input reject: shared ETAAC full envelope validation"
+        }
+      ],
+      "output_no_overwrite": "pass",
+      "repeat_accounting": "2 and 5 complete decodes: pass",
+      "type": "aac_full_native_fixture_tests",
+      "valid": [
+        {
+          "case": "stereo-48000-512",
+          "pcm_sha256": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+          "result": "pass"
+        },
+        {
+          "case": "stereo-48000-32",
+          "pcm_sha256": "812c2c3a167f44e13b6c311f353b623c9d4a22dc4eaf03741044fa29153ad248",
+          "result": "pass"
+        },
+        {
+          "case": "stereo-48000-1",
+          "pcm_sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+          "result": "pass"
+        },
+        {
+          "case": "mono-44100-32",
+          "pcm_sha256": "3ecac15983f7f953e47b972f9c469595a6477e8f1170d3144ec4c75e77409713",
+          "result": "pass"
+        },
+        {
+          "case": "mono-48000-32",
+          "pcm_sha256": "26bda342158550aab09496eb762e23ae05e7403ce4db5a72a6289c7f73ed23cc",
+          "result": "pass"
+        }
+      ]
+    },
+    "initial_report_superseded_by": "build-et/aac-full/offline-numerical-diagnosis-v1/FOLLOWUP-SINE128-PROOF.md; actual fix freezes only sine-window coefficients, not FFT/MDCT tables"
+  },
+  "selected_sha256": {
+    "et_aac_full.elf": "deb1c2127c5132e69b28cd244eb16388f106326d211cff378f1e8df246532321",
+    "full-run": "56fcc2fb20bed129a0c8f6e94863e0c75c4fee116e15c7b70060ee57ae084e90",
+    "aac-full-cpu": "3417e02d735a65991a5037b14eab7085dfa1297061a21bcc594ca9ddc287e659"
+  },
+  "selected_directory": "build-et/aac-full/selected",
+  "selected_candidate": "build-et/aac-full/device-frozen-sines-v2/et_aac_full.elf",
+  "benchmark_inventory": "et-audio/full/BENCHMARKS.json",
+  "fixed_validation_runs": [
+    {
+      "path": "build-et/aac-full/silicon/fixed-sines-smoke-1",
+      "config": {
+        "type": "config",
+        "backend": "silicon-shire0-hart0",
+        "protocol": 4,
+        "packets": 1,
+        "channels": 2,
+        "sample_rate": 48000,
+        "chunk": 1,
+        "meter": 0,
+        "input_bytes": 256,
+        "output_bytes": 8192,
+        "device_bytes": 67379840
+      },
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 1,
+        "exact_channel_frames": 2,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.285919765,
+        "upload_s": 0.000561668,
+        "decoder_init_s": 0.276161399,
+        "init_status_io_s": 0.000895815,
+        "decode_s": 0.009707853,
+        "decode_status_io_s": 0.000726722,
+        "consumer_s": 0.0,
+        "consumer_status_io_s": 0.0,
+        "pcm_readback_s": 0.000316843,
+        "state_validation_read_s": 0.000289991,
+        "compare_s": 2.99e-06,
+        "decoder_close_s": 0.006202462,
+        "close_status_io_s": 0.000621301,
+        "resident_service_s": 0.010434575,
+        "transfer_inclusive_service_s": 0.011313086
+      },
+      "health_unchanged": true,
+      "artifact_sha256": {
+        "timestamps": "e76dc04cdda21efdb79784a48f933b75905920ee7c3e20cecb3138f031ed6d3d",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "b14eeb2e1970154660f8031a3a9dcc8360505a8be829996dcbd98f2d0f6eb517",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "4f266a5c4fcafc4a312576708e722b3f225cbf16c58f78352b393e904ceb09b4",
+        "config.txt": "adec92476b468a83f9bfd64f9a4adc1ec01848c94f8db09a19f86c586f699b67",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "d4a3d5af42a7c72c04533a41db988bde420f9d7cb2cd1546b79709ec8770a82c",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "cda2511976d0dc3feee15a211e5da23a92df3ad76983f34f44308d6e925d35bd",
+        "run.jsonl": "b8a710f12f9a068c6d0658d69b48fc4dd38e0cee71558657ff4b9e6284d75fe7",
+        "state.bin": "41b30334da753bcce26a2ae72066d8ccdd1fa4e8293e6724fe4998f422ee2bb9",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/fixed-sines-stereo-32",
+      "config": {
+        "type": "config",
+        "backend": "silicon-shire0-hart0",
+        "protocol": 4,
+        "packets": 32,
+        "channels": 2,
+        "sample_rate": 48000,
+        "chunk": 16,
+        "meter": 1,
+        "input_bytes": 16832,
+        "output_bytes": 262144,
+        "device_bytes": 67650368
+      },
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 32,
+        "exact_channel_frames": 64,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.295211041,
+        "upload_s": 0.000560413,
+        "decoder_init_s": 0.276334154,
+        "init_status_io_s": 0.001014698,
+        "decode_s": 0.102365237,
+        "decode_status_io_s": 0.001690901,
+        "consumer_s": 0.005728207,
+        "consumer_status_io_s": 0.000810308,
+        "pcm_readback_s": 0.000491074,
+        "state_validation_read_s": 0.000431984,
+        "compare_s": 9.6728e-05,
+        "decoder_close_s": 0.006334999,
+        "close_status_io_s": 0.000845918,
+        "resident_service_s": 0.110594653,
+        "transfer_inclusive_service_s": 0.111155066
+      },
+      "health_unchanged": true,
+      "artifact_sha256": {
+        "timestamps": "6d26963bd3afeed752d115b41a8dd06d872c18aa8b7dfbdafc15b79cb899f571",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "bcadf003b4bac28b5b5bca46ec838d1434444dd4e68a9dfece1777f6a1a0cd7d",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "812c2c3a167f44e13b6c311f353b623c9d4a22dc4eaf03741044fa29153ad248",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "278dcd3e96d54ec7c786f062afad993449f0f8480f9d80d9132d03c3f27d6c7d",
+        "config.txt": "d58b79a50cd98f1d6f58da3e96616a990f109930919e02d51d88ca58b4e20fff",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "b62f674004786492ae5811b5102ba698b06ed0e928c359309df94c66dd8c0053",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "26d756b716761f3bdb2b0e094bd5e393662e655142d8548d112fddd798f8ae13",
+        "run.jsonl": "48456a07ead04d5a403e492a9e70f4069d01f5cb6f5600f1c7527aa4c6448658",
+        "state.bin": "8377730c42cff5f1fc9ac984638f5fb9306e6be7f92052671b158308702abfbe",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/fixed-sines-mono-44100-32",
+      "config": {
+        "type": "config",
+        "backend": "silicon-shire0-hart0",
+        "protocol": 4,
+        "packets": 32,
+        "channels": 1,
+        "sample_rate": 44100,
+        "chunk": 16,
+        "meter": 1,
+        "input_bytes": 13120,
+        "output_bytes": 131072,
+        "device_bytes": 67515584
+      },
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 32,
+        "exact_channel_frames": 32,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.287285001,
+        "upload_s": 0.000562142,
+        "decoder_init_s": 0.276330132,
+        "init_status_io_s": 0.00098455,
+        "decode_s": 0.074809283,
+        "decode_status_io_s": 0.001266499,
+        "consumer_s": 0.005635467,
+        "consumer_status_io_s": 0.000573839,
+        "pcm_readback_s": 0.000342053,
+        "state_validation_read_s": 0.000399464,
+        "compare_s": 4.3872e-05,
+        "decoder_close_s": 0.006305954,
+        "close_status_io_s": 0.000597467,
+        "resident_service_s": 0.082285088,
+        "transfer_inclusive_service_s": 0.08284723
+      },
+      "health_unchanged": true,
+      "artifact_sha256": {
+        "timestamps": "d204a6afbc9587236819f7b44780773ac191f1e983c498e050ffa80850a9d587",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "cd0cb475694f7146787a9cb39739810db24239c7cf7bf5dcdd3925d57be1635f",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "3ecac15983f7f953e47b972f9c469595a6477e8f1170d3144ec4c75e77409713",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "83708b61f6f192734248270191124a76f3100acf3006914258f9b2c920b68259",
+        "config.txt": "a7e922f6949bdb2f640bdde3b8a703782861730ca53679832de75249a12100d5",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "c8c3059fe11e0df97881c43552ba5f15ead613b58cef45a09cbab19d3aa05a45",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "b0d2216db57247bc12c8563cfe800dcbf8fa9b6d169d82b32a64e500ff344d84",
+        "run.jsonl": "f98d5cbe6733188fda52ce109752188e583a5627a71a9ec5cc63807ae4d5148f",
+        "state.bin": "cde37b5295e04220dc6e758969282aff2270dc20902807325bfe1e425e61af39",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/fixed-sines-mono-48000-32",
+      "config": {
+        "type": "config",
+        "backend": "silicon-shire0-hart0",
+        "protocol": 4,
+        "packets": 32,
+        "channels": 1,
+        "sample_rate": 48000,
+        "chunk": 16,
+        "meter": 1,
+        "input_bytes": 12352,
+        "output_bytes": 131072,
+        "device_bytes": 67514816
+      },
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 32,
+        "exact_channel_frames": 32,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.290632994,
+        "upload_s": 0.000521815,
+        "decoder_init_s": 0.276207071,
+        "init_status_io_s": 0.000894421,
+        "decode_s": 0.074108826,
+        "decode_status_io_s": 0.001183771,
+        "consumer_s": 0.00564453,
+        "consumer_status_io_s": 0.000583239,
+        "pcm_readback_s": 0.000453819,
+        "state_validation_read_s": 0.000287366,
+        "compare_s": 4.4445e-05,
+        "decoder_close_s": 0.006239853,
+        "close_status_io_s": 0.000605376,
+        "resident_service_s": 0.081520366,
+        "transfer_inclusive_service_s": 0.082042181
+      },
+      "health_unchanged": true,
+      "artifact_sha256": {
+        "timestamps": "ef0dea04c3a890db7ef663ad982f4c8d92096fdb15836fcec7bed45e3a1eac31",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "7b67d5d76ea0a090197a3629df570bc3e1fbf2fcf74e13394f6aaa228293d148",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "26bda342158550aab09496eb762e23ae05e7403ce4db5a72a6289c7f73ed23cc",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "3bd2f9469009a91ced3823ed6273f83fae5c0e825ad4e27ee29cfcd2c5a26eb9",
+        "config.txt": "e5071401ecc1c92b690b50e9736284491f7426b01aa7447e8ab438c3cfe2250d",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "c0a7a6be03b198212f7479b63fa6bbc77f7f9be88d44705631d9e921ad9729b2",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "ceaf51383bc3fbfea0831a6387e2560a6be85db5d34ea86ec3571117b5777f90",
+        "run.jsonl": "ad56e1584247aefbd8b9125cd50c64a0def7dd17327d0d476b97b96abb8761ee",
+        "state.bin": "98ffbb97f2d17d830574245b80821e96c36e775a35b394d96d01b2d0036656fb",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    },
+    {
+      "path": "build-et/aac-full/silicon/fixed-sines-stereo-48000-512",
+      "config": {
+        "type": "config",
+        "backend": "silicon-shire0-hart0",
+        "protocol": 4,
+        "packets": 512,
+        "channels": 2,
+        "sample_rate": 48000,
+        "chunk": 512,
+        "meter": 0,
+        "input_bytes": 296128,
+        "output_bytes": 4194304,
+        "device_bytes": 71861824
+      },
+      "result": {
+        "type": "result",
+        "pass": true,
+        "exact_packet_frames": 512,
+        "exact_channel_frames": 1024,
+        "pcm_mismatches": 0,
+        "runtime_setup_s": 0.284351791,
+        "upload_s": 0.000562537,
+        "decoder_init_s": 0.280369393,
+        "init_status_io_s": 0.0008876,
+        "decode_s": 1.518325452,
+        "decode_status_io_s": 0.00088864,
+        "consumer_s": 0.0,
+        "consumer_status_io_s": 0.0,
+        "pcm_readback_s": 0.00411825,
+        "state_validation_read_s": 0.000445207,
+        "compare_s": 0.001452586,
+        "decoder_close_s": 0.006201049,
+        "close_status_io_s": 0.000815872,
+        "resident_service_s": 1.519214092,
+        "transfer_inclusive_service_s": 1.523894879
+      },
+      "health_unchanged": true,
+      "artifact_sha256": {
+        "timestamps": "043ac5ce6adfd54c87b67e015efe6ac0056a1c7b0facbd2226eaa5b0c1f2c90e",
+        "before.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "after.mm": "d13055a02a4193ac2adc48c802de1cc4d53e2bfb3572c06b62bb787da53e3b0b",
+        "owners.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "actual.pcm": "47ff50e289297d4d6893e14bd40ff28de241d9903647dc06a6df6189bdd72167",
+        "before.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "after.counts": "a8d266e5684d510cd95bd7e5fcda672580af95ac29ca69d7ef5b21de54e8209f",
+        "after.ce": "04f489f40d0fb0ea119a951cbcf142c2622893db8967e9946580de2df745d820",
+        "provenance.sha256": "50a1fc06e3684cac8c6b35fd4d1ff7f72e23413b2006dbb98adc81e33ca0f64b",
+        "config.txt": "cd2d97c96ecc388fd2d44035c798b1a0e3f78433bbcac113a3f0dcfeef015991",
+        "after.uce": "020bee093f13e8486fcb709814dfd0353ced6abebf6863f430dd7a8c27951bfa",
+        "before.mm": "ccbcd9b68e6c0b269f5b4282554a8b1e888354d5d669a233e64a0b178274e37e",
+        "result.txt": "9359ff9653bee913a39c04f8eabc410af54073694dcb26b95c6882944c950a9c",
+        "run.log": "4ec3409e52040532ac496e38539bdb5b7d1d7d4e6dd1dd91fc5b342fc484a466",
+        "run.jsonl": "6a6af73bdd99e9d0c3f952a77be29a89725e03269b45aa5357e1d5bde3cd2f31",
+        "state.bin": "af511167b66dc966e79a440b34f9498c136fc3c94352d0f48b18621315df873a",
+        "diagnostic-authorization.json": "b9df62400b745c69690d0bbd9f01871440d3c9f9ef7dd7572ce628cadae7baf1"
+      }
+    }
+  ],
+  "superseded_diagnostic": "build-et/aac-full/offline-sine-v1 modern-sinf control used an unselected implementation; falsification withdrawn; source and attempts archived. Old sf_sin.c reproductions establish actual cause."
 }

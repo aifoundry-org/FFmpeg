@@ -10,7 +10,9 @@ if '--output' in sys.argv:
 if out.exists(): raise SystemExit('refusing existing output root: '+str(out))
 if not (R6/'libavcodec/libavcodec.a').is_file(): raise SystemExit('missing pinned r6 archive')
 out.mkdir(parents=True); src=out/'private-source'; src.mkdir()
-freeze_sines='--freeze-sine-windows' in sys.argv
+# Default to the validated mathematical constants. Legacy mode is explicit
+# and retained only to reproduce the diagnosed libm mismatch.
+freeze_sines='--legacy-runtime-sine-windows' not in sys.argv
 owned=['freeze-sine-windows.py','protocol.h','full-native-tests.c','kernel.c','platform.c','platform.h','arena.c','arena.h','entry.S','linker.ld','build-device.py','check-device.py','arena-tests.c','README.md']
 for name in owned:
     p=ROOT/'et-audio/full'/name
