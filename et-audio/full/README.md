@@ -119,6 +119,16 @@ ETAAC_FULL_ELF=build-et/aac-full/device-no-mcode-v1/et_aac_full.elf \
 Only a successful run writes `PASS.json`. Hardware additionally requires
 `FF_ET_ALLOW_PCIE=1`, an explicit matching `ETAAC_FULL_ELF`, and
 `ETAAC_FULL_EMULATOR_PROOF=build-et/aac-full/emulator/UNIQUE/PASS.json`.
+After the extended simulator completed its lifecycle but failed PCM, the user
+explicitly authorized hardware numerical debugging. A separate, opt-in
+`ETAAC_FULL_NUMERICAL_DEBUG=1` route now permits only the exact reviewed ELF
+and unchanged simulator evidence pinned in `silicon-debug-authorization.json`.
+`validate-debug-authorization.py` rechecks those hashes and completed lifecycle.
+This route does not create an emulator PASS, claim safety is guaranteed, or
+relax numerical acceptance. The normal path still requires the matching
+emulator PASS. All device-health, ownership, static instruction, and stop-on-
+failure checks remain in force, including blockers after a numerical failure.
+
 `run-silicon.sh NAME INPUT GOLD CHUNK METER` acquires the shared device lock,
 checks retained recovery blockers and the established health baseline, uses
 only shire 0/hart 0, and blocks further access on failure. It performs no reset,

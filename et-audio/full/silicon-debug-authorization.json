@@ -1,0 +1,18 @@
+{
+  "mode": "user-authorized-numerical-debug-only",
+  "authorization_date": "2026-09-16",
+  "authorization": "User explicitly authorized ET-SOC1 hardware debugging after the completed simulator lifecycle despite failed exact PCM. This is not a guarantee against hardware wedges or numerical acceptance.",
+  "elf_sha256": "6951564f388059a7222a77a1932568ad59514451ce7757b0af9c7dfe75922026",
+  "simulator_directory": "build-et/aac-full/emulator/portable-extended-32",
+  "artifact_sha256": {
+    "actual.pcm": "28d4ddc1ee8c65d32a12605c743ee6983f9ac638865a0a301cf0ad4075579990",
+    "state.bin": "9fb66b3a95283ab5237fde197c0ec59db17be86dde93c47ce3afbbd68979a690",
+    "run.jsonl": "73d70998fd45528b1e91ba4fd900e9b1aa459124a2ad5e392a7675895ebf01a8",
+    "run.log": "3d08ead0db9a6ddad26d58204ac39051e36db2e41047ab341689c291616a4a92",
+    "exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "provenance.sha256": "9304c7478267bb48031a5404ebb061925d944b0006a28fb0687489d3b326171c",
+    "scope.txt": "38a87757a85cd2ba5790de5061969b17369dd5a10278aafbc338c163adf25ee4"
+  },
+  "expected_pcm_mismatches": 407,
+  "constraints": "shire0/hart0; retain static/health/lock gates; no reset/recovery/counter changes; stop and retain blockers on any failed run; no numerical tolerance"
+}

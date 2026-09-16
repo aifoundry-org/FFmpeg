@@ -22,6 +22,13 @@ KERNEL=${ETAAC_FULL_ELF:?Set explicit fully checked full AAC ELF path}
 [[ $KERNEL == build-et/aac-full/* && $KERNEL != *..* ]] || exit 2
 FF_ET_ALLOW_PCIE=0 "$ROOT/et-tools/et-env" python3 et-audio/full/check-device.py \
  "/work/$KERNEL" /opt/et/bin/riscv64-unknown-elf-
+DEBUG=${ETAAC_FULL_NUMERICAL_DEBUG:-0}
+[[ $DEBUG == 0 || $DEBUG == 1 ]] || exit 2
+if [[ $DEBUG == 1 ]]; then
+ # Explicit user authorization for the single reviewed completed-lifecycle ELF.
+ # This is eligibility to diagnose, not a replacement PCM success proof.
+ AUTHORIZATION=$(python3 "$ROOT/et-audio/full/validate-debug-authorization.py" "$ROOT" "$KERNEL")
+else
 PROOF=${ETAAC_FULL_EMULATOR_PROOF:?Set explicit matching emulator PASS.json before hardware}
 [[ $PROOF == build-et/aac-full/emulator/*/PASS.json && $PROOF != *..* ]] || exit 2
 python3 - "$ROOT/$PROOF" "$ROOT/$KERNEL" <<'PROOF'
@@ -30,9 +37,11 @@ p=json.loads(pathlib.Path(sys.argv[1]).read_text())
 assert p['pass'] and p['config']['backend']=='sys_emu-shire0-hart0'
 assert p['elf_sha256']==hashlib.sha256(pathlib.Path(sys.argv[2]).read_bytes()).hexdigest()
 PROOF
+fi
 OUT="$ROOT/build-et/aac-full/silicon/$NAME"
 [[ ! -e $OUT ]] || { echo "Refusing to overwrite $OUT" >&2; exit 2; }
 mkdir -p "$OUT"
+if [[ $DEBUG == 1 ]]; then printf '%s\n' "$AUTHORIZATION" >"$OUT/diagnostic-authorization.json"; fi
 BLOCK="$ROOT/build-et/aac-full/RECOVERY_REQUIRED"
 for marker in "$BLOCK" "$ROOT/build-et/aac-profile/PROFILE_RECOVERY_REQUIRED" "$ROOT/build-et/aac-offline/RECOVERY_REQUIRED" "$ROOT/build-et/aac-prototype/RECOVERY_REQUIRED" "$ROOT/build-et/silicon/RECOVERY_REQUIRED" \
  "$ROOT/../et-platform/examples/hyenadna/artifacts/device-recovery-required.json" \
