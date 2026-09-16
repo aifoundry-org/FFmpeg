@@ -10,7 +10,8 @@ if '--output' in sys.argv:
 if out.exists(): raise SystemExit('refusing existing output root: '+str(out))
 if not (R6/'libavcodec/libavcodec.a').is_file(): raise SystemExit('missing pinned r6 archive')
 out.mkdir(parents=True); src=out/'private-source'; src.mkdir()
-owned=['protocol.h','full-native-tests.c','kernel.c','platform.c','platform.h','arena.c','arena.h','entry.S','linker.ld','build-device.py','check-device.py','arena-tests.c','README.md']
+freeze_sines='--freeze-sine-windows' in sys.argv
+owned=['freeze-sine-windows.py','protocol.h','full-native-tests.c','kernel.c','platform.c','platform.h','arena.c','arena.h','entry.S','linker.ld','build-device.py','check-device.py','arena-tests.c','README.md']
 for name in owned:
     p=ROOT/'et-audio/full'/name
     if p.exists(): shutil.copy2(p,src/name)
@@ -26,6 +27,8 @@ dumper=out/'dump-cbrt'; subprocess.run([os.environ.get('CC','cc'),'-std=c11','-O
 frozen=src/'cbrt_frozen.c'
 with frozen.open('w') as f: subprocess.run([str(dumper)],check=True,stdout=f)
 (src/'CBRT_PROVENANCE.txt').write_text('CPU archive: '+str(cpu/'libavcodec/libavcodec.a')+'\nCPU archive SHA256: '+hashlib.sha256((cpu/'libavcodec/libavcodec.a').read_bytes()).hexdigest()+'\nGenerated source SHA256: '+hashlib.sha256(frozen.read_bytes()).hexdigest()+'\nMethod: ff_cbrt_tableinit() then exact uint32_t[8192] emission; no AAC payload is processed.\n')
+if freeze_sines:
+    subprocess.run([sys.executable,str(ROOT/'et-audio/full/freeze-sine-windows.py'),str(R6),str(src)],check=True)
 with (src/'SHA256SUMS').open('w') as f:
     for p in sorted(src.iterdir()):
         if p.is_file() and p.name!='SHA256SUMS': f.write(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n')
@@ -38,6 +41,11 @@ objects=[]
 for name in ['kernel.c','platform.c','arena.c']:
     o=out/(name+'.o'); subprocess.run([cc,*flags,'-c',str(ROOT/'et-audio/full'/name),'-o',str(o)],check=True); objects.append(o)
 o=out/'cbrt_frozen.o'; subprocess.run([cc,*flags,'-c',str(frozen),'-o',str(o)],check=True); objects.append(o)
+if freeze_sines:
+    # Resolve all upstream sinewin symbols before the archive is searched.
+    o=out/'sinewin_frozen.o'
+    subprocess.run([cc,*flags,'-U__STRICT_ANSI__','-D_XOPEN_SOURCE=600','-I'+str(R6/'libavcodec'),'-c',str(src/'sinewin_frozen.c'),'-o',str(o)],check=True)
+    objects.append(o)
 o=out/'entry.o'; subprocess.run([cc,*flags,'-c',str(ROOT/'et-audio/full/entry.S'),'-o',str(o)],check=True); objects.append(o)
 o=out/'memory.o'; subprocess.run([cc,*flags,'-DET_WIDE_MEM=1','-c',str(ROOT/'et-kernels/src/libc.c'),'-o',str(o)],check=True); objects.append(o)
 (src/'LIBRARY_SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p)+'\n' for p in [R6/'libavcodec/libavcodec.a',R6/'libavutil/libavutil.a',scalar/'libm.a',scalar/'libc.a',scalar/'libgcc.a']))

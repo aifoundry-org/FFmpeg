@@ -27,7 +27,7 @@ DEBUG=${ETAAC_FULL_NUMERICAL_DEBUG:-0}
 if [[ $DEBUG == 1 ]]; then
  # Explicit user authorization for the single reviewed completed-lifecycle ELF.
  # This is eligibility to diagnose, not a replacement PCM success proof.
- AUTHORIZATION=$(python3 "$ROOT/et-audio/full/validate-debug-authorization.py" "$ROOT" "$KERNEL")
+ AUTHORIZATION=$(python3 "$ROOT/et-audio/full/validate-debug-authorization.py" "$ROOT" "$KERNEL" "${ETAAC_FULL_DEBUG_AUTHORIZATION:-silicon-debug-authorization.json}")
 else
 PROOF=${ETAAC_FULL_EMULATOR_PROOF:?Set explicit matching emulator PASS.json before hardware}
 [[ $PROOF == build-et/aac-full/emulator/*/PASS.json && $PROOF != *..* ]] || exit 2

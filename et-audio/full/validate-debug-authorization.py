@@ -32,7 +32,20 @@ def validate(root, elf, authorization):
         path.resolve().relative_to(root.resolve())
         assert digest(path) == expected, ('changed input/binary', name)
         provenance.append(expected)
-    assert len(provenance) == 4 and provenance[0] == digest(elf)
+    assert len(provenance) == 4
+    if 'parent_elf' in authorization:
+        parent = root / authorization['parent_elf']
+        assert digest(parent) == authorization['simulator_elf_sha256'] == provenance[0]
+        required_objects = {'kernel.c.o', 'platform.c.o', 'arena.c.o', 'entry.o',
+                            'memory.o', 'cbrt_frozen.o', 'private-source/LIBRARY_SHA256SUMS'}
+        assert set(authorization['unchanged_objects']) == required_objects
+        for name, expected in authorization['unchanged_objects'].items():
+            assert digest(parent.parent / name) == digest(elf.parent / name) == expected
+        assert authorization['fix_evidence_sha256'] and authorization['reviewed_fix']
+        for name, expected in authorization['fix_evidence_sha256'].items():
+            assert digest(root / name) == expected, ('changed fix evidence', name)
+    else:
+        assert provenance[0] == digest(elf)
     rows = [json.loads(line) for line in (evidence / 'run.jsonl').read_text().splitlines()]
     config, result = rows[0], rows[-1]
     assert config['backend'] == 'sys_emu-shire0-hart0' and config['protocol'] == 4
@@ -51,10 +64,14 @@ def validate(root, elf, authorization):
             'simulator_directory': authorization['simulator_directory'],
             'simulator_pcm_pass': False, 'simulator_lifecycle_complete': True,
             'authorization': authorization['authorization'],
-            'constraints': authorization['constraints']}
+            'constraints': authorization['constraints'],
+            'reviewed_fix': authorization.get('reviewed_fix'),
+            'simulator_elf_sha256': provenance[0]}
 
 
 if __name__ == '__main__':
     root = pathlib.Path(sys.argv[1]).resolve()
-    authorization = json.loads((root / 'et-audio/full/silicon-debug-authorization.json').read_text())
+    name = sys.argv[3] if len(sys.argv) == 4 else 'silicon-debug-authorization.json'
+    assert name in ('silicon-debug-authorization.json', 'silicon-fixed-sines-authorization.json')
+    authorization = json.loads((root / 'et-audio/full' / name).read_text())
     print(json.dumps(validate(root, root / sys.argv[2], authorization), sort_keys=True))

@@ -1,0 +1,39 @@
+{
+  "mode": "user-authorized-numerical-debug-only",
+  "authorization_date": "2026-09-16",
+  "authorization": "User authorized hardware debugging and requested a full CPU comparison once fixed. Numerical-only failure reviewed: old newlib sinf reproduces exact silicon PCM; frozen coefficients restore all five native fixtures. This is diagnostic eligibility, not a claim of corrected silicon PCM.",
+  "elf_sha256": "deb1c2127c5132e69b28cd244eb16388f106326d211cff378f1e8df246532321",
+  "simulator_directory": "build-et/aac-full/emulator/portable-extended-32",
+  "artifact_sha256": {
+    "actual.pcm": "28d4ddc1ee8c65d32a12605c743ee6983f9ac638865a0a301cf0ad4075579990",
+    "state.bin": "9fb66b3a95283ab5237fde197c0ec59db17be86dde93c47ce3afbbd68979a690",
+    "run.jsonl": "73d70998fd45528b1e91ba4fd900e9b1aa459124a2ad5e392a7675895ebf01a8",
+    "run.log": "3d08ead0db9a6ddad26d58204ac39051e36db2e41047ab341689c291616a4a92",
+    "exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "provenance.sha256": "9304c7478267bb48031a5404ebb061925d944b0006a28fb0687489d3b326171c",
+    "scope.txt": "38a87757a85cd2ba5790de5061969b17369dd5a10278aafbc338c163adf25ee4"
+  },
+  "expected_pcm_mismatches": 407,
+  "constraints": "shire0/hart0; retain static/health/lock gates; no reset/recovery/counter changes; stop and retain blockers on any failed run; no numerical tolerance",
+  "simulator_elf_sha256": "6951564f388059a7222a77a1932568ad59514451ce7757b0af9c7dfe75922026",
+  "parent_elf": "build-et/aac-full/device-no-mcode-v1/et_aac_full.elf",
+  "reviewed_fix": "native-frozen AAC sine-window constants; real initialization copies constants, other lengths retain upstream math",
+  "unchanged_objects": {
+    "kernel.c.o": "f7eb7a276f0e59a95ea39b6e9e57b0fa66ea381e0ee67710944cd0e770866802",
+    "platform.c.o": "3cad56bb39d75bcbdff805d67e27ad2974bbaded5a696654ab888bafe331d613",
+    "arena.c.o": "b7df59af31ac5789d5df96d585afa231e0ffa1b4502de4c0b861358ec58c9132",
+    "entry.o": "ddc7b62f2f4b5992e8091dda568930b683c4ab5bddbb433b7cb160c20fcbf398",
+    "memory.o": "fb081e6b6eb5da3a0eccd39c11227cb5870ff33eb704eb93108717297199235d",
+    "cbrt_frozen.o": "48568da6b93ef3cde6344a950a0cfe51ea67d0f68bc6a6c4d9469cecdb2dffc6",
+    "private-source/LIBRARY_SHA256SUMS": "2e9a26cd9dd3b51b79a3f70809059e242a63e40147457486ec5dfdcf61918b13"
+  },
+  "fix_evidence_sha256": {
+    "build-et/aac-full/device-frozen-sines-v2/sinewin_frozen.o": "fa9e70a36a6d3561ca10e25cebf29b5bb526bd329bf6017555a39f911e5a9d45",
+    "build-et/aac-full/device-frozen-sines-v2/private-source/sinewin_frozen.c": "515494ac041df33d492da0ed3e0cd99d7953db608106141c33a3f46bf44c6101",
+    "build-et/aac-full/device-frozen-sines-v2/private-source/sinewin_tablegen.h": "9b955c59c2d254e8190d2d54d20af4e662b28e4cb3927222d290c1f389a4c7d2",
+    "build-et/aac-full/device-frozen-sines-v2/private-source/sine_windows_frozen.h": "a652afceea2f88f2d76094b424c946ad1b05e863398e4e3ad0c152c3d24d179d",
+    "build-et/aac-full/device-frozen-sines-v2/private-source/SINE_PROVENANCE.txt": "edc0f93198529f62d81a36af228c9cc3f79391847e7222a61bc178ff69128098",
+    "build-et/aac-full/offline-sine-parent-v1/fixed-fixtures.json": "0d66c75362323f3d1287b89faa25e8aa6efb19d3ba908ed23743b5011a646c50",
+    "build-et/aac-full/offline-sine-parent-v1/comparison.json": "7c307e553f757e5de18765f979e0eb3848026848da7879eea693c096e523332a"
+  }
+}
