@@ -17,7 +17,10 @@ is not the same thing as an entire MP4 file. Packet boundaries, codec config,
 timestamps, priming/trimming and errors still need explicit handling.
 
 The coefficient-input path remains useful as a controlled test fixture and a
-way to isolate synthesis from the newly moved decoder front end. It is not the
+way to isolate synthesis from the decoder front end planned to move on-device.
+A spectral cache does not inherently require host preprocessing: once the full
+decoder exists, ET itself can populate spectral or PCM caches. Cache policy and
+where the codec executes are separate choices. It is not the
 assumed production boundary anymore. The full decoder will preserve packet
 order and all decoder state per independent stream; unlike the synthesis-only
 experiment, coupled stereo channels cannot simply be treated as unrelated
