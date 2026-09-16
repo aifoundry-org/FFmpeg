@@ -1,0 +1,9 @@
+b5ae3f0a11bd4a438a95e7ffb01bee51a9a0110dbcc250b87d42798490ebc5a1  ../../libavutil/tx_template.c
+c3db88b6eb58c8837bfcf3992872376244142d155efe1b03a8b0fe83825434ac  ../../libavutil/tx_priv.h
+ea0d0d7f492ea0dff061803059cabb39641a9d46381239ae1e28ccfcf9c19671  ../../libavutil/tx.c
+7a5b23f958b184dd7be7bf13ea18c5c4f6c9506906ed5408a322db76338d989c  ../../libavcodec/aac/aacdec_dsp_template.c
+050a19e31c3ecfbe8578f720c74e61b624d934ce29660135f8ebb2bd7c5573db  ../../libavutil/float_dsp.c
+358c2fcc7df9144364a99825cdb8f555b4633719d64105119bc88bd0f1129042  ../../libavcodec/aactab.c
+a2009e3577b0e890eba200e542f6bc625aa9c3656c9f9667b3213421df4b475e  ../../libavcodec/kbdwin.c
+a2defd94fb60f2c6b838e51219afedf6a0991f393fccae6dd9d205a60b5c78de  ../../libavcodec/sinewin_tablegen.h
+c38b36d09a886b8a0471fa1c8f0174a1a852f437011d818569ece3824b1d4b6b  ../../libavutil/mathematics.c

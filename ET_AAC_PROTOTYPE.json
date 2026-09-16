@@ -1,0 +1,1114 @@
+{
+  "benchmarks": {
+    "cpu_optimized_b2": {
+      "max_s": 1.784e-06,
+      "median_s": 1.602e-06,
+      "min_s": 1.549e-06,
+      "runs": [
+        {
+          "batch_s": 1.784e-06,
+          "checksum": 26.00312774302438,
+          "cpu_flags": 1037275,
+          "elapsed_s": 0.053527695,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 61526,
+          "tasks": 2,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 1.778e-06,
+          "checksum": 26.00312774302438,
+          "cpu_flags": 1037275,
+          "elapsed_s": 0.053332226,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 61526,
+          "tasks": 2,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 1.602e-06,
+          "checksum": 26.00312774302438,
+          "cpu_flags": 1037275,
+          "elapsed_s": 0.048070482,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 61526,
+          "tasks": 2,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 1.549e-06,
+          "checksum": 26.00312774302438,
+          "cpu_flags": 1037275,
+          "elapsed_s": 0.046467644,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 61526,
+          "tasks": 2,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 1.589e-06,
+          "checksum": 26.00312774302438,
+          "cpu_flags": 1037275,
+          "elapsed_s": 0.047672452,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 61526,
+          "tasks": 2,
+          "type": "cpu_stage"
+        }
+      ],
+      "samples_s": [
+        1.784e-06,
+        1.778e-06,
+        1.602e-06,
+        1.549e-06,
+        1.589e-06
+      ]
+    },
+    "cpu_optimized_b64": {
+      "max_s": 5.0377e-05,
+      "median_s": 5.0327e-05,
+      "min_s": 5.0257e-05,
+      "runs": [
+        {
+          "batch_s": 5.036e-05,
+          "checksum": 832.1000877767801,
+          "cpu_flags": 1037275,
+          "elapsed_s": 1.51078763,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 1968832,
+          "tasks": 64,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 5.0377e-05,
+          "checksum": 832.1000877767801,
+          "cpu_flags": 1037275,
+          "elapsed_s": 1.511307466,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 1968832,
+          "tasks": 64,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 5.0323e-05,
+          "checksum": 832.1000877767801,
+          "cpu_flags": 1037275,
+          "elapsed_s": 1.509675667,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 1968832,
+          "tasks": 64,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 5.0327e-05,
+          "checksum": 832.1000877767801,
+          "cpu_flags": 1037275,
+          "elapsed_s": 1.509812526,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 1968832,
+          "tasks": 64,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 5.0257e-05,
+          "checksum": 832.1000877767801,
+          "cpu_flags": 1037275,
+          "elapsed_s": 1.507698992,
+          "frames_per_session": 60,
+          "max_abs_error": 1.7881393432617188e-07,
+          "repeats": 500,
+          "scalar": 0,
+          "scalar_golden_different_samples": 1968832,
+          "tasks": 64,
+          "type": "cpu_stage"
+        }
+      ],
+      "samples_s": [
+        5.036e-05,
+        5.0377e-05,
+        5.0323e-05,
+        5.0327e-05,
+        5.0257e-05
+      ]
+    },
+    "cpu_scalar_b2": {
+      "max_s": 5.067e-06,
+      "median_s": 4.781e-06,
+      "min_s": 4.684e-06,
+      "runs": [
+        {
+          "batch_s": 5.067e-06,
+          "checksum": 26.00310300476849,
+          "cpu_flags": 0,
+          "elapsed_s": 0.151997218,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 2,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 4.684e-06,
+          "checksum": 26.00310300476849,
+          "cpu_flags": 0,
+          "elapsed_s": 0.140524167,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 2,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 4.793e-06,
+          "checksum": 26.00310300476849,
+          "cpu_flags": 0,
+          "elapsed_s": 0.143779822,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 2,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 4.781e-06,
+          "checksum": 26.00310300476849,
+          "cpu_flags": 0,
+          "elapsed_s": 0.143422589,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 2,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 4.776e-06,
+          "checksum": 26.00310300476849,
+          "cpu_flags": 0,
+          "elapsed_s": 0.143288607,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 2,
+          "type": "cpu_stage"
+        }
+      ],
+      "samples_s": [
+        5.067e-06,
+        4.684e-06,
+        4.793e-06,
+        4.781e-06,
+        4.776e-06
+      ]
+    },
+    "cpu_scalar_b64": {
+      "max_s": 0.000145697,
+      "median_s": 0.000145629,
+      "min_s": 0.000145554,
+      "runs": [
+        {
+          "batch_s": 0.000145635,
+          "checksum": 832.0992961525917,
+          "cpu_flags": 0,
+          "elapsed_s": 4.369053103,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 64,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 0.000145629,
+          "checksum": 832.0992961525917,
+          "cpu_flags": 0,
+          "elapsed_s": 4.368857374,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 64,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 0.000145554,
+          "checksum": 832.0992961525917,
+          "cpu_flags": 0,
+          "elapsed_s": 4.366628369,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 64,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 0.000145697,
+          "checksum": 832.0992961525917,
+          "cpu_flags": 0,
+          "elapsed_s": 4.370906807,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 64,
+          "type": "cpu_stage"
+        },
+        {
+          "batch_s": 0.000145619,
+          "checksum": 832.0992961525917,
+          "cpu_flags": 0,
+          "elapsed_s": 4.368581464,
+          "frames_per_session": 60,
+          "max_abs_error": 0,
+          "repeats": 500,
+          "scalar": 1,
+          "scalar_golden_different_samples": 0,
+          "tasks": 64,
+          "type": "cpu_stage"
+        }
+      ],
+      "samples_s": [
+        0.000145635,
+        0.000145629,
+        0.000145554,
+        0.000145697,
+        0.000145619
+      ]
+    },
+    "et_b2_op0": {
+      "max_s": 0.003079699433333333,
+      "median_s": 0.0030354366833333334,
+      "min_s": 0.003023071333333333,
+      "samples_s": [
+        0.0030247510833333333,
+        0.003079699433333333,
+        0.003023071333333333,
+        0.0030625349333333334,
+        0.0030354366833333334
+      ]
+    },
+    "et_b2_op1": {
+      "max_s": 0.002514812416666667,
+      "median_s": 0.0025137076833333335,
+      "min_s": 0.00249820655,
+      "samples_s": [
+        0.00249820655,
+        0.0025137076833333335,
+        0.0025137656833333333,
+        0.0024998486166666668,
+        0.002514812416666667
+      ]
+    },
+    "et_b64_op0": {
+      "max_s": 0.003661543583333333,
+      "median_s": 0.0035409761,
+      "min_s": 0.0033981167333333334,
+      "samples_s": [
+        0.003661543583333333,
+        0.0033981167333333334,
+        0.003651821233333333,
+        0.0034047034666666665,
+        0.0035409761
+      ]
+    },
+    "et_b64_op1": {
+      "max_s": 0.0027815102833333334,
+      "median_s": 0.0027667443333333334,
+      "min_s": 0.0021248824333333334,
+      "samples_s": [
+        0.0021248824333333334,
+        0.0027815102833333334,
+        0.002746973266666667,
+        0.0027667443333333334,
+        0.00278073885
+      ]
+    }
+  },
+  "binary_sha256": {
+    "capture-src/ffmpeg": "70957b132fb2064693b29f6066c2f13f13a858b061c04c2ccb7ccc1903e5cf07",
+    "cpu-stage/cpu-stage": "7a62fbff6876a5240d5e00926e312492ad1402a1dc2f8786fd8ecbb4511d62ae",
+    "cpu/ffmpeg": "e3f25eca773a34a0c51f16a9652e612d78cf4211e322d836dc24db0b5ed37ab9",
+    "device/et_aac_synth.elf": "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1",
+    "host/etaac-replay-native": "eb84a327b69c886f494e09b400ea87d59f6abe5ae8700fd0186efd2dc00e824d",
+    "host/etaac-run": "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7"
+  },
+  "captured_fixture_records": 351,
+  "cpu_full_decode_30s_stereo48": {
+    "correctness": {
+      "comparison": {
+        "byte_identical": false,
+        "compared_samples": 2883584,
+        "different_samples": 2119304,
+        "max_abs_difference": 1.7881393432617188e-07,
+        "optimized_bytes": 11534336,
+        "rms_difference": 6.401990856310779e-09,
+        "sample_count_equal": true,
+        "scalar_bytes": 11534336
+      },
+      "optimized_f32le": {
+        "path": "/work/build-et/aac-prototype/baseline-30s-20260916/timing/stereo-48000.optimized.f32le",
+        "sha256": "51dbd5e17a719502a324eafd8e45f4391ab74e4b36e3c4495631964f297ee715"
+      },
+      "scalar_f32le": {
+        "path": "/work/build-et/aac-prototype/baseline-30s-20260916/timing/stereo-48000.scalar.f32le",
+        "sha256": "036ee5fe8b34e66ffbf7558c5cd5ad63c7bb6af3405ff8b283f4fdc18a8e7d4f"
+      }
+    },
+    "input": "/work/build-et/aac-prototype/baseline-30s-20260916/fixtures/stereo-48000.aac",
+    "input_sha256": "e30d92ef2325aee9866762dc3421dd6de2a2b7c60d5cca1a6e843045476dd76d",
+    "interpretation": "Output differences, if any, are characterized above and not masked by this benchmark. F32LE hashes are extracted from explicitly PCM-f32 WAV data because the minimal build has no raw f32le muxer.",
+    "method": {
+      "cpu_affinity": "0",
+      "outlier_policy": "all five runs retained",
+      "streams": 1,
+      "threads": 1,
+      "timing_output": "null muxer",
+      "wall_clock": "time.perf_counter"
+    },
+    "timing": {
+      "optimized_default_cpu_flags": {
+        "maximum_seconds": 0.020965490984963253,
+        "median_seconds": 0.020663600007537752,
+        "minimum_seconds": 0.02041758398991078,
+        "run_count": 5,
+        "runs_seconds": [
+          0.020965490984963253,
+          0.02080611200653948,
+          0.020663600007537752,
+          0.020458632992813364,
+          0.02041758398991078
+        ]
+      },
+      "scalar_oracle_cpu_flags_0": {
+        "maximum_seconds": 0.027347556984750554,
+        "median_seconds": 0.02714747199206613,
+        "minimum_seconds": 0.026979451009538025,
+        "run_count": 5,
+        "runs_seconds": [
+          0.0272117989952676,
+          0.02714747199206613,
+          0.027347556984750554,
+          0.027061843982664868,
+          0.026979451009538025
+        ]
+      }
+    }
+  },
+  "exact_copy_channel_frames": 21336,
+  "exact_synthesis_channel_frames": 26181,
+  "hardware": {
+    "host": "i7-13700K",
+    "host_affinity": "0 (one P-core logical CPU)",
+    "minion_boot_mhz_reported_by_device_layer": 600,
+    "sdk_image": "et-soc1-dev:20260911",
+    "shire_mask": 1
+  },
+  "method": {
+    "batch_unit": "one 1024-sample channel-synthesis frame per task; 64 tasks clone two channel timelines into 32 independent stereo states",
+    "cpu_stage": "5 runs, each 500 x 60 batches; warmed pinned av_tx and float_dsp; pack plus synthesis; startup excluded",
+    "et": "5 independent runs per arm; each is mean service over all 60 batches; all samples retained",
+    "service": "pack + upload/wait + launch/wait + PCM/status readback/wait; excludes setup, oracle, extra state readback and comparisons",
+    "timing_instrumentation": true
+  },
+  "preflight_failure": {
+    "cause": "complete-timeline preflight rejected demux probe context; no runtime open; unchanged health",
+    "path": "build-et/aac-prototype/silicon/real-mono441-h1",
+    "resolution": "select complete separate timelines without splicing; original marker archived in failed run"
+  },
+  "recorded_utc": "2026-09-16T00:46:31.972031+00:00",
+  "runs": [
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 0,
+        "setup_s": 0.26086116,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.003596365,
+      "mean_service_s": 0.0030247510833333333,
+      "name": "bench-b2-op0-r1",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "639231579be065c5372cc315e4d6190af58b8948b32082caee959a9ac5c58169"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 0,
+        "setup_s": 0.263865152,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.003583366,
+      "mean_service_s": 0.003079699433333333,
+      "name": "bench-b2-op0-r2",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "04f3f86b914cdaf42b4c8623fa0d31eef7fa04a06b4f07c484d2dcfda9f8d660"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 0,
+        "setup_s": 0.257495175,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.003593138,
+      "mean_service_s": 0.003023071333333333,
+      "name": "bench-b2-op0-r3",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "e421ee45d1609ee9651326ec79aeb663875fe31b904349959ac895711c3158c6"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 0,
+        "setup_s": 0.266435626,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.00359436,
+      "mean_service_s": 0.0030625349333333334,
+      "name": "bench-b2-op0-r4",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "fc2179a2800d59032a9b5c14543601d488d84653c3aaa3252eeed21125b1f4bb"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 0,
+        "setup_s": 0.264541156,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.003651599,
+      "mean_service_s": 0.0030354366833333334,
+      "name": "bench-b2-op0-r5",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "979a4e7f5fb4fd5e51b210081bfeea80c832f1b705cbe35a0c452820041af53e"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 1,
+        "setup_s": 0.260705419,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.003093065,
+      "mean_service_s": 0.00249820655,
+      "name": "bench-b2-op1-r1",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "57d1190340a9ae226eacb91ecef4300b9ab53cf5dfcaececfb3d637305e6b656"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 1,
+        "setup_s": 0.264440355,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.003137101,
+      "mean_service_s": 0.0025137076833333335,
+      "name": "bench-b2-op1-r2",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "a5940dc23af3cf8fcb3a2af2dd0a40b5111517bda10f6c0423e70b62f0d63e24"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 1,
+        "setup_s": 0.265998105,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.00316991,
+      "mean_service_s": 0.0025137656833333333,
+      "name": "bench-b2-op1-r3",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "5d405cbde8a841d87ee665819414af3f13cc8625cdeb90ea6324a494ab80cc53"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 1,
+        "setup_s": 0.262999688,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.003145717,
+      "mean_service_s": 0.0024998486166666668,
+      "name": "bench-b2-op1-r4",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "059776f291cbdd72659ffda6d740018ada6f8a0c18bfc6704ff808e1f301be0e"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 32,
+        "operation": 1,
+        "setup_s": 0.262496648,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 120,
+      "max_service_s": 0.00307182,
+      "mean_service_s": 0.002514812416666667,
+      "name": "bench-b2-op1-r5",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "f6735c9c7751a08a3b4a79708388b3aa6ce7b75f04b6e7aac5d2fbdb41acc97b"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 0,
+        "setup_s": 0.26629217,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.013135098,
+      "mean_service_s": 0.003661543583333333,
+      "name": "bench-b64-op0-r1",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "7341b0f4aca3144f8af325df456c9fe6baf73314884068bb009b9bf06f863520"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 0,
+        "setup_s": 0.257435093,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.003762961,
+      "mean_service_s": 0.0033981167333333334,
+      "name": "bench-b64-op0-r2",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "537bd7c883e85f2c81a067e7938db693815735e93813c6c54215039cc89de25a"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 0,
+        "setup_s": 0.265309918,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.01328038,
+      "mean_service_s": 0.003651821233333333,
+      "name": "bench-b64-op0-r3",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "1c981e2180e7f025b71d59f8a2205ae612c2df5d0ad77a89d7c6c9255937bba5"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 0,
+        "setup_s": 0.262730397,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.003787423,
+      "mean_service_s": 0.0034047034666666665,
+      "name": "bench-b64-op0-r4",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "c0ab3cbdcbbaee51fab847080a2112989a3ba8519407df0192337a01913e4f11"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 0,
+        "setup_s": 0.258816806,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.013050569,
+      "mean_service_s": 0.0035409761,
+      "name": "bench-b64-op0-r5",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "64002474582cab85f35097012657e91fad002a0e9e78b095119d4e728b5ef4d5"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 1,
+        "setup_s": 0.263610772,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.002458671,
+      "mean_service_s": 0.0021248824333333334,
+      "name": "bench-b64-op1-r1",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "0fcd299b63d785b55ea62c552719a6ef8d5903c4c21047880b5ba0bfe944016b"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 1,
+        "setup_s": 0.260731126,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.003296921,
+      "mean_service_s": 0.0027815102833333334,
+      "name": "bench-b64-op1-r2",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "4d04ba2d7a936b1b00aa675790688dd9baf4fd3891adc1c8bf1c20bef93dacd9"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 1,
+        "setup_s": 0.264835432,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.003272505,
+      "mean_service_s": 0.002746973266666667,
+      "name": "bench-b64-op1-r3",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "aa10ee56083b684af2633c275760eb4ebcf18d76fb96b801b8dc54263114600e"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 1,
+        "setup_s": 0.264226609,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.003258431,
+      "mean_service_s": 0.0027667443333333334,
+      "name": "bench-b64-op1-r4",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "d97e9f1b74428fa2ed926fea84dd0a2e6ca5310abcdaaf2c8339ffec8588f116"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 1,
+        "setup_s": 0.262164818,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.003265205,
+      "mean_service_s": 0.00278073885,
+      "name": "bench-b64-op1-r5",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "f6ae01772f13e89cb59204cfea14825ac8168b2db8a808ea194a6f29ca128353"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "frames": 24,
+        "harts": 64,
+        "operation": 1,
+        "setup_s": 0.262418454,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 1536,
+      "max_service_s": 0.002772595,
+      "mean_service_s": 0.0024316789166666667,
+      "name": "copy-smoke-h64",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "31ccbfb94d73c5e650512732e8c5705a026396931faeed6a96f7b4f641475366  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run"
+      ],
+      "run_jsonl_sha256": "5462a5d191ce5d637d93eee190bc242452b0248f4caed1a9d8b1ec307c352747"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 1,
+        "frames": 55,
+        "harts": 1,
+        "operation": 0,
+        "setup_s": 0.266194288,
+        "tasks": 1,
+        "type": "config"
+      },
+      "exact_channel_frames": 55,
+      "max_service_s": 0.003599404,
+      "mean_service_s": 0.0029232624727272725,
+      "name": "real-mono441-h1-v2",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "a7f78c3e7ee88f3fdf0cb5a5c9d26195d76d28ebb33ff2e5a56799ab66ee8b36  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/mono-44100.etaaccap"
+      ],
+      "run_jsonl_sha256": "31e271765a940629cfd138ec71e3c6ac41adf184c90a05fa249051e7d6d6b198"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 1,
+        "frames": 60,
+        "harts": 1,
+        "operation": 0,
+        "setup_s": 0.257559622,
+        "tasks": 1,
+        "type": "config"
+      },
+      "exact_channel_frames": 60,
+      "max_service_s": 0.003604042,
+      "mean_service_s": 0.0029190445833333334,
+      "name": "real-mono480-h1",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "4d8d7350436f5cb8b70ecca2074e91c3876e1f6a2987c4d70103355326837088  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/mono-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "1ea34ee69285d7028191fa2e913eb262475540234e17fc4d2657b91069d0d822"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 55,
+        "harts": 32,
+        "operation": 0,
+        "setup_s": 0.257932325,
+        "tasks": 2,
+        "type": "config"
+      },
+      "exact_channel_frames": 110,
+      "max_service_s": 0.003595131,
+      "mean_service_s": 0.0027382532,
+      "name": "real-stereo441-h32",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "ecc39cc99c6cfacfc9d057914502b401ee3e3dca154cc1aca440b96318e32916  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-44100.etaaccap"
+      ],
+      "run_jsonl_sha256": "2f1a977c176359dbca915a44efc8404b437a1a614c9b2a3c41a8fd739c3fdf98"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "capture_contexts": 2,
+        "frames": 60,
+        "harts": 64,
+        "operation": 0,
+        "setup_s": 0.262905208,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 3840,
+      "max_service_s": 0.013238543,
+      "mean_service_s": 0.0035499127666666665,
+      "name": "real-stereo480-h64-v2",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "3f274e469b8069856f510437744e8407dd941c8627e99c5ebe402132bc97edd7  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run",
+        "1af369a3763a83bd19a4a80ef6ba8ee0a79f3b2c44f94af59d98e83895818c1e  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/captures/stereo-48000.etaaccap"
+      ],
+      "run_jsonl_sha256": "b3ca8d366131b32907381c17b23775b1e5bc9bf13339329c0a3d794d8b188f22"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "frames": 12,
+        "harts": 1,
+        "operation": 0,
+        "setup_s": 0.258570107,
+        "tasks": 1,
+        "type": "config"
+      },
+      "exact_channel_frames": 12,
+      "max_service_s": 0.002767968,
+      "mean_service_s": 0.0023500034166666667,
+      "name": "scalar-smoke-h1",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "31ccbfb94d73c5e650512732e8c5705a026396931faeed6a96f7b4f641475366  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run"
+      ],
+      "run_jsonl_sha256": "fa55c65fb8e23073e839edd0e5f80a58eeaabb8d4c6b5e9b6eef7b9a750494c0"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "frames": 24,
+        "harts": 32,
+        "operation": 0,
+        "setup_s": 0.260563648,
+        "tasks": 32,
+        "type": "config"
+      },
+      "exact_channel_frames": 768,
+      "max_service_s": 0.003009682,
+      "mean_service_s": 0.0026679403333333333,
+      "name": "scalar-smoke-h32",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "31ccbfb94d73c5e650512732e8c5705a026396931faeed6a96f7b4f641475366  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run"
+      ],
+      "run_jsonl_sha256": "8bab8575e3b680122dc87539ea566f2d7980a089335735bf99fafe404a547ce2"
+    },
+    {
+      "config": {
+        "backend": "silicon-shire0",
+        "frames": 24,
+        "harts": 64,
+        "operation": 0,
+        "setup_s": 0.262338383,
+        "tasks": 64,
+        "type": "config"
+      },
+      "exact_channel_frames": 1536,
+      "max_service_s": 0.003888515,
+      "mean_service_s": 0.0031409210833333334,
+      "name": "scalar-smoke-h64",
+      "provenance": [
+        "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/device/et_aac_synth.elf",
+        "31ccbfb94d73c5e650512732e8c5705a026396931faeed6a96f7b4f641475366  /var/lib/shelley/et-workspace/ffmpeg/build-et/aac-prototype/host/etaac-run"
+      ],
+      "run_jsonl_sha256": "5ca7cfc1ae40cb736694d9cd58a01296d72d2bbf86a088069a6e59d4df6bc3cf"
+    }
+  ],
+  "schema": 1,
+  "scope": "physical shire 0; scalar F32 AAC-LC synthesis-stage replay; not a complete offloaded decoder",
+  "silicon_pass_runs": 28,
+  "source_sha256": {
+    "et-audio/.gitignore": "f81a873ccba7370bc63d65284570e945c9ac14b22f2cf36b6c10cc77c81f40cb",
+    "et-audio/CMakeLists.txt": "4134872b3edf8d5f547f5f4e439dcc7bab94c6a32b2fbaea77537636023ef936",
+    "et-audio/README.md": "b7c7cf0304c3a72fb637ba69edb67e5614164747b30fb65f219f5a32c3cad740",
+    "et-audio/build-cpu-stage.py": "ba3b4d14da8e86930e69ad125b953761fd5e6b526165127e5625375cead7b7a4",
+    "et-audio/build-cpu.py": "b195c53dd39f48ad3fb3fccc77b397b5f521e0ccd92efbb55a33a9ff62d12a94",
+    "et-audio/capture/README.md": "60ada5ecdc59f1a82a60aaae48f97704002f342d77eb22f0d71e56dee2460d0a",
+    "et-audio/capture/aac_capture_format.h": "9cbde858654ef6f8113d0663f4c3d2329f11a960bc8959de3c126483f4c71a2e",
+    "et-audio/capture/aacdec_capture.patch": "8ffdc9a109bdd59f6e8cdf32f7359f3ac976c7cac1521231c3474fb5b3c36707",
+    "et-audio/capture/benchmark_cpu.py": "e4c13fd9a7ca15375710f786996bee6c577ce700d478603cdf342eb411c4c6a7",
+    "et-audio/capture/build_capture.py": "916597affe3421e3b0dc0f3abf6d9092ead6aba86bf8f2b309cb1a9c609e0b9e",
+    "et-audio/capture/inspect_capture.py": "ea0acad2b138fdc31d8097187f94faaa93956bf6b7f1790e78b808e4937867a3",
+    "et-audio/capture/run_fixtures.py": "0b5e0529d0a100260d485b89aba28645e75df71ca86b8f6976781178ebcdef02",
+    "et-audio/capture_io.h": "61b2c6de5af06dc954ff998a316bdb9e7d7dc4c9ac5c106c5d5bf61643f93d8e",
+    "et-audio/check-device.py": "0baae79ab1eaa2d2def67a93666e608741598fb0e0c211a54ea325b88e329a87",
+    "et-audio/cpu-stage.c": "4937b67b52c85372e95a9bd880203241db6fc2ea1ce7917856ccedcfa11bc7cf",
+    "et-audio/dsp/PROVENANCE.md": "14f3e557ee0bf1f489e74d2bea9690c0d9fe4d31db0b8233c07633dd85e61f2b",
+    "et-audio/dsp/SOURCE_MANIFEST.sha256": "31c0ff75f7c2fbe5214b8400b67edbb0060b1cae525dca59fa007f83024becd9",
+    "et-audio/dsp/etaac_synth.c": "9b51aea77bcd7c936c442b3c304f79439674d32cecd84b3f736a0fed7881aa06",
+    "et-audio/dsp/etaac_tables.h": "31e1e54c3567b460e008623ee4d3731db0424c97a97aa031cb55f9b953b63e5d",
+    "et-audio/dsp/synth.h": "cd3af1ff8390dd400bc11c72d9f9712b18bf3e19514e9fef369fa412a8f00b56",
+    "et-audio/dsp/tests/Makefile": "07ca911607ee591bea38fc8a399375531060596d2799566c16237e6ab1831989",
+    "et-audio/dsp/tests/test_etaac_ffmpeg.c": "fd0fc49e8f59e8e8f5f2df1752b287bbed0678d1154b0b31639cb5f822d9a6d7",
+    "et-audio/dsp/tools/generate_tables.c": "6d53a4b0245f48b26c1147cb809dbc00d6118449957069f7ac64c6df28700b31",
+    "et-audio/dsp/tools/generate_tables.sh": "f2e4a392b7fe0c1eaa52f5b77595f6849e1c44301d0fa95fc203738acb35a48a",
+    "et-audio/kernel.c": "f1094ad202a47a272f00605de1cb1124d49939af760449e9b5b7228b8e13e356",
+    "et-audio/protocol.h": "ebfc8a167098dc748f342403a936c1cf0680f6cfa6a49f35a2a7c9130a86bc7d",
+    "et-audio/replay-native.c": "d8d8543d7d732e8779fb3819ea73e33ebc6fb003161d99189438f5fa99873060",
+    "et-audio/results.py": "7c026db264753ed90e398597b95c14a2336783f747a140d6f203c3a3bea4c66d",
+    "et-audio/run-silicon.sh": "1d083463ede82c0675707373de4522e3ca187bb1193673a65b6764f0c3b2418f",
+    "et-audio/runner.c": "fe8fde095bed9e55d8b3384299e9aa00deab5f561b5257261034d63f32a72b05",
+    "et-audio/runtime/CMakeLists.txt": "0565c7539a494555c1bd72ae8e740b82bd0f8e9c37e7e3f73b0161e5cdad5a00",
+    "et-audio/runtime/README.md": "3a618eaf2decfc4be1afb5bd4058b852ff6448a91865596409725a8e64c6791b",
+    "et-audio/runtime/etaac_runtime.h": "94d0fc495676318c29faa83927ae36b685155035a378d406be3ab34981b51b60",
+    "et-audio/runtime/etaac_runtime_private.h": "2ed9399256c1cb8789265af4251bcbe03c701c70e550baec48f57ce2a5cda1f8",
+    "et-audio/runtime/generate_runtime.py": "9dd8a0d9fda9db40461760d6aa17d6152ec3ebe18ece7b245d2c42a1723c5066",
+    "et-audio/runtime/tests/mock/device-layer/IDeviceLayer.h": "eea531e8c5d74269341ae4cacc8fea2f6fd46cb9f522409e8e50b4aeee7e2836",
+    "et-audio/runtime/tests/mock/runtime/IRuntime.h": "63ec7962cbd5b692a642c893f2cb222d743753ae801a3ffe07ac7749243ba6e0",
+    "et-audio/runtime/tests/runtime_test.cpp": "4b174529c60c4dce031a36360ee4a100fc6f6902e3ef5d3a729dde2672f07f2e",
+    "et-audio/tests.c": "a1d3935f3054181a050f0f5c07e91d15f68dbeb7fa86b83557e5690c062266c0"
+  }
+}
