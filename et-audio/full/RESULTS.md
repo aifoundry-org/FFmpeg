@@ -1,9 +1,10 @@
 # Full AAC integration checkpoint — September 16, 2026
 
-**No full-decoder silicon launch or ET throughput result yet.** The current
-candidate passes the strengthened static gate; simulator validation is still
-required. Hardware tooling requires a successful simulator result with the
-same ELF hash, in addition to all existing shire-0, locking and health guards.
+**Silicon remains blocked: the extended simulator run failed exact PCM.**
+No full-decoder silicon launch or ET throughput result exists. The candidate
+passes the strengthened static gate, but hardware tooling also requires a
+successful simulator result with the same ELF hash, in addition to all
+existing shire-0, locking and health guards.
 
 ## Verified
 
@@ -40,11 +41,40 @@ same ELF hash, in addition to all existing shire-0, locking and health guards.
    transcript. Standard SDK virtual topology is restored. Subsequent long
    jobs use an in-memory wrapper snapshot.
 
-An extended, software-only 32-packet validation is scheduled under
-`build-et/aac-full/emulator/portable-extended-32`, capped at 3,600 seconds.
-It uses the unchanged candidate `device-no-mcode-v1/et_aac_full.elf`, split
-16-packet requests, and actual fused-meter comparison. Silicon remains blocked
-unless it writes a matching `PASS.json`.
+## Extended simulator result: failed numerical acceptance
+
+`build-et/aac-full/emulator/portable-extended-32` completed within its
+3,600-second cap and exited **1**, not a timeout. Its recorded ELF, runner,
+compressed input and scalar oracle hashes all still match. No `PASS.json`
+was produced.
+
+The unchanged `device-no-mcode-v1/et_aac_full.elf` completed INIT, two
+16-packet DECODE requests, fused-meter verification, and CLOSE. All five
+status results were zero, unsupported-call and heap-failure counters were
+zero, all stack guards passed, and live heap returned to zero on CLOSE.
+Nevertheless, **407 of 65,536 PCM words differ** from the scalar oracle:
+
+| Packet index (zero-based) | Mismatched words |
+|---|---:|
+| 10 | 249 |
+| 11 | 158 |
+
+The first mismatch is word 20,691: packet 10, channel 0, sample 211.
+Both channels are affected. The runner correctly reports zero accepted exact
+packet frames despite completing 32 decoded packets. No tolerance is applied;
+the matching meter features do not establish PCM equality.
+
+INIT took about 20.2 minutes and the two decode launches about 9.0 minutes
+combined **in the simulator**. These wall times are not silicon performance.
+The numerical root cause is not established; the next investigation must
+isolate the packet-10 divergence offline/in simulation before hardware is
+eligible. No hardware access, recovery operation, or marker clearing was
+performed following this failure.
+
+Raw PCM, private state, logs, exit status and provenance remain unchanged.
+New read-only-derived diagnostics and their raw-artifact hashes are saved in
+`build-et/aac-full/emulator/portable-extended-32/pcm-analysis.json` and mirrored
+in `RESULTS.json`.
 
 ## CPU baseline, not an ET comparison
 

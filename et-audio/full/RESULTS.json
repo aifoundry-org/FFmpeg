@@ -1,7 +1,7 @@
 {
   "date_utc": "2026-09-16",
   "scope": "Complete compressed AAC-LC, one stream, target shire0/hart0; no silicon launches yet",
-  "status": "native passed; target emulator validation pending; silicon blocked",
+  "status": "native passed; extended emulator completed lifecycle but failed exact PCM; silicon blocked",
   "cpu": {
     "scope": "one full stereo 48 kHz AAC-LC stream, 512 packets; CPU0; five fresh processes plus one 5-context repeat process per mode",
     "input_sha256": "80dd3dbd32f432ec3f148306b6e2fa1d76dfef1533fab5e99347c59c65afa004",
@@ -443,9 +443,12 @@
     {
       "path": "build-et/aac-full/emulator/portable-shire0-32",
       "reason": "software-only reduced-topology probe stopped; wrapper editing race exit127; startup log recovered separately; standard topology restored"
+    },
+    {
+      "path": "build-et/aac-full/emulator/portable-extended-32",
+      "reason": "exit 1 after full lifecycle: 407/65536 PCM words differ from scalar oracle; no PASS.json; no hardware access"
     }
   ],
-  "pending_run": "build-et/aac-full/emulator/portable-extended-32",
   "previous_scope_note": "Prior synthesis-only 64-channel/512-frame results are not equivalent to this full one-stream workload; no ET full-decoder speed comparison is available.",
   "preserved_manifests": {
     "ET_AAC_PROFILE.json": {
@@ -564,5 +567,68 @@
     "build-et/aac-profile/selected/profile-fast.elf": "b4674c3ecc1659203aaafb4db71531fbd9653242219e48ae0afaa9e62461f4b3",
     "build-et/aac-prototype/selected/scalar.elf": "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1",
     "build-et/optimization/opt2/et_mpeg2_slice.elf": "44ac57592938cde2c398ef05e281e27fc54d548e6b38ed9847555c24c94152f3"
+  },
+  "last_run": "build-et/aac-full/emulator/portable-extended-32",
+  "extended_emulator_analysis": {
+    "scope": "offline analysis of retained simulator artifacts; no hardware access",
+    "acceptance": "FAIL: exact 32-bit PCM equality required; no tolerance applied",
+    "word_count": 65536,
+    "mismatch_count": 407,
+    "first_mismatch": {
+      "word": 20691,
+      "packet_zero_based": 10,
+      "channel_zero_based": 0,
+      "sample_in_channel": 211
+    },
+    "mismatches_by_packet_zero_based": {
+      "10": 249,
+      "11": 158
+    },
+    "mismatches_by_channel_zero_based": {
+      "0": 197,
+      "1": 210
+    },
+    "decoded_packets": 32,
+    "lifecycle_results_zero": true,
+    "stack_guards_intact": true,
+    "heap_live_after_close": 0,
+    "provenance_checks": {
+      "/var/lib/shelley/et-workspace/ffmpeg/build-et/aac-full/device-no-mcode-v1/et_aac_full.elf": true,
+      "/var/lib/shelley/et-workspace/ffmpeg/build-et/aac-full/host/full-emulator-run": true,
+      "/var/lib/shelley/et-workspace/ffmpeg/build-et/aac-full/fixtures/stereo-48000-32.input": true,
+      "/var/lib/shelley/et-workspace/ffmpeg/build-et/aac-full/fixtures/stereo-48000-32.scalar.pcm": true
+    },
+    "artifact_sha256": {
+      "actual.pcm": "28d4ddc1ee8c65d32a12605c743ee6983f9ac638865a0a301cf0ad4075579990",
+      "state.bin": "9fb66b3a95283ab5237fde197c0ec59db17be86dde93c47ce3afbbd68979a690",
+      "run.jsonl": "73d70998fd45528b1e91ba4fd900e9b1aa459124a2ad5e392a7675895ebf01a8",
+      "run.log": "3d08ead0db9a6ddad26d58204ac39051e36db2e41047ab341689c291616a4a92",
+      "exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "provenance.sha256": "9304c7478267bb48031a5404ebb061925d944b0006a28fb0687489d3b326171c",
+      "scope.txt": "38a87757a85cd2ba5790de5061969b17369dd5a10278aafbc338c163adf25ee4"
+    },
+    "reported_result": {
+      "type": "result",
+      "pass": false,
+      "exact_packet_frames": 0,
+      "exact_channel_frames": 0,
+      "pcm_mismatches": 407,
+      "runtime_setup_s": 73.613317444,
+      "upload_s": 0.035121803,
+      "decoder_init_s": 1212.590351208,
+      "init_status_io_s": 0.254884261,
+      "decode_s": 539.406489029,
+      "decode_status_io_s": 0.245137057,
+      "consumer_s": 9.537334899,
+      "consumer_status_io_s": 0.184931384,
+      "pcm_readback_s": 0.034298513,
+      "state_validation_read_s": 0.034389045,
+      "compare_s": 3.2749e-05,
+      "decoder_close_s": 11.315001846,
+      "close_status_io_s": 0.177373975,
+      "resident_service_s": 549.373892369,
+      "transfer_inclusive_service_s": 549.409014172
+    },
+    "root_cause": "not established; simulator wall times are not silicon performance"
   }
 }
