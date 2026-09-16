@@ -18,7 +18,7 @@ for line in disassembly.splitlines():
     bits,op=m.groups()
     if op.startswith('.') or op in ('unimp','ebreak','wfi','mret','sret'):
         raise SystemExit('unknown/trap/privileged instruction: '+line)
-    if len(bits)!=8 or op.startswith(('c.','v.')): raise SystemExit('compressed/RVV instruction: '+line)
+    if len(bits)!=8 or op.startswith(('c.','v')): raise SystemExit('compressed/RVV instruction: '+line)
     if op.startswith(('fmadd','fmsub','fnmadd','fnmsub')) or op.endswith(('.d','.q','.ps','.pi')): raise SystemExit('unreviewed FP/SIMD instruction: '+line)
     if op in ('fdiv.s','fsqrt.s','fcvt.l.s','fcvt.lu.s','fcvt.s.l','fcvt.s.lu','fence.i','sfence.vma'):
         raise SystemExit('ET microcode-dependent instruction: '+line)

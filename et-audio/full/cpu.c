@@ -34,7 +34,7 @@ typedef struct FullInput {
 } FullInput;
 
 typedef struct Timing {
-    double setup_s, decode_s;
+    double setup_s, decode_s, close_s;
     uint64_t frames, samples;
     double checksum;
 } Timing;
@@ -131,10 +131,14 @@ static int decode_once(const FullInput *in, float *store, Timing *t) {
     if (avcodec_send_packet(ctx, NULL) < 0 || avcodec_receive_frame(ctx, frame) != AVERROR_EOF) {
         fprintf(stderr, "unexpected delayed AAC frame\n"); goto done;
     }
+    /* Make every output store observable even in timing-only invocations. */
+    __asm__ volatile("" : : "r"(store) : "memory");
     t->decode_s += now_s() - begin;
     rc = 0;
 done:
+    begin=now_s();
     av_frame_free(&frame); av_packet_free(&pkt); avcodec_free_context(&ctx);
+    t->close_s+=now_s()-begin;
     return rc;
 }
 
@@ -170,10 +174,11 @@ int main(int argc, char **argv) {
         Timing one = {0};
         if (decode_once(&in, store, &one)) { free(store); full_input_free(&in); return 1; }
         total.setup_s += one.setup_s; total.decode_s += one.decode_s; total.frames += one.frames; total.samples += one.samples; total.checksum += one.checksum;
-        rep++;
+        total.close_s += one.close_s;
     }
+    if(total.frames!=(uint64_t)repetitions*in.packets || total.samples!=total.frames*in.channels*1024){free(store);full_input_free(&in);return fail("repeat accounting mismatch");}
     if (pcm && write_new_pcm(pcm, store, floats)) { free(store); full_input_free(&in); return 1; }
-    printf("{\"type\":\"aac_full_cpu\",\"mode\":\"%s\",\"scalar\":%d,\"cpu_flags\":%d,\"packets\":%u,\"channels\":%u,\"sample_rate\":%u,\"repeats\":%lu,\"setup_table_context_s\":%.9f,\"decode_output_store_s\":%.9f,\"total_s\":%.9f,\"per_decode_s\":%.9f,\"frames\":%" PRIu64 ",\"samples\":%" PRIu64 ",\"checksum\":%.17g,\"pcm_written\":%s}\n",
-           mode, scalar, av_get_cpu_flags(), in.packets, in.channels, in.rate, repetitions, total.setup_s, total.decode_s, total.setup_s + total.decode_s, (total.setup_s + total.decode_s) / repetitions, total.frames, total.samples, total.checksum, pcm ? "true" : "false");
+    printf("{\"type\":\"aac_full_cpu\",\"mode\":\"%s\",\"scalar\":%d,\"cpu_flags\":%d,\"packets\":%u,\"channels\":%u,\"sample_rate\":%u,\"repeats\":%lu,\"setup_table_context_s\":%.9f,\"decode_output_store_s\":%.9f,\"decoder_close_s\":%.9f,\"total_s\":%.9f,\"per_decode_s\":%.9f,\"frames\":%" PRIu64 ",\"samples\":%" PRIu64 ",\"checksum\":%.17g,\"pcm_written\":%s}\n",
+           mode, scalar, av_get_cpu_flags(), in.packets, in.channels, in.rate, repetitions, total.setup_s, total.decode_s, total.close_s, total.setup_s + total.decode_s + total.close_s, (total.setup_s + total.decode_s + total.close_s) / repetitions, total.frames, total.samples, total.checksum, pcm ? "true" : "false");
     free(store); full_input_free(&in); return 0;
 }

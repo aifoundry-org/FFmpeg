@@ -1,0 +1,568 @@
+{
+  "date_utc": "2026-09-16",
+  "scope": "Complete compressed AAC-LC, one stream, target shire0/hart0; no silicon launches yet",
+  "status": "native passed; target emulator validation pending; silicon blocked",
+  "cpu": {
+    "scope": "one full stereo 48 kHz AAC-LC stream, 512 packets; CPU0; five fresh processes plus one 5-context repeat process per mode",
+    "input_sha256": "80dd3dbd32f432ec3f148306b6e2fa1d76dfef1533fab5e99347c59c65afa004",
+    "executable_sha256": "503ad7a3e5fb626410e76a87fb0edeba0b0dc7c8e14461ec0b317e44e1877c52",
+    "samples": [
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000564497,
+          "decode_output_store_s": 0.007124054,
+          "decoder_close_s": 2.2014e-05,
+          "total_s": 0.007710565,
+          "per_decode_s": 0.007710565,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000503839,
+          "decode_output_store_s": 0.005643283,
+          "decoder_close_s": 1.923e-05,
+          "total_s": 0.006166352,
+          "per_decode_s": 0.006166352,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000466588,
+          "decode_output_store_s": 0.005621551,
+          "decoder_close_s": 1.8633e-05,
+          "total_s": 0.006106772,
+          "per_decode_s": 0.006106772,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000461716,
+          "decode_output_store_s": 0.005645809,
+          "decoder_close_s": 1.9492e-05,
+          "total_s": 0.006127017,
+          "per_decode_s": 0.006127017,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000464223,
+          "decode_output_store_s": 0.005565741,
+          "decoder_close_s": 1.8989e-05,
+          "total_s": 0.006048953,
+          "per_decode_s": 0.006048953,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695453809923492,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "5",
+          "scalar"
+        ],
+        "returncode": 0,
+        "repeats": 5,
+        "mode": "scalar",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "scalar",
+          "scalar": 1,
+          "cpu_flags": 0,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 5,
+          "setup_table_context_s": 0.000785076,
+          "decode_output_store_s": 0.026143993,
+          "decoder_close_s": 3.5258e-05,
+          "total_s": 0.026964327,
+          "per_decode_s": 0.005392865,
+          "frames": 2560,
+          "samples": 5242880,
+          "checksum": -6.847726904961746,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000552898,
+          "decode_output_store_s": 0.003967366,
+          "decoder_close_s": 1.9434e-05,
+          "total_s": 0.004539698,
+          "per_decode_s": 0.004539698,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000545103,
+          "decode_output_store_s": 0.003906546,
+          "decoder_close_s": 1.9869e-05,
+          "total_s": 0.004471518,
+          "per_decode_s": 0.004471518,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000483384,
+          "decode_output_store_s": 0.003893827,
+          "decoder_close_s": 2.02e-05,
+          "total_s": 0.004397411,
+          "per_decode_s": 0.004397411,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.00048221,
+          "decode_output_store_s": 0.003895959,
+          "decoder_close_s": 1.9334e-05,
+          "total_s": 0.004397503,
+          "per_decode_s": 0.004397503,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "1",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 1,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 1,
+          "setup_table_context_s": 0.000474262,
+          "decode_output_store_s": 0.003878324,
+          "decoder_close_s": 1.9883e-05,
+          "total_s": 0.004372469,
+          "per_decode_s": 0.004372469,
+          "frames": 512,
+          "samples": 1048576,
+          "checksum": -1.3695455618435517,
+          "pcm_written": false
+        }
+      },
+      {
+        "command": [
+          "taskset",
+          "-c",
+          "0",
+          "/work/build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu",
+          "/work/build-et/aac-full/fixtures/stereo-48000-512.input",
+          "5",
+          "optimized"
+        ],
+        "returncode": 0,
+        "repeats": 5,
+        "mode": "optimized",
+        "result": {
+          "type": "aac_full_cpu",
+          "mode": "optimized",
+          "scalar": 0,
+          "cpu_flags": 1037275,
+          "packets": 512,
+          "channels": 2,
+          "sample_rate": 48000,
+          "repeats": 5,
+          "setup_table_context_s": 0.000917788,
+          "decode_output_store_s": 0.017629783,
+          "decoder_close_s": 3.9033e-05,
+          "total_s": 0.018586604,
+          "per_decode_s": 0.003717321,
+          "frames": 2560,
+          "samples": 5242880,
+          "checksum": -6.8477278092177585,
+          "pcm_written": false
+        }
+      }
+    ]
+  },
+  "cpu_median_fresh_process_total_ms": {
+    "scalar": 6.127017,
+    "optimized": 4.3975029999999995
+  },
+  "native_evidence": [
+    "build-et/aac-full/native/full-test-v2.log",
+    "build-et/aac-full/native/asan-runtime.log",
+    "build-et/aac-full/native/fixture-repeat-v3.json"
+  ],
+  "candidate": "build-et/aac-full/device-no-mcode-v1/et_aac_full.elf",
+  "failures": [
+    {
+      "path": "build-et/aac-full/device-local/BLOCKER.txt",
+      "reason": "SDK libraries emitted compressed instructions; rebuilt real libraries"
+    },
+    {
+      "path": "build-et/aac-full/build-publish-v1.log",
+      "reason": "zero instruction padding rejected; linker now fills code alignment with full-width NOPs"
+    },
+    {
+      "path": "build-et/aac-full/emulator/smoke-1",
+      "reason": "missing ELF pointer relocations caused INIT load fault"
+    },
+    {
+      "path": "build-et/aac-full/emulator/reloc-1",
+      "reason": "fdiv.s ET microcode trap during INIT"
+    },
+    {
+      "path": "build-et/aac-full/emulator/reloc-2",
+      "reason": "same microcode trap after no-relax relocation build"
+    },
+    {
+      "path": "build-et/aac-full/emulator/portable-32",
+      "reason": "900-second timeout before INIT completed; no target success claimed"
+    },
+    {
+      "path": "build-et/aac-full/emulator/portable-shire0-32",
+      "reason": "software-only reduced-topology probe stopped; wrapper editing race exit127; startup log recovered separately; standard topology restored"
+    }
+  ],
+  "pending_run": "build-et/aac-full/emulator/portable-extended-32",
+  "previous_scope_note": "Prior synthesis-only 64-channel/512-frame results are not equivalent to this full one-stream workload; no ET full-decoder speed comparison is available.",
+  "preserved_manifests": {
+    "ET_AAC_PROFILE.json": {
+      "manifest_sha256": "5ee53741b763b0e48446f5b94aefb5a5e497a47b0fb12727e731c8cb70e47577",
+      "source_checks": {
+        "et-audio/decoder/README.md": true,
+        "et-audio/decoder/build_and_audit.py": true,
+        "et-audio/profile/CMakeLists.txt": true,
+        "et-audio/profile/README.md": true,
+        "et-audio/profile/generate-offline-tests.py": true,
+        "et-audio/profile/generate-profile-dsp.py": true,
+        "et-audio/profile/generate-runtime.py": true,
+        "et-audio/profile/kernel.c": true,
+        "et-audio/profile/profile_synth.h": true,
+        "et-audio/profile/protocol.h": true,
+        "et-audio/profile/results.py": true,
+        "et-audio/profile/run-silicon.sh": true,
+        "et-audio/profile/runner.c": true,
+        "et-audio/profile/runtime.h": true,
+        "et-audio/profile/tests.c": true
+      }
+    },
+    "ET_AAC_OFFLINE.json": {
+      "manifest_sha256": "6cb1f9ce167c086b815d7b619e7450115182a2a9c0e613d54f3ffb17c840f725",
+      "source_checks": {
+        "et-audio/offline/CMakeLists.txt": true,
+        "et-audio/offline/README.md": true,
+        "et-audio/offline/build-cpu.py": true,
+        "et-audio/offline/cpu.c": true,
+        "et-audio/offline/generate-runtime.py": true,
+        "et-audio/offline/kernel.c": true,
+        "et-audio/offline/protocol.h": true,
+        "et-audio/offline/results.py": true,
+        "et-audio/offline/run-silicon.sh": true,
+        "et-audio/offline/runner.c": true,
+        "et-audio/offline/runtime.h": true,
+        "et-audio/offline/tests.c": true
+      }
+    },
+    "ET_AAC_PROTOTYPE.json": {
+      "manifest_sha256": "294fdfcf854b3586e4d56de0d8da73506dd214d0066cc570727193d3739ece0d",
+      "source_checks": {
+        "et-audio/.gitignore": true,
+        "et-audio/CMakeLists.txt": true,
+        "et-audio/README.md": true,
+        "et-audio/build-cpu-stage.py": true,
+        "et-audio/build-cpu.py": true,
+        "et-audio/capture/README.md": true,
+        "et-audio/capture/aac_capture_format.h": true,
+        "et-audio/capture/aacdec_capture.patch": true,
+        "et-audio/capture/benchmark_cpu.py": true,
+        "et-audio/capture/build_capture.py": true,
+        "et-audio/capture/inspect_capture.py": true,
+        "et-audio/capture/run_fixtures.py": true,
+        "et-audio/capture_io.h": true,
+        "et-audio/check-device.py": true,
+        "et-audio/cpu-stage.c": true,
+        "et-audio/dsp/PROVENANCE.md": true,
+        "et-audio/dsp/SOURCE_MANIFEST.sha256": true,
+        "et-audio/dsp/etaac_synth.c": true,
+        "et-audio/dsp/etaac_tables.h": true,
+        "et-audio/dsp/synth.h": true,
+        "et-audio/dsp/tests/Makefile": true,
+        "et-audio/dsp/tests/test_etaac_ffmpeg.c": true,
+        "et-audio/dsp/tools/generate_tables.c": true,
+        "et-audio/dsp/tools/generate_tables.sh": true,
+        "et-audio/kernel.c": true,
+        "et-audio/protocol.h": true,
+        "et-audio/replay-native.c": true,
+        "et-audio/results.py": true,
+        "et-audio/run-silicon.sh": true,
+        "et-audio/runner.c": true,
+        "et-audio/runtime/CMakeLists.txt": true,
+        "et-audio/runtime/README.md": true,
+        "et-audio/runtime/etaac_runtime.h": true,
+        "et-audio/runtime/etaac_runtime_private.h": true,
+        "et-audio/runtime/generate_runtime.py": true,
+        "et-audio/runtime/tests/mock/device-layer/IDeviceLayer.h": true,
+        "et-audio/runtime/tests/mock/runtime/IRuntime.h": true,
+        "et-audio/runtime/tests/runtime_test.cpp": true,
+        "et-audio/tests.c": true
+      }
+    },
+    "ET_OPTIMIZATION.json": {
+      "manifest_sha256": "0ddaca23c257a28357077fc30b86ba267ac0db1ee1c34819e100a5d57c6def4b",
+      "source_checks": {
+        "et-kernels/generated/block_inter.h": true,
+        "et-kernels/generated/block_intra.h": true,
+        "et-kernels/generated/tables.h": true,
+        "et-kernels/include/config.h": true,
+        "et-kernels/include/et_mpeg2.h": true,
+        "et-kernels/include/libavutil/avconfig.h": true,
+        "et-kernels/src/cache.h": true,
+        "et-kernels/src/crt.S": true,
+        "et-kernels/src/decoder.c": true,
+        "et-kernels/src/decoder_internal.h": true,
+        "et-kernels/src/entry.c": true,
+        "et-kernels/src/idct.c": true,
+        "et-kernels/src/idct_simd.c": true,
+        "et-kernels/src/idct_simd.h": true,
+        "et-kernels/src/libc.c": true,
+        "et-kernels/src/linker.ld": true,
+        "et-kernels/src/motion.h": true,
+        "et-kernels/src/reconstruct.h": true,
+        "et-kernels/tests/idct_exact.c": true,
+        "et-kernels/tests/test_decode.c": true,
+        "et-kernels/tests/test_memory.c": true,
+        "et-kernels/tests/test_motion.c": true,
+        "et-kernels/tests/test_reconstruct.c": true
+      }
+    }
+  },
+  "candidate_sha256": "6951564f388059a7222a77a1932568ad59514451ce7757b0af9c7dfe75922026",
+  "preserved_selected": {
+    "build-et/aac-offline/selected/fast.elf": "c67777fe96bc5825150670e8a4c7e8b4b8a4ab5573c184532fbe570decc1e353",
+    "build-et/aac-profile/selected/profile-fast.elf": "b4674c3ecc1659203aaafb4db71531fbd9653242219e48ae0afaa9e62461f4b3",
+    "build-et/aac-prototype/selected/scalar.elf": "7fccc6753d6f5440447d8e657096dd7ee58b7d7e28ce9f65825427b1d874c9e1",
+    "build-et/optimization/opt2/et_mpeg2_slice.elf": "44ac57592938cde2c398ef05e281e27fc54d548e6b38ed9847555c24c94152f3"
+  }
+}

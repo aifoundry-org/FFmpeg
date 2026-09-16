@@ -27,6 +27,7 @@ def main():
                     help="pinned optimized CPU FFmpeg static build")
     ap.add_argument("--output-root", type=pathlib.Path, default=DEFAULT_OUT)
     ap.add_argument("--skip-tests", action="store_true")
+    ap.add_argument("--binary-only", action="store_true", help="build fresh binary without regenerating fixtures")
     args = ap.parse_args()
     ff = args.ffmpeg_build.resolve(); out = args.output_root.resolve()
     codec = ff / "libavcodec/libavcodec.a"; util = ff / "libavutil/libavutil.a"
@@ -42,12 +43,15 @@ def main():
         "scalar (-cpuflags 0 equivalent) is the FF CPU oracle; optimized/default output and "
         "timings characterize dispatch only and are not an ET tolerance. Capture JSON stdout here.\n")
     binary = cpu / "aac-full-cpu"
+    if binary.exists(): ap.error("refusing to overwrite CPU binary; use a fresh output root")
     cc = os.environ.get("CC", "cc")
     # libavcodec/libavutil are intentionally the existing optimized baseline archives;
     # scalar is selected at runtime using av_force_cpu_flags(0), not a metadata frontend.
     run([cc, "-std=c11", "-O2", "-g", "-Wall", "-Wextra", "-Werror", "-ffp-contract=off",
          "-I", str(ff), "-I", str(ROOT), str(ROOT / "et-audio/full/cpu.c"),
          str(codec), str(util), "-lm", "-lz", "-pthread", "-o", str(binary)])
+    if args.binary_only:
+        print("Built", binary); return
     run([sys.executable, str(ROOT / "et-audio/full/fixtures.py"), "--output", str(out / "fixtures"), "--cpu", str(binary)])
     if not args.skip_tests:
         run([sys.executable, str(ROOT / "et-audio/full/fixture-tests.py"), "--cpu", str(binary), "--fixtures", str(out / "fixtures"),

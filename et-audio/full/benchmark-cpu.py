@@ -6,7 +6,7 @@ p.add_argument('--output',required=True);a=p.parse_args()
 root=pathlib.Path(__file__).resolve().parents[2];out=pathlib.Path(a.output).resolve()
 if out.exists():raise SystemExit('refusing existing output')
 out.mkdir(parents=True)
-cpu=root/'build-et/aac-full/cpu/aac-full-cpu'
+cpu=root/'build-et/aac-full/cpu-lifecycle-v2/cpu/aac-full-cpu'
 inp=root/'build-et/aac-full/fixtures/stereo-48000-512.input'
 records=[]
 for mode in ('scalar','optimized'):
@@ -20,6 +20,8 @@ for mode in ('scalar','optimized'):
   (out/'attempts.json').write_text(json.dumps(records,indent=2)+'\n')
   if r.returncode:raise SystemExit(r.returncode)
   row['result']=json.loads(r.stdout)
+  assert row['result']['frames']==512*repeats
+  assert row['result']['samples']==512*repeats*2*1024
   print(json.dumps(row),flush=True)
 report={'scope':'one full stereo 48 kHz AAC-LC stream, 512 packets; CPU0; five fresh processes plus one 5-context repeat process per mode',
  'input_sha256':hashlib.sha256(inp.read_bytes()).hexdigest(),'executable_sha256':hashlib.sha256(cpu.read_bytes()).hexdigest(),'samples':records}

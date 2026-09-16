@@ -79,6 +79,12 @@ def main():
         if p.returncode == 0 or existing.read_bytes() != b"keep" or "already exists" not in p.stderr:
             raise AssertionError(f"PCM output overwrite guard failed: rc={p.returncode}, stderr={p.stderr!r}")
         evidence["output_no_overwrite"] = "pass"
+        repeat_input=args.fixtures/manifest['cases'][0]['input']
+        for count in (2,5):
+            p=subprocess.run([str(args.cpu),str(repeat_input),str(count),'scalar'],text=True,capture_output=True,check=True)
+            row=json.loads(p.stdout); expected=count*manifest['cases'][0]['packet_count']
+            assert row['frames']==expected and row['samples']==expected*manifest['cases'][0]['channels']*1024
+        evidence['repeat_accounting']='2 and 5 complete decodes: pass'
     args.native_output.parent.mkdir(parents=True, exist_ok=True)
     args.native_output.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
     print(json.dumps(evidence, sort_keys=True))
